@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import List from '@material-ui/core/List';
@@ -8,7 +8,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuList from "./MenuList";
 import Typography from '@material-ui/core/Typography';
-
+import {Link} from "@material-ui/core";
+import PersonIcon from '@material-ui/icons/Person';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -33,11 +34,11 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: "35px",
         paddingBottom: "60px",
         color: "#6c844c",
+        textDecoration:"none",
     },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
-
     },
     drawerPaper: {
         width: drawerWidth,
@@ -47,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
         msOverflowStyle: "none",
         scrollBehavior: "smooth",
         paddingTop: 0,
+        [theme.breakpoints.down('xs')]: {
+            display:"none",
+
+        },
     },
     listTxt:{
         fontFamily: "twayair",
@@ -66,16 +71,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function Navbar() {
     const classes = useStyles();
+
     const menu1 = ["소개", "팀 소개", "사업 소개", "토큰 메뉴얼"];
     const menu2 = ["쇼핑하기", "친환경 골프공", "로스트볼", "리피니쉬"];
     const menu3 = ["Q&A", "공지사항", "자주묻는질문", "질문등록"];
-
     return (
         <div className={classes.root}>
             <CssBaseline />
 
+                <PersonIcon/>
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -84,7 +91,7 @@ export default function Navbar() {
                 }}
                 anchor="left"
             >
-            <Typography variant={"h1"} className={classes.title} align={"center"}>REBORN</Typography>
+            <Typography variant={"h1"} className={classes.title} align={"center"}><Link href="/" className={classes.title}>REBORN</Link></Typography>
                 <Divider />
                 <List className={classes.list}>
                     <MenuList menu={menu1}/>
