@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     list:{
         padding: "20px 0px"
     },
+
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     content: {
@@ -74,6 +75,7 @@ export default function Navbar() {
     return (
         <div className={classes.root}>
             <CssBaseline />
+
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -100,7 +102,6 @@ export default function Navbar() {
                     </ListItem>
                 </List>
             </Drawer>
-
         </div>
     );
 }
