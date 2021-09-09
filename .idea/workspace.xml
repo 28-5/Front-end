@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="430d9d61-576c-4053-a3ed-3a96632016cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Join/Join.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/reborn1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/reborn2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Join/Address.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Join/AddressModal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Join/Join.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/Join.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main/Main.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +69,7 @@
       <workItem from="1630994052935" duration="393000" />
       <workItem from="1630994466445" duration="13141000" />
       <workItem from="1631060655296" duration="25938000" />
+      <workItem from="1631151181593" duration="14482000" />
     </task>
     <servers />
   </component>
@@ -80,9 +84,13 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-816" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1631001486262" />
-    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2" timestamp="1631000546436">
+    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2" timestamp="1631165035724">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1631000546436" />
+    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1631165035724" />
+    <state x="-908" y="239" key="run.anything.popup" timestamp="1631168604881">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-908" y="239" key="run.anything.popup/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1631168604881" />
   </component>
 </project>

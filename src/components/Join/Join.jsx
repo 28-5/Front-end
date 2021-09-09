@@ -1,19 +1,19 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import {useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
+import AddressModal from "./AddressModal";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Grid from "@material-ui/core/Grid";
 import Input from "@material-ui/core/Input";
+import axios from "axios";
+import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import EmailIcon from "@material-ui/icons/Email";
 import clsx from "clsx";
 import LockIcon from "@material-ui/icons/Lock";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
 import HomeIcon from '@material-ui/icons/Home';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
     section:{
@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
         width: "400px",
         height: "50px",
     },
+    addressInput:{
+        width: "300px",
+        height: "50px",
+    },
     inputGrid:{
         textAlign:"center",
         margin: "20px 0px",
@@ -58,14 +62,19 @@ const useStyles = makeStyles((theme) => ({
         borderRight: "solid"
 
     },
+    addressBtn: {
+        marginBottom:"12px"
+    }
 }));
 
 
 
 const Join = () => {
     const classes = useStyles();
-
     const [open, setOpen] = useState(false);
+    const [IsModalOpen, setModalOpen] = useState(false);
+    const [address, setAddress] = useState('주소');
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -73,15 +82,36 @@ const Join = () => {
         setOpen(!open);
         setTimeout(() => {
             setOpen(false);
-            console.log("hi");
         }, 500);
     };
 
-    const fetchLoginInfo = (event) =>{
+    const modalOpenHandler = () => {
+        setModalOpen(true);
+    };
+
+    const modalCloseHandler = () => {
+        setModalOpen(false);
+    };
+
+    const addressHandler = props =>{
+        setAddress(props);
+    };
+
+
+
+    const fetchJoinInfo = (event) =>{
         event.preventDefault();
-        axios.post("/login", {
+        console.log("email: "+ event.target.userEmail.value);
+        console.log("pass: " + event.target.userPass.value);
+        console.log("name: " + event.target.userName.value);
+        console.log("phone: " + event.target.userPhone.value);
+        console.log("address: " + address);
+        axios.post("/create", {
             email : event.target.userEmail.value,
             pass: event.target.userPass.value,
+            name: event.target.userName.value,
+            phone: event.target.userPhone.value,
+            address: event.target.userAddr.value,
         }).then(res => {
             console.log("Post success! + res.data: " + res.data);
         }).catch(err => {
@@ -90,54 +120,58 @@ const Join = () => {
         });
     }
 
+
     return (
         <section className={classes.section}>
             <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
                 <CircularProgress color="primary" />
             </Backdrop>
             <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.joinBox}>
-                <form onSubmit={fetchLoginInfo}>
+                <form onSubmit={fetchJoinInfo}>
                     <Grid item xs={12} >
                         <Input type="text" name="userEmail" placeholder="이메일"
                                startAdornment={( <InputAdornment position="start">
-                                   <EmailIcon className={classes.icon}/>
+                                   <EmailIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
                         <Input type="password" name="userPass" placeholder="비밀번호"
                                startAdornment={( <InputAdornment position="start">
-                                   <LockIcon className={classes.icon}/>
+                                   <LockIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="password" name="userPass" placeholder="비밀번호 확인"
+                        <Input type="password" name="userPassCheck" placeholder="비밀번호 확인"
                                startAdornment={( <InputAdornment position="start">
-                                   <LockIcon className={classes.icon}/>
+                                   <LockIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="text" name="userPass" placeholder="이름"
+                        <Input type="text" name="userName" placeholder="이름"
                                startAdornment={( <InputAdornment position="start">
-                                   <AssignmentIndIcon className={classes.icon}/>
+                                   <AssignmentIndIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="number" name="userPass" placeholder="휴대폰번호"
+                        <Input type="tel" name="userPhone" placeholder="휴대폰번호"
                                startAdornment={( <InputAdornment position="start">
-                                   <PhoneIphoneIcon className={classes.icon}/>
+                                   <PhoneIphoneIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="text" name="userPass" placeholder="주소"
+                        <Input type="text" name="userAddr" placeholder={address}
                                startAdornment={( <InputAdornment position="start">
-                                   <HomeIcon className={classes.icon}/>
+                                   <HomeIcon />
                                </InputAdornment>)}
-                               className={classes.joinInput}/>
+                               disabled="true"
+                               className={classes.addressInput}/>
+                        <Button color="secondary" variant="outlined" className={classes.addressBtn} onClick={modalOpenHandler}>주소찾기</Button>
+                        {IsModalOpen && <AddressModal modalOpen={IsModalOpen} closeModal={modalCloseHandler} getAddress={addressHandler}/>}
                     </Grid>
                     <Grid item xs={12}>
                         <Button type="submit" className={classes.joinBtn} >회원가입</Button>

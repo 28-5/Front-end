@@ -6,6 +6,9 @@ const Main = () => {
     return(
       <Container maxWidth="lg">
           <LoginNavBtn />
+          <section id="top">
+              <img src="/img/reborn1.svg" />
+          </section>
       </Container>
     );
 };
