@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuList from "./MenuList";
 import Typography from '@material-ui/core/Typography';
-import {Link} from "@material-ui/core";
+import {Link } from "react-router-dom";
 import PersonIcon from '@material-ui/icons/Person';
 const drawerWidth = 240;
 
@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
     title:{
         fontSize: "50px",
         fontWeight:"bold",
-        paddingTop: "35px",
-        paddingBottom: "60px",
+        paddingTop: "10px",
+        paddingBottom: "10px",
         color: "#6c844c",
         textDecoration:"none",
     },
@@ -42,8 +42,6 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
         width: drawerWidth,
-        // overflow:"hidden",
-        // paddingTop: "100px",
         scrollbarWidth: "10px",
         msOverflowStyle: "none",
         scrollBehavior: "smooth",
@@ -69,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
         display:"flex",
         alignContent:"center"
     },
+
+    link:{
+        color:"black"
+    }
 }));
 
 
@@ -91,7 +93,7 @@ export default function Navbar() {
                 }}
                 anchor="left"
             >
-            <Typography variant={"h1"} className={classes.title} align={"center"}><Link href="/" className={classes.title}>REBORN</Link></Typography>
+            <Typography variant={"h1"} className={classes.title} align={"center"}><Link to="/" className={classes.title}>REBORN</Link></Typography>
                 <Divider />
                 <List className={classes.list}>
                     <MenuList menu={menu1}/>
@@ -103,10 +105,13 @@ export default function Navbar() {
                     <MenuList menu={menu3}/>
                 </List>
                 <Divider />
+
                 <List>
+                <Link to="/admin" className={classes.link}>
                     <ListItem button key={"관리자모드"}>
                         <ListItemText primary={<Typography className={classes.listTxt}>관리자 페이지</Typography>} />
                     </ListItem>
+                </Link>
                 </List>
             </Drawer>
         </div>

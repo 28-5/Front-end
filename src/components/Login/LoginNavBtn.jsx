@@ -8,9 +8,11 @@ const useStyles = makeStyles(() => ({
     loginBtn:{
         display:"block",
         float: "right",
+        paddingRight:"100px"
     },
     icon:{
-        fontSize: "240px",
+        fontSize: "40px",
+        color:"#6c844c",
     }
 
 }));
