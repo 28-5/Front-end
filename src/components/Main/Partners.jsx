@@ -1,42 +1,38 @@
-import React from "react";
-import Typography from '@material-ui/core/Typography';
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
-import ProductCardList from "../Product/ProductCardList";
-import Divider from '@material-ui/core/Divider';
+import React from "react";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
     mainContainer:{
-        paddingLeft:"260px",
+        paddingLeft:"200px",
         paddingTop: "50px",
         fontFamily: "twayair",
+    },
+
+    partnerImg:{
+        width: "80%"
     },
     bodyTitle:{
         fontFamily: "twayair",
         textAlign:"center",
+        fontSize: 40,
         paddingBottom: "40px",
-        fontSize: 40
     },
-    root: {
-        maxWidth: 345,
-    },
-
 }));
-const MainBody = () => {
+
+const Partners = () => {
     const classes = useStyles();
 
-    return(
+    return (
         <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.mainContainer}>
             <Grid item xs={12} md={12}>
-                <Typography variant="h3" className={classes.bodyTitle}>베스트 상품</Typography>
+                <Typography variant="h3" className={classes.bodyTitle}>제휴 업체</Typography>
             </Grid>
-
-
-
-            {/*<ItemList/>*/}
-            <ProductCardList/>
+            <img src="./img/partners.jpg" className={classes.partnerImg}/>
         </Grid>
     );
+
 };
 
-export default MainBody;
+export default Partners;

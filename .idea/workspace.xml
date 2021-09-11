@@ -2,24 +2,31 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="430d9d61-576c-4053-a3ed-3a96632016cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/favicon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/mainImg1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/mainImg2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/Chart.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/Dashboard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/Deposits.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/Orders.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/Title.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/listItems.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Main/MainBody.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/partners.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/유명 브랜드.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/초급자연습용 컬러.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/초급자연습용 토탈 브랜드 볼.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/캘러웨이.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/타이틀리스트 컬러볼.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/타이틀리스트.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/테일러메이드 컬러.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/productImg/테일러메이드.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Main/ItemList.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Main/MainTop.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Main/Partners.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Product/ProductCardList.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Product/ProductData.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login/LoginNavBtn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/LoginNavBtn.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Main/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main/Main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main/MainBody.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main/MainBody.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +72,7 @@
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Product" />
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Login" />
     </key>
   </component>
@@ -84,6 +92,7 @@
       <workItem from="1631060655296" duration="25938000" />
       <workItem from="1631151181593" duration="14835000" />
       <workItem from="1631241020648" duration="17057000" />
+      <workItem from="1631319305021" duration="20504000" />
     </task>
     <servers />
   </component>
@@ -98,10 +107,11 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-816" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1631001486262" />
-    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2" timestamp="1631243158998">
-      <screen x="-1920" y="0" width="1920" height="1040" />
+    <state x="522" y="149" key="Vcs.Push.Dialog.v2" timestamp="1631345573737">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="-1016" y="188" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1631243158998" />
+    <state x="522" y="149" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1631345573737" />
     <state x="-908" y="239" key="run.anything.popup" timestamp="1631168604881">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
