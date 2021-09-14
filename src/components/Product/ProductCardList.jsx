@@ -7,16 +7,16 @@ import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import ProductData from "./ProductData";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 260,
-        boxShadow: "none"
+        boxShadow: "none",
+        textAlign:"left",
     },
 
     cardGrid:{
-        // paddingTop: "30px",
+        backgroundColor:"#fff"
     },
     productTitle:{
         fontFamily: "twayair",
@@ -39,31 +39,23 @@ const ProductCardList = () => {
 
     return(
         <>
-            <Divider variant="inset" className={classes.divider}/>
             {ProductData.map((item) => (
                 <Grid item xs={6} md={3} className={classes.cardGrid}>
-             <Card className={classes.root}>
-            <CardActionArea href="/login">
-                <CardMedia
-                    component="img"
-                    alt="Product image"
-                    height="240"
-                    image={item.img}
-                    title="Reborn Products"
-                />
-
-                <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2" className={classes.productTitle}>
-                        {item.title}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p" className={classes.productPrice}>
-                        {item.star}
-                    </Typography><Typography variant="body2" color="textSecondary" component="p" className={classes.productPrice}>
-                        {item.price}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
+                 <Card className={classes.root}>
+                    <CardActionArea href="/login">
+                        <CardMedia component="img" alt="Product image" height="240" image={item.img} title="Reborn Products" />
+                        <CardContent className={classes.cardContent}>
+                            <Typography gutterBottom variant="h5" component="h2" className={classes.productTitle}>
+                                {item.title}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p" className={classes.productPrice}>
+                                {item.star}
+                            </Typography><Typography variant="body2" color="textSecondary" component="p" className={classes.productPrice}>
+                                {item.price}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
                 </Grid>
                 ))
                 }

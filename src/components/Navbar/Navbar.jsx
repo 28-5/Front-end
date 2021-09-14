@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         fontWeight:"bold",
         paddingTop: "10px",
         paddingBottom: "10px",
-        color: "#6c844c",
+        color: "#84bc44",
         textDecoration:"none",
     },
     drawer: {
@@ -77,9 +77,23 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
     const classes = useStyles();
 
-    const menu1 = ["소개", "팀 소개", "사업 소개", "토큰 메뉴얼"];
-    const menu2 = ["쇼핑하기", "친환경 골프공", "로스트볼", "리피니쉬"];
-    const menu3 = ["Q&A", "공지사항", "자주묻는질문", "질문등록"];
+    const menu1 = [
+        {소개: "/business"},
+        {개발팀: "/team"},
+        {사업소개: "/business"},
+        {토큰메뉴얼: "/tokenManual"},
+    ];
+    const menu2 = [
+        {쇼핑하기: "/shop"}
+        ];
+    const menu3 = [
+        {공지사항: "/notification"},
+        {QnA: "/qna"},
+        {질문등록: "/ask"},
+        {자주묻는질문: "/fnq"},
+    ];
+
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -96,7 +110,7 @@ export default function Navbar() {
             <Typography variant={"h1"} className={classes.title} align={"center"}><Link to="/" className={classes.title}>REBORN</Link></Typography>
                 <Divider />
                 <List className={classes.list}>
-                    <MenuList menu={menu1}/>
+                    <MenuList menu={menu1} />
                 </List>
                 <List className={classes.list}>
                     <MenuList menu={menu2}/>

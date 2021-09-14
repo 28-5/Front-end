@@ -106,7 +106,7 @@ const Join = () => {
         console.log("name: " + event.target.userName.value);
         console.log("phone: " + event.target.userPhone.value);
         console.log("address: " + address);
-        axios.post("/create", {
+        axios.post("/member/register", {
             email : event.target.userEmail.value,
             pass: event.target.userPass.value,
             name: event.target.userName.value,

@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme) => ({
         color:"grey"
 
     },
+    link:{
+        textDecoration: "none",
+        color: "black"
+    }
 }));
 
 
@@ -38,23 +43,28 @@ const MenuList = props => {
     const listClick = () => {
         setOpen(!isOpen);
     };
+    const menu_name = props.menu.map(name => {
+        return Object.keys(name).toString();
+    });
+    const menu_addr = props.menu.map(addr => {
+        return Object.values(addr).toString();
+    });
 
     return (
         <>
-            <ListItem button onClick={listClick}>
+            <ListItem button onClick={listClick} component={menu_name[0] === "쇼핑하기" && Link} to={menu_name[0] === "쇼핑하기" && menu_addr[0]} >
                 <ListItemIcon>
-                    {props.menu[0] === "소개"? <InfoIcon/>: (props.menu[0]==="쇼핑하기"? <LocalMallIcon/>: <QuestionAnswerIcon/>)}
-
+                    {menu_name[0] === "소개"? <InfoIcon/>: (menu_name[0] ==="쇼핑하기"? <LocalMallIcon/>: <QuestionAnswerIcon/>)}
                 </ListItemIcon>
-                <ListItemText primary={<Typography className={classes.menuTxt}>{props.menu[0]}</Typography>}/>
+                <ListItemText primary={<Typography className={classes.menuTxt}>{menu_name[0]}</Typography>}/>
                 {isOpen ? <ExpandLess/> : <ExpandMore/>}
             </ListItem>
-
             <Collapse in={isOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {props.menu.map(m => (
-                        <ListItem button key={m} className={classes.nested}>
-                            {m !== props.menu[0] && <ListItemText primary={<Typography className={[classes.menuTxt, classes.subMenuTxt]}>{m}</Typography>}/>}
+                        <ListItem button key={m} className={classes.nested} component={Link} to={Object.values(m).toString()}>
+                            {Object.keys(m).toString() !== menu_name[0] && <ListItemText primary={<Typography
+                                className={[classes.menuTxt, classes.subMenuTxt]}>{Object.keys(m).toString()}</Typography>}/>}
                         </ListItem>
                     ))}
                 </List>

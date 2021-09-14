@@ -82,7 +82,7 @@ const Login = () => {
 
     const fetchLoginInfo = (event) =>{
         event.preventDefault();
-        axios.post("/login", {
+        axios.post("/member/login", {
             email : event.target.userEmail.value,
             pass: event.target.userPass.value,
         }).then(res => {
@@ -122,7 +122,7 @@ const Login = () => {
                     <Button type="submit" className={classes.loginBtn} >로그인</Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" href="/create" className={clsx(classes.joinBtn)}>회원가입</Button>
+                    <Button type="submit" href="/member/register" className={clsx(classes.joinBtn)}>회원가입</Button>
                 </Grid>
                 </form>
             </Grid>

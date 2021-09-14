@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft:"200px",
         paddingTop: "50px",
         fontFamily: "twayair",
+        backgroundColor:"#fff"
     },
 
     partnerImg:{

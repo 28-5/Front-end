@@ -21,7 +21,7 @@ const LoginNavBtn = () => {
    const classes = useStyles();
     return (
         <div  className={classes.loginBtn}>
-           <Link to={"/login"} >
+           <Link to={"/member/login"} >
                <PersonIcon className={classes.icon}/>
            </Link>
         </div>
