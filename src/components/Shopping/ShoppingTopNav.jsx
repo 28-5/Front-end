@@ -22,9 +22,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "50px",
         fontWeight:"bold",
         paddingTop: "10px",
-        paddingBottom: "10px",
-        // borderBottom: "1px solid #84bc44",
-        height: "6rem"
+        height: "4rem"
     },
     titleLink:{
         color: "#84bc44",
