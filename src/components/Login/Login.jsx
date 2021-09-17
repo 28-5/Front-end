@@ -11,6 +11,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     section:{
@@ -115,8 +116,8 @@ const Login = () => {
                            className={classes.loginInput}/>
                 </Grid>
                 <Grid item xs={12} className={classes.inputGrid}>
-                    <Typography  display="inline" align="left" className={clsx(classes.findTxt, classes.findTxtId)}>아이디 찾기</Typography>
-                    <Typography  display="inline" align="left" className={classes.findTxt}>비밀번호 찾기</Typography>
+                    <Typography  display="inline" align="left" className={clsx(classes.findTxt, classes.findTxtId)} component={Link} to="/">아이디 찾기</Typography>
+                    <Typography  display="inline" align="left" className={classes.findTxt} component={Link} to="/">비밀번호 찾기</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Button type="submit" className={classes.loginBtn} >로그인</Button>

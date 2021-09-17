@@ -11,6 +11,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InfoIcon from '@material-ui/icons/Info';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import clsx from "clsx";
 import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +53,7 @@ const MenuList = props => {
 
     return (
         <>
-            <ListItem button onClick={listClick} component={menu_name[0] === "쇼핑하기" && Link} to={menu_name[0] === "쇼핑하기" && menu_addr[0]} >
+            <ListItem button onClick={listClick} component={menu_name[0] === "쇼핑하기"? Link: undefined} to={menu_name[0] === "쇼핑하기"?menu_addr[0]: undefined} >
                 <ListItemIcon>
                     {menu_name[0] === "소개"? <InfoIcon/>: (menu_name[0] ==="쇼핑하기"? <LocalMallIcon/>: <QuestionAnswerIcon/>)}
                 </ListItemIcon>
@@ -62,9 +63,9 @@ const MenuList = props => {
             <Collapse in={isOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {props.menu.map(m => (
-                        <ListItem button key={m} className={classes.nested} component={Link} to={Object.values(m).toString()}>
+                        <ListItem button key={Object.keys(m).toString()} className={classes.nested} component={Link} to={Object.values(m).toString()}>
                             {Object.keys(m).toString() !== menu_name[0] && <ListItemText primary={<Typography
-                                className={[classes.menuTxt, classes.subMenuTxt]}>{Object.keys(m).toString()}</Typography>}/>}
+                                className={clsx([classes.menuTxt, classes.subMenuTxt])}>{Object.keys(m).toString()}</Typography>}/>}
                         </ListItem>
                     ))}
                 </List>

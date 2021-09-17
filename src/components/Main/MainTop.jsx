@@ -41,7 +41,7 @@ const MainTop = () => {
                     <Typography display="inline" align="center" variant="h4" className={classes.mainMessage}>리본에<br/>오신걸 환영합니다</Typography>
                 </Grid>
                 <Grid item xs={12} md={12} className={classes.mainImgGrid}>
-                    <img className={classes.mainImg} src="/img/mainImg2.jpg" />
+                    <img className={classes.mainImg} src="/img/mainImg2.jpg" alt="main_img"/>
                 </Grid>
             </Grid>
     );

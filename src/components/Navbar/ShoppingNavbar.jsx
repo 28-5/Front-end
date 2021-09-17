@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -16,18 +15,23 @@ import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import EmailIcon from "@material-ui/icons/Email";
-import TextField from "@material-ui/core/TextField";
 import Input from "@material-ui/core/Input";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
+        marginLeft: theme.spacing(0),
+        paddingLeft:0,
     },
     appBar:{
         backgroundColor:"#fff",
         color: "black",
-        boxShadow: "none"
+        boxShadow: "none",
+    },
+    toolBar:{
+        paddingLeft:0,
+
     },
     menuContainer:{
         [theme.breakpoints.down('md')]: {
@@ -35,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     menuButton: {
-        marginRight: theme.spacing(3.5),
+        paddingLeft: 0,
+        marginRight: theme.spacing(2),
 
     },
     title: {
@@ -56,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(0),
+            marginLeft: theme.spacing(2),
             width: 'auto',
         },
         [theme.breakpoints.down('md')]: {
@@ -69,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     searchInput:{
+        width:"18rem",
         [theme.breakpoints.down('md')]: {
             width: "20rem"
         },
@@ -107,26 +113,15 @@ const useStyles = makeStyles((theme) => ({
 const ShoppingNavbar = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
     const [isButtonOpened, setisButtonOpened] = useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
     const handleMenuClose = () => {
         setAnchorEl(null);
-    };
-
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
     };
 
     const handleClick = (event) => {
@@ -140,41 +135,35 @@ const ShoppingNavbar = () => {
     return (
         <Container maxWidth="lg" className={classes.grow}>
             <AppBar position="static" className={classes.appBar}>
-                <Toolbar>
+                <Toolbar className={classes.toolBar}>
                         <div className={classes.menuContainer}>
                             <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} onClick={handleClick}>
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     전체 카테고리
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} onClick={handleClick}>
+                            <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClose={handleClose}>
+                                <MenuItem onClick={handleMenuClose}>베스트</MenuItem>
+                                <MenuItem onClick={handleMenuClose}>주문조회</MenuItem>
+                                <MenuItem onClick={handleMenuClose}>마이페이지</MenuItem>
+                                <MenuItem onClick={handleMenuClose}>공지사항</MenuItem>
+                            </Menu>
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     베스트
                                 </Typography>
                             </Button>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={isButtonOpened}
-                                keepMounted
-                                open={Boolean(isButtonOpened)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
-                                <MenuItem onClick={handleClose}>Logout</MenuItem>
-                            </Menu>
-
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} onClick={handleClick}>
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     주문조회
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} onClick={handleClick}>
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     마이페이지
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} onClick={handleClick}>
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/notification">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     공지사항
                                 </Typography>

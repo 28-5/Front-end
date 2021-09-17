@@ -12,13 +12,12 @@ const useStyles = makeStyles((theme) => ({
     },
 
     partnerImg:{
-        width: "80%"
+        width: "94%"
     },
     bodyTitle:{
         fontFamily: "twayair",
         textAlign:"center",
         fontSize: 40,
-        paddingBottom: "40px",
     },
 }));
 
@@ -30,7 +29,7 @@ const Partners = () => {
             <Grid item xs={12} md={12}>
                 <Typography variant="h3" className={classes.bodyTitle}>제휴 업체</Typography>
             </Grid>
-            <img src="./img/partners.jpg" className={classes.partnerImg}/>
+            <img src="./img/partners.jpg" className={classes.partnerImg} alt="partners"/>
         </Grid>
     );
 

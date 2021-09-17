@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
             outline: '1px solid slategrey'
         }
     },
-
     title:{
         fontSize: "50px",
         fontWeight:"bold",

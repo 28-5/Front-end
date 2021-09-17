@@ -2,7 +2,8 @@ import React from "react";
 import Typography from '@material-ui/core/Typography';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Grid from "@material-ui/core/Grid";
-import ProductCardList from "../Product/ProductCardList";
+import ProductCardList from "../Shopping/Product/ProductCardList";
+import ProductData from "../Shopping/Product/ProductData";
 
 const useStyles = makeStyles((theme) => ({
     mainContainer:{
@@ -33,7 +34,7 @@ const MainBody = () => {
             <Grid item xs={12} md={12}>
                 <Typography variant="h3" className={classes.bodyTitle}>베스트 상품</Typography>
             </Grid>
-            <ProductCardList/>
+            <ProductCardList data={ProductData}/>
         </Grid>
     );
 };

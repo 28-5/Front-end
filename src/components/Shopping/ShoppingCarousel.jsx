@@ -10,7 +10,6 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
     carouselSlider:{
         top: -20,
-        zIndex: -1
     },
     wrap:{
         position:"relative",
@@ -39,14 +38,13 @@ const useStyles = makeStyles((theme) => ({
     nextArrow:{
         position:"relative",
         bottom: "11.1rem",
-        float:"right"
+        float:"right",
     },
 
     prevArrow:{
         position:"relative",
         top: "11.1rem",
         zIndex: "1"
-        // float:"left"
     }
 
 }))
@@ -76,7 +74,7 @@ const ShoppingCarousel = () => {
         fade: true,
         infinite: true,
         speed: 500,
-        slidesToScroll: 5,
+        slidesToScroll: 1,
         autoplay: true,
         nextArrow: <NextArrow type="next"/>,
         prevArrow: <PrevArrow type="prev"/>,
@@ -85,22 +83,22 @@ const ShoppingCarousel = () => {
     return (
             <Slider {...settings} className={classes.carouselSlider}>
                 <div className={classes.wrap}>
-                    <img src="img/carousel/img1.jpg" className={classes.sliderImg}/>
+                    <img src="img/carousel/img1.jpg" className={classes.sliderImg} alt="slider1"/>
                     <div className={classes.imgTxt}>
                         <Typography>hiii</Typography>
                     </div>
                 </div>
                 <div>
-                    <img src="img/carousel/img2.jpg" className={classes.sliderImg}/>
+                    <img src="img/carousel/img2.jpg" className={classes.sliderImg} alt="slider2"/>
                 </div>
                 <div>
-                    <img src="img/carousel/img3.jpg" className={classes.sliderImg}/>
+                    <img src="img/carousel/img3.jpg" className={classes.sliderImg} alt="slider3"/>
                 </div>
                 <div>
-                    <img src="img/carousel/img4.jpg" className={classes.sliderImg}/>
+                    <img src="img/carousel/img4.jpg" className={classes.sliderImg} alt="slider4"/>
                 </div>
                 <div>
-                    <img src="img/carousel/img5.jpg" className={classes.sliderImg}/>
+                    <img src="img/carousel/img5.jpg" className={classes.sliderImg} alt="slider5"/>
                 </div>
             </Slider>
 
