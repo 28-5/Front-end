@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     title:{
-        fontSize: "50px",
+        fontSize: "40px",
         fontWeight:"bold",
         paddingTop: "10px",
-        paddingBottom: "10px",
+        paddingBottom: "20px",
         color: "#84bc44",
         textDecoration:"none",
     },
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
     listTxt:{
         fontFamily: "twayair",
+        color:"black"
     },
     list:{
         padding: "20px 0px"

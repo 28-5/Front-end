@@ -1,6 +1,6 @@
 import ShoppingTopNav from "../ShoppingTopNav";
 import ShoppingNavbar from "../../Navbar/ShoppingNavbar";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import Container from "@material-ui/core/Container";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Breadcrumb from "./Breadcrumb";
@@ -11,7 +11,8 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AmountSelect from "./AmountSelect";
 import Cart from "../Cart/Cart";
-import CartModal from "../Cart/CartModal";
+import Footer from "../../Main/Footer";
+import CartContext from "../../store/Cart-context";
 
 const useStyles = makeStyles((theme) => ({
     shoppingMainSection:{
@@ -33,22 +34,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DetailedProduct = ({match}) => {
+const DetailedProduct = (props) => {
     const classes = useStyles();
+    const cartCtx = useContext(CartContext);
     const data = ProductData;
-    const productNumer = match.params.productNum;
+    const productNumer = props.match.params.productNum;
     const productInfo = data.filter(d => {
         return d.product_id === productNumer;
     });
-
-    const [cartIsShown, setCartIsShown] = useState(false);
-
-    const showCartHandler = ()=>{
-        setCartIsShown(true);
+    console.log("product info: " + productInfo[0]);
+    const addToCartHandler = amount =>{
+        cartCtx.addItem({
+            id: productInfo[0].product_id,
+            title: productInfo[0].title,
+            price: productInfo[0].price,
+            amount: amount,
+        });
     };
-    const hideCartHandler = ()=>{
-        setCartIsShown(false);
-    };
+
+
+    console.log(productInfo);
 
     return(
         <section className={classes.shoppingMainSection}>
@@ -71,10 +76,13 @@ const DetailedProduct = ({match}) => {
                         <AmountSelect/>
                     </Grid>
                         <Grid item sm={12} md={6} >
-                            <Button variant="contained" color="primary" onClick={showCartHandler} className={classes.button} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
+                            <Button variant="contained" color="primary" onClick={props.showCart} className={classes.button} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
                                 장바구니
                             </Button>
-                            {cartIsShown && <Cart onClose={hideCartHandler} isOpen={cartIsShown} data={productInfo[0]}/>}
+                            <Button variant="contained" color="secondary" onClick={addToCartHandler} className={classes.button} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
+                                추가테스트
+                            </Button>
+                            {props.isShown && <Cart onClose={props.closeCart} isOpen={props.isShown} data={productInfo[0]}/>}
                         </Grid>
                         <Grid item sm={12} md={6} >
                             <Button variant="contained" color="primary" className={classes.button} startIcon={<LocalShippingIcon>send</LocalShippingIcon>}                        >
@@ -83,6 +91,7 @@ const DetailedProduct = ({match}) => {
                         </Grid>
                 </Grid>
             </Container>
+            <Footer />
         </section>
     );
 }

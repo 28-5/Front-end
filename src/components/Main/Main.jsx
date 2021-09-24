@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import MainTop from "./MainTop";
 import MainBody from "./MainBody";
 import Partners from "./Partners";
+import Footer from "./Footer";
 
 const Main = () => {
     return(
@@ -13,7 +14,7 @@ const Main = () => {
           <MainTop />
           <MainBody/>
           <Partners/>
-
+          <Footer />
 
     </>
     );

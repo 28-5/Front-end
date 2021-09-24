@@ -14,16 +14,19 @@ const useStyles = makeStyles((theme) => ({
     },
     bodyTitle:{
         fontFamily: "twayair",
-        textAlign:"center",
+        textAlign:"left",
+        paddingTop: 20,
         paddingBottom: "40px",
-        fontSize: 40,
-        borderBottom: "1px solid orange",
+        fontSize: 25,
+        // borderBottom: "1px solid",
         backgroundColor:"#fff"
         // width: 800,
     },
-    root: {
-        maxWidth: 345,
-    },
+    line_dec:{
+        width: "30px",
+        height: "5px",
+        backgroundColor: "#84bc44",
+    }
 
 }));
 const MainBody = () => {
@@ -32,6 +35,7 @@ const MainBody = () => {
     return(
         <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.mainContainer}>
             <Grid item xs={12} md={12}>
+                <div className={classes.line_dec} />
                 <Typography variant="h3" className={classes.bodyTitle}>베스트 상품</Typography>
             </Grid>
             <ProductCardList data={ProductData}/>

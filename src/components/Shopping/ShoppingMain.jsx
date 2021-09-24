@@ -3,11 +3,12 @@ import ShoppingCarousel from "./ShoppingCarousel";
 import ShoppingNavbar from "../Navbar/ShoppingNavbar";
 import ProductCardList from "./Product/ProductCardList";
 import Grid from "@material-ui/core/Grid";
-import React from "react";
+import React, {useState} from "react";
 import Container from "@material-ui/core/Container";
 import productData from "./Product/ProductData";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
+import Footer from "../Main/Footer";
 
 const useStyles = makeStyles((theme) => ({
     shoppingMainSection:{
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ShoppingMain = ({match}) => {
     const classes = useStyles();
+
     return(
         <section className={classes.shoppingMainSection}>
             <ShoppingTopNav/>
@@ -33,6 +35,7 @@ const ShoppingMain = ({match}) => {
                     <ProductCardList data={productData}/>
                 </Grid>
             </Container>
+            <Footer />
         </section>
     );
 };

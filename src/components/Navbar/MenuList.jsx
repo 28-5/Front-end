@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
     menuTxt:{
         fontFamily: "twayair",
+        color: "black",
     },
     subMenuTxt:{
         color:"grey"

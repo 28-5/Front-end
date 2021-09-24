@@ -5,10 +5,10 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
     mainContainer:{
-        paddingLeft:"200px",
+        paddingLeft:"260px",
         paddingTop: "50px",
         fontFamily: "twayair",
-        backgroundColor:"#fff"
+        backgroundColor: "#fff",
     },
 
     partnerImg:{
@@ -16,9 +16,19 @@ const useStyles = makeStyles((theme) => ({
     },
     bodyTitle:{
         fontFamily: "twayair",
-        textAlign:"center",
-        fontSize: 40,
+        textAlign:"left",
+        paddingTop: 20,
+        paddingBottom: "40px",
+        fontSize: 25,
+        // borderBottom: "1px solid",
+        backgroundColor:"#fff"
+        // width: 800,
     },
+    line_dec:{
+        width: "30px",
+        height: "5px",
+        backgroundColor: "#84bc44",
+    }
 }));
 
 const Partners = () => {
@@ -27,9 +37,10 @@ const Partners = () => {
     return (
         <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.mainContainer}>
             <Grid item xs={12} md={12}>
+                <div className={classes.line_dec} />
                 <Typography variant="h3" className={classes.bodyTitle}>제휴 업체</Typography>
-            </Grid>
             <img src="./img/partners.jpg" className={classes.partnerImg} alt="partners"/>
+            </Grid>
         </Grid>
     );
 
