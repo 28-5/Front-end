@@ -2,19 +2,30 @@ import CartModal from "./CartModal";
 import React, {useContext} from "react";
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom";
 import CartContext from "../../store/Cart-context";
+import CartItems from "./CartItems";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
-        width: "50%",
-        height: "75%",
+        width: "60%",
+        height: "80%",
         borderRadius: 20,
         backgroundColor: "#fff",
         boxShadow: "0px 15px 30px #84bc44",
-        // boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        overflow: "auto",
+
+        [theme.breakpoints.down('md')]: {
+            width: "40%",
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: "60%",
+            height: "60%",
+            top: 30,
+            left: 300,
+        },
+
     },
     header:{
       margin: "auto",
@@ -33,96 +44,16 @@ const useStyles = makeStyles((theme) => ({
     action:{
         fontSize: 20,
         fontFamily: "twayair",
-        fontWeight: 600,
+        fontWeight: 500,
         color: "#e44c4c",
         cursor: "pointer",
         borderBottom: "1px solid #E44C4C",
-    },
-    cart_Items:{
-        margin: "auto",
-        width: "90%",
-        height: "30%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    image_box:{
-        width: "15%",
-        textAlign: "center",
-    },
-    cartImg:{
-        height: "120px"
-    },
-    about:{
-        height: "100%",
-    },
-    title:{
-        paddingTop: "5px",
-        lineHeight: "10px",
-        fontSize: "32px",
-        fontFamily: "twayair",
-        fontWeight: "800",
-        color: "#202020",
-    },
-    subtitle:{
-        lineHeight: "10px",
-        fontSize: "18px",
-        fontFamily: "twayair",
-        fontWeight: "600",
-        color: "#909090",
-    },
-    counter:{
-        width: "15%",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    btn:{
-        width: "40px",
-        height: "40px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "50%",
-        backgroundColor: "#d9d9d9",
-        fontSize: "20px",
-        fontFamily: "twayair",
-        fontWeight: 900,
-        color: "#202020",
-        cursor: "pointer",
-    },
-    count:{
-        fontSize: "20px",
-        fontFamily: "twayair",
-        fontWeight: 900,
-        color: "#202020",
-    },
-    prices:{
-        height: "100%",
-        textAlign: "right",
-    },
-    amount:{
-        paddingTop: "20px",
-        fontSize: "26px",
-        fontFamily: "twayair",
-        fontWeight: 800,
-        color: "#202020",
-    },
-    save:{
-        paddingTop: "5px",
-        fontSize: "14px",
-        fontFamily: "twayair",
-        fontWeight: 600,
-        color: "#1687d9",
-        cursor: "pointer",
-    },
-    remove:{
-        paddingTop: "5px",
-        fontSize: "14px",
-        fontFamily: "twayair",
-        fontWeight: 600,
-        color: "#E44C4C",
-        cursor: "pointer",
+        [theme.breakpoints.down('md')]: {
+            fontSize: 18,
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 18,
+        },
     },
     hr:{
         width: "66%",
@@ -130,36 +61,61 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "5%",
     },
     checkout:{
-        width: "28%",
+        width: "36%",
         float: "right",
         marginRight: "5%",
     },
     total:{
+        paddingTop:5,
         width: "100%",
         display:"flex",
         justifyContent: "space-between",
+        [theme.breakpoints.down('md')]: {
+            width: "100%",
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: "50px",
+        },
     },
     subtotal:{
         fontSize: "22px",
         fontFamily: "twayair",
         fontWeight: 700,
         color: "#202020",
+        [theme.breakpoints.down('md')]: {
+            fontSize: "16px",
+        },
     },
     items:{
-        fontSize: "16px",
+        paddingTop:10,
+        fontSize: "18px",
         fontFamily: "twayair",
         fontWeight: 500,
         color: "#909090",
         lineHeight: "10px",
+        [theme.breakpoints.down('md')]: {
+            fontSize: "16px",
+        },
+        [theme.breakpoints.down('sm')]: {
+            // height: "50px",
+            fontSize: "16px",
+            lineHeight: 1
+        },
     },
     total_amount:{
         fontSize: "36px",
         fontFamily: "twayair",
         fontWeight: 900,
         color: "#202020",
+        [theme.breakpoints.down('md')]: {
+            fontSize: "24px",
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: "24px",
+        },
     },
     button:{
-        marginTop: "5px",
+        marginTop: "15px",
         width: "100%",
         height: "40px",
         border:"none",
@@ -170,15 +126,19 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "twayair",
         fontWeight: 600,
         color: "#202020",
+        [theme.breakpoints.down('md')]: {
+            // height: "90px",
+        },
+        [theme.breakpoints.down('sm')]: {
+            height: "50px",
+            marginTop: 50
+        },
     },
-
-
 }));
 
 const getModalStyle = () =>  {
     const top = 50 ;
     const left = 50;
-
     return {
         top: `${top}%`,
         left: `${left}%`,
@@ -196,69 +156,40 @@ const Cart = props => {
             ...item, amount:1
         });
     };
+    const cartItemRemoveHandler = id => {
+        cartCtx.removeItem(id);
+    };
 
-    const cartItems =
-            cartCtx.items.map(item =>
-                <div className={classes.cart_Items}>
-                    <div className={classes.image_box}>
-                        <img src={props.data.img} className={classes.cartImg}/>
-                    </div>
-                    <div className={classes.about}>
-                        <h1 className={classes.title}>{props.data.title}</h1>
-                        <h3 className={classes.subtitle}>{props.data.price}</h3>
-                    </div>
-                    <div className={classes.counter}>
-                        <div className={classes.btn}>+</div>
-                        <div className={classes.count}>2</div>
-                        <div className={classes.btn}>-</div>
-                    </div>
-                    <div className={classes.prices}>
-                        <div className={classes.amount}>{item.price}</div>
-                        <div className={classes.save}><u>나중에 주문하기</u></div>
-                        <div className={classes.remove}><u>제거</u></div>
-                    </div>
-                </div>
-                );
-// <div className={classes.cart_Items}>
-//             <div className={classes.image_box}>
-//                 <img src={props.data.img} className={classes.cartImg}/>
-//             </div>
-//             <div className={classes.about}>
-//                 <h1 className={classes.title}>{props.data.title}</h1>
-//                 <h3 className={classes.subtitle}>{props.data.price}</h3>
-//             </div>
-//             <div className={classes.counter}>
-//                 <div className={classes.btn}>+</div>
-//                 <div className={classes.count}>2</div>
-//                 <div className={classes.btn}>-</div>
-//             </div>
-//             <div className={classes.prices}>
-//                 <div className={classes.amount}>$2.99</div>
-//                 <div className={classes.save}><u>나중에 주문하기</u></div>
-//                 <div className={classes.remove}><u>제거</u></div>
-//             </div>
-//         </div>;
-
+    const cartItemAllRemoveHandler = id =>{
+        const findIndex = cartCtx.items.findIndex(item => item.id === id);
+        const foundItemLength = cartCtx.items[findIndex].amount;
+        for(var a = 0; a < foundItemLength ; a++){
+            cartCtx.removeItem(id);
+        }
+    };
+    const cartCleaner = () =>{
+        cartCtx.cleanCart();
+    };
     return(
         <>
             <CartModal isOpen={props.isOpen} onClose={props.onClose}>
                 <div style={modalStyle} className={classes.paper}>
                     <div className={classes.header}>
                         <Typography variant={"h3"} className={classes.heading}>장바구니</Typography>
-                        <Typography variant={"h5"} className={classes.action}>모두 지우기</Typography>
+                        {hasItems && <Typography variant={"h5"} className={classes.action} onClick={cartCleaner}>모두 지우기</Typography>}
                     </div>
-                    {cartItems}
+                    {<CartItems data={cartCtx} onAdd={cartItemAddHandler} onRemove={cartItemRemoveHandler} removeItem={cartItemAllRemoveHandler}/>}
 
                     <hr className={classes.hr}/>
                         <div className={classes.checkout}>
                             <div className={classes.total}>
                                 <div>
                                     <div className={classes.subtotal}>전체 금액</div>
-                                    <div className={classes.items}>2 items</div>
+                                    <div className={classes.items}>전체수량: {props.numberOfItems}</div>
                                 </div>
-                                <div className={classes.total_amount}>$6.18</div>
+                                <div className={classes.total_amount}>{cartCtx.totalAmount.toLocaleString('ko-KR')}</div>
                             </div>
-                            <button className={classes.button}>주문하기</button>
+                            {hasItems && <button className={classes.button}>주문하기</button>}
                         </div>
                 </div>
             </CartModal>

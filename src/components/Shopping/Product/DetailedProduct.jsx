@@ -13,83 +13,167 @@ import AmountSelect from "./AmountSelect";
 import Cart from "../Cart/Cart";
 import Footer from "../../Main/Footer";
 import CartContext from "../../store/Cart-context";
+import Typography from "@material-ui/core/Typography";
+import DetailedProductContent from "./DetailedProductContent";
 
 const useStyles = makeStyles((theme) => ({
     shoppingMainSection:{
         backgroundColor: "#fff"
     },
-    shoppingMainContainer:{
-        border: "1px solid black"
-    },
-    bestTitle:{
-        textAlign:"center",
-        paddingTop: "40px"
+    gridContainer:{
+      marginTop: 20
     },
     productImg:{
-        width: 500
+        width: "500px",
+        height: "500px",
     },
-    gridDelivery:{
-        display:"inline"
+    detailedProductInfoTitleDiv:{
+        // marginBottom: 90
+    },
+    infoTitle:{
+        fontSize: "24px",
+        fontFamily: "twayair",
+        fontWeight: 700,
+        color: "#222222",
+    },
+    infoStar:{
+        fontSize: 20,
+        marginLeft: -4,
+        color: "#222222",
+    },
+    infoPrice:{
+        paddingTop: 20,
+        fontSize: "40px",
+        fontFamily: "twayair",
+        fontWeight: 400,
+        color: "#222222",
+    },
+    cardTitle:{
+        fontSize: "20px",
+        fontFamily: "twayair",
+        fontWeight: 400,
+        display:"inline-block",
+        color: "#222222",
+    },
+    cardPrice:{
+        fontSize: "20px",
+        fontFamily: "twayair",
+        fontWeight: 400,
+        color: "#ff5b59",
+        display:"inline-block",
+        paddingLeft: 75,
+    },
+    deliveryTitle:{
+        color: "#222222",
+        fontSize: "18px",
+        fontFamily: "twayair",
+        fontWeight: 400,
+        display:"inline-block",
+    },
+    deliveryDate:{
+        color: "#222222",
+        fontSize: "18px",
+        paddingLeft: 100,
+        fontFamily: "twayair",
+        fontWeight: 400,
+        display:"inline-block",
+    },
+    deliveryFee:{
+        paddingTop: 15,
+        color: "#222222",
+        fontSize: "18px",
+        paddingLeft: 115,
+        fontFamily: "twayair",
+        fontWeight: 400,
+        display:"inline-block",
+    },
+    btnDiv:{
+      marginTop: 160,
+      textAlign: "center",
+
+      [theme.breakpoints.down('sm')]: {
+        marginTop: 100,
+        },
+    },
+    cartBtn:{
+        width: "50%",
+        [theme.breakpoints.down('sm')]: {
+            width: "100%",
+        },
+    },
+    buyBtn:{
+        width: "50%",
+        [theme.breakpoints.down('sm')]: {
+            width: "100%",
+        },
     },
 }));
-
+function stringNumberToNumber(num){
+    return parseInt(num.replace(/,/g , ''));
+}
 
 const DetailedProduct = (props) => {
     const classes = useStyles();
     const cartCtx = useContext(CartContext);
+    const [selectedAmount, setSelectedAmount]   =   useState(1);
+
+    //Database 연결해야 하는 부분?
     const data = ProductData;
     const productNumer = props.match.params.productNum;
     const productInfo = data.filter(d => {
         return d.product_id === productNumer;
     });
-    console.log("product info: " + productInfo[0]);
     const addToCartHandler = amount =>{
         cartCtx.addItem({
             id: productInfo[0].product_id,
             title: productInfo[0].title,
-            price: productInfo[0].price,
-            amount: amount,
+            price: stringNumberToNumber(productInfo[0].price),
+            img: productInfo[0].img,
+            amount: selectedAmount,
         });
     };
-
-
-    console.log(productInfo);
 
     return(
         <section className={classes.shoppingMainSection}>
             <ShoppingTopNav/>
-            <Container maxWidth="lg" className={classes.shoppingMainContainer}>
+            <Container maxWidth="lg">
                 <ShoppingNavbar />
                 <Breadcrumb showPath={productNumer} />
-                <Grid container direction="row" justifyContent="center" alignItems="center" >
+                <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridContainer}>
                     <Grid item sm={12} md={6} >
                         <img src={productInfo[0].img} className={classes.productImg} alt="productImg"/>
                     </Grid>
-                    <Grid item sm={12} md={6} >
-                        <div>
-                            <h1>{productInfo[0].title}</h1>
-                            <h1>{productInfo[0].price}</h1>
-                            <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum.</span>
+                    <Grid item sm={12} md={6}>
+                        <div className={classes.detailedProductInfoTitleDiv}>
+                            <Typography variant="h5" className={classes.infoTitle}>{productInfo[0].title}</Typography>
+                            <Typography variant="h5" className={classes.infoStar}>{productInfo[0].star}</Typography>
+                        {/*<hr className={classes.hr}/>*/}
+                            <Typography variant="h5" className={classes.infoPrice}>{productInfo[0].price} 원</Typography>
+                        <hr className={classes.hr}/>
                         </div>
-                            <h1 className={classes.gridDelivery}>배송정보 </h1>
-                            <h3 className={classes.gridDelivery}>9월 20일 도착 예정</h3>
-                        <AmountSelect/>
+                        <Typography variant="h5" className={classes.cardTitle}>카드혜택가</Typography>
+                        <Typography variant="h5" className={classes.cardPrice}>{(stringNumberToNumber(productInfo[0].price)*0.9).toLocaleString('ko-KR')} 원</Typography>
+                        <hr className={classes.hr}/>
+
+                        <Typography variant="h5" className={classes.deliveryTitle}>배송정보</Typography>
+                        <Typography variant="h5" className={classes.deliveryDate}>9월 20일 도착 예정</Typography><br/>
+                        <Typography variant="h5" className={classes.deliveryTitle}>배송비</Typography>
+                        <Typography variant="h5" className={classes.deliveryFee}>배송무료</Typography>
+
+                        <hr className={classes.hr}/>
+                        <AmountSelect setAmount={setSelectedAmount} minimumAmount={selectedAmount}/>
+                        <div className={classes.btnDiv}>
+                        <Button variant="contained" color="secondary" onClick={addToCartHandler} className={classes.cartBtn} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
+                                장바구니 담기
+                        </Button>
+                        <Button variant="contained" color="primary" className={classes.buyBtn} startIcon={<LocalShippingIcon>send</LocalShippingIcon>}                        >
+                                구매하기
+                        </Button>
+                        </div>
                     </Grid>
-                        <Grid item sm={12} md={6} >
-                            <Button variant="contained" color="primary" onClick={props.showCart} className={classes.button} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
-                                장바구니
-                            </Button>
-                            <Button variant="contained" color="secondary" onClick={addToCartHandler} className={classes.button} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
-                                추가테스트
-                            </Button>
-                            {props.isShown && <Cart onClose={props.closeCart} isOpen={props.isShown} data={productInfo[0]}/>}
-                        </Grid>
-                        <Grid item sm={12} md={6} >
-                            <Button variant="contained" color="primary" className={classes.button} startIcon={<LocalShippingIcon>send</LocalShippingIcon>}                        >
-                                주문하기
-                            </Button>
-                        </Grid>
+                        {props.isShown && <Cart onClose={props.closeCart} isOpen={props.isShown} data={productInfo[0]}/>}
                 </Grid>
+                <DetailedProductContent/>
             </Container>
             <Footer />
         </section>

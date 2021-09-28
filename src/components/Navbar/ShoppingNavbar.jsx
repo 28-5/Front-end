@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,6 +17,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
 import {Link} from "react-router-dom";
+import Cart from "../Shopping/Cart/Cart";
+import CartContext from "../store/Cart-context";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     menuContainer:{
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display:"none",
         },
     },
@@ -78,6 +80,12 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('md')]: {
             width: "20rem"
         },
+        [theme.breakpoints.down('sm')]: {
+            width: "15rem"
+        },
+        [theme.breakpoints.down('xs')]: {
+            width: "9rem"
+        },
     },
 
     cartIcon:{
@@ -104,33 +112,59 @@ const useStyles = makeStyles((theme) => ({
 
     mobileMenu:{
         display: 'none',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display:"flex",
         },
     },
 }));
 
 const ShoppingNavbar = () => {
-    const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [isButtonOpened, setisButtonOpened] = useState(null);
+    const classes                                         = useStyles();
+    const cartCtx                                         = useContext(CartContext);
+    const [anchorEl, setAnchorEl]                         = useState(null);
+    const [mobileAnchorEl, setMobileAnchorEl]             = useState(null);
+    const [isButtonOpened, setisButtonOpened]             = useState(null);
+    const [isMobileButtonOpened, setisMobileButtonOpened] = useState(null);
+    const [cartIsShown, setCartIsShown]                   = useState(false);
+    const numberOfCartItems                               = cartCtx.items.reduce((curNum, item) => {
+        return curNum + item.amount;
+    }, 0);
 
+    const showCartHandler = ()=>{
+        setCartIsShown(true);
+    };
+    const hideCartHandler = ()=>{
+        setCartIsShown(false);
+    };
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
+    };
+    const mobileHandleProfileMenuOpen = (event) => {
+        setMobileAnchorEl(event.currentTarget);
     };
 
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+    const mobileHandleMenuClose = () => {
+        setMobileAnchorEl(null);
+    };
 
     const handleClick = (event) => {
         setisButtonOpened(event.currentTarget);
+    };
+    const mobileHandleClick = (event) => {
+        setisMobileButtonOpened(event.currentTarget);
     };
 
     const handleClose = () => {
         setisButtonOpened(null);
     };
+    const mobileHandleClose = () => {
+        setisMobileButtonOpened(null);
+    };
+
 
     return (
         <Container maxWidth="lg" className={classes.grow}>
@@ -169,25 +203,18 @@ const ShoppingNavbar = () => {
                                 </Typography>
                             </Button>
                         </div>
+
+                    {/*-----모바일-----*/}
                     <div className={classes.mobileMenu}>
-                        <IconButton
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
+                        <IconButton onClick={mobileHandleClick} color="inherit">
                             <MenuIcon className={classes.menuIcon}/>
                         </IconButton>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                        >
-                            <MenuItem onClick={handleMenuClose}>전체 카테고리</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>베스트</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>주문조회</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>마이페이지</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>공지사항</MenuItem>
+                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(isMobileButtonOpened)} onClose={mobileHandleClose}>
+                            <MenuItem onClick={mobileHandleMenuClose}>전체 카테고리</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}>베스트</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}>주문조회</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}>마이페이지</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}>공지사항</MenuItem>
                         </Menu>
                     </div>
                     <div className={classes.search}>
@@ -196,31 +223,18 @@ const ShoppingNavbar = () => {
                         </InputAdornment>)}/>
                     </div>
 
-
-
-
                     <div className={classes.grow} />
 
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
+                        <IconButton aria-label="show 4 new mails" color="inherit" onClick={showCartHandler}>
+                            <Badge badgeContent={numberOfCartItems} color="secondary">
                                 <ShoppingCartIcon className={classes.cartIcon} />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            edge="end"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
+                        <IconButton edge="end" onClick={handleProfileMenuOpen} color="inherit">
                             <AccountCircle className={classes.accountIcon}/>
                         </IconButton>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                        >
+                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMenuClose}>
                             <MenuItem onClick={handleMenuClose}>프로필 보기</MenuItem>
                             <MenuItem onClick={handleMenuClose}>개인정보 수정</MenuItem>
                             <MenuItem onClick={handleMenuClose}>로그아웃</MenuItem>
@@ -228,26 +242,23 @@ const ShoppingNavbar = () => {
                     </div>
 
                     <div className={classes.sectionMobile}>
-                        <IconButton
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
+                        <IconButton aria-label="show 4 new mails" color="inherit" onClick={showCartHandler}>
+                            <Badge badgeContent={numberOfCartItems} color="secondary">
+                                <ShoppingCartIcon className={classes.cartIcon} />
+                            </Badge>
+                        </IconButton>
+                        <IconButton onClick={mobileHandleProfileMenuOpen} color="inherit">
                             <MoreIcon />
                         </IconButton>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                        >
-                            <MenuItem onClick={handleMenuClose}>프로필 보기</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>개인정보 수정</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>로그아웃</MenuItem>
+                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(mobileAnchorEl)} onClose={mobileHandleMenuClose}>
+                            <MenuItem onClick={mobileHandleMenuClose}>프로필 보기</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}>개인정보 수정</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}>로그아웃</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>
             </AppBar>
+            {cartIsShown && <Cart onClose={hideCartHandler} isOpen={cartIsShown} numberOfItems={numberOfCartItems}/>}
         </Container>
     );
 }

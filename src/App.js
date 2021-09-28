@@ -4,7 +4,6 @@ import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
 import Join from "./components/Join/Join";
 import Dashboard from "./components/Admin/Dashboard";
-import ShoppingRouter from "./components/Shopping/ShoppingRouter";
 import ShoppingMain from "./components/Shopping/ShoppingMain";
 import DetailedProduct from "./components/Shopping/Product/DetailedProduct";
 import CartProvider from "./components/store/CartProvider";

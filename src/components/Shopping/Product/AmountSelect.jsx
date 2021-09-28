@@ -7,18 +7,25 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(1),
-        width: 300,
+        marginTop: 10,
+        width: "100%",
+        float:"right"
+    },
+    selectLabel:{
+        color: "#222222",
+        fontSize: "20px",
+        fontFamily: "twayair",
+        fontWeight: 400,
     },
 }));
 
 const AmountSelect = props =>{
     const classes = useStyles();
-    const [amount, setAmount] = useState('');
     const [open, setOpen] = useState(false);
 
     const handleChange = (event) => {
-        setAmount(event.target.value);
+        props.setAmount(event.target.value);
+        console.log(event.target.value);
     };
 
     const handleClose = () => {
@@ -29,18 +36,22 @@ const AmountSelect = props =>{
         setOpen(true);
     };
 
+    const valueHandler = event =>{
+        console.log(event.target.value);
+    };
+
 
     return(
         <div>
             <FormControl className={classes.formControl} required >
-                <InputLabel id="demo-controlled-open-select-label">수량을 선택해주세요</InputLabel>
+                <InputLabel id="demo-controlled-open-select-label" className={classes.selectLabel}>원하시는 만큼의 수량을 선택해주세요</InputLabel>
                 <Select
                     labelId="demo-controlled-open-select-label"
                     id="demo-controlled-open-select"
                     open={open}
                     onClose={handleClose}
                     onOpen={handleOpen}
-                    value={amount}
+                    value={props.minimumAmount}
                     onChange={handleChange}
                 >
                     <MenuItem value={1}>1</MenuItem>

@@ -36,7 +36,7 @@ const ShoppingTopNav = () => {
 
     return(
         <Container maxWidth="lg">
-            <Typography variant={"h1"} className={classes.title} align={"center"}><Link to="/" className={classes.titleLink}>REBORN</Link></Typography>
+            <Typography variant={"h1"} className={classes.title} align={"center"}><Link to="/shop" className={classes.titleLink}>REBORN</Link></Typography>
         </Container>
     );
 };
