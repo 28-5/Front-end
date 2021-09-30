@@ -12,7 +12,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AmountSelect from "./AmountSelect";
 import Cart from "../Cart/Cart";
 import Footer from "../../Main/Footer";
-import CartContext from "../../store/Cart-context";
+import CartContext from "../../../store/Cart-context";
 import Typography from "@material-ui/core/Typography";
 import DetailedProductContent from "./DetailedProductContent";
 

@@ -2,7 +2,7 @@ import CartModal from "./CartModal";
 import React, {useContext} from "react";
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from "@material-ui/core/styles";
-import CartContext from "../../store/Cart-context";
+import CartContext from "../../../store/Cart-context";
 import CartItems from "./CartItems";
 
 const useStyles = makeStyles((theme) => ({

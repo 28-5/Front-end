@@ -26,23 +26,16 @@ const AddressModal = props => {
 
     return(
         <>
-            <Modal
-                aria-labelledby="modal-title"
-                aria-describedby="modal-content"
-                className={classes.modal}
-                open={props.modalOpen}
-                onClose={props.closeModal}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-            >
+            <Modal aria-labelledby="modal-title" aria-describedby="modal-content" className={classes.modal}
+                open={props.modalOpen} onClose={props.closeModal} closeAfterTransition BackdropComponent={Backdrop}
+                BackdropProps={{timeout: 500,}}>
+
                 <Fade in={props.modalOpen}>
                     <div className={classes.paper}>
                         <h2 id="modal-title">주소찾기</h2>
-                        <p id="modal-content"><Address getAddress={props.getAddress}/></p>
-
+                        <p id="modal-content">
+                            <Address getAddress={props.getAddress} onClose={props.closeModal}/>
+                        </p>
                     </div>
                 </Fade>
             </Modal>

@@ -171,11 +171,10 @@ const useStyles = makeStyles((theme) => ({
 
 const CartItems = props => {
     const classes       = useStyles();
-    const totalAmount   = props.data.totalAmount;
     return props.data.items.map(item =>
         <div className={classes.cart_Items} key={item.id}>
             <div className={classes.image_box}>
-                <img src={item.img} className={classes.cartImg}/>
+                <img src={item.img} className={classes.cartImg} alt="product"/>
             </div>
             <div className={classes.about}>
                 <h1 className={classes.title}>{item.title}</h1>

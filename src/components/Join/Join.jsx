@@ -69,11 +69,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const Join = () => {
+const Join = ({history}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [IsModalOpen, setModalOpen] = useState(false);
-    const [address, setAddress] = useState('주소');
+    const [userEmail, setUserEmail]   = useState(null);
+    const [userPass, setUserPass]   = useState(null);
+    const [userName, setUserName]   = useState(null);
+    const [userPhoneNum, setUserPhoneNum]   = useState(null);
+    const [userAddress, setUserAddress] = useState('주소');
 
     const handleClose = () => {
         setOpen(false);
@@ -92,31 +96,45 @@ const Join = () => {
     const modalCloseHandler = () => {
         setModalOpen(false);
     };
+    const signupEmailHandler = event =>{
+        setUserEmail(event.target.value);
+    };
+    const signupPassHandler = event =>{
+        setUserPass(event.target.value);
+    };
+    const signupNameHandler = event =>{
+        setUserName(event.target.value);
+    };
+    const signupPhoneNumHandler = event =>{
+        setUserPhoneNum(event.target.value);
+    };
 
-    const addressHandler = props =>{
-        setAddress(props);
+    const signupAddressHandler = props =>{
+        setUserAddress(props);
     };
 
 
 
     const fetchJoinInfo = (event) =>{
         event.preventDefault();
-        console.log("email: "+ event.target.userEmail.value);
-        console.log("pass: " + event.target.userPass.value);
-        console.log("name: " + event.target.userName.value);
-        console.log("phone: " + event.target.userPhone.value);
-        console.log("address: " + address);
         axios.post("/member/register", {
-            email : event.target.userEmail.value,
-            pass: event.target.userPass.value,
-            name: event.target.userName.value,
-            phone: event.target.userPhone.value,
-            address: event.target.userAddr.value,
+            email : userEmail,
+            pass: userPass,
+            name: userName,
+            phone: userPhoneNum,
+            address: userAddress,
         }).then(res => {
             console.log("Post success! + res.data: " + res.data);
         }).catch(err => {
             console.log("Login Failed");
+            console.log(userEmail);
+            console.log(userPass);
+            console.log(userName);
+            console.log(userPhoneNum);
+            console.log(userAddress);
             handleToggle();
+           alert("메인으로!")
+            history.push("/main");
         });
     }
 
@@ -129,14 +147,14 @@ const Join = () => {
             <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.joinBox}>
                 <form onSubmit={fetchJoinInfo}>
                     <Grid item xs={12} >
-                        <Input type="text" name="userEmail" placeholder="이메일"
+                        <Input type="email" name="userEmail" placeholder="이메일" onChange={signupEmailHandler}
                                startAdornment={( <InputAdornment position="start">
                                    <EmailIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="password" name="userPass" placeholder="비밀번호"
+                        <Input type="password" name="userPass" placeholder="비밀번호" onChange={signupPassHandler}
                                startAdornment={( <InputAdornment position="start">
                                    <LockIcon />
                                </InputAdornment>)}
@@ -150,28 +168,28 @@ const Join = () => {
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="text" name="userName" placeholder="이름"
+                        <Input type="text" name="userName" placeholder="이름" onChange={signupNameHandler}
                                startAdornment={( <InputAdornment position="start">
                                    <AssignmentIndIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="tel" name="userPhone" placeholder="휴대폰번호"
+                        <Input type="tel" name="userPhone" placeholder="휴대폰번호" onChange={signupPhoneNumHandler}
                                startAdornment={( <InputAdornment position="start">
                                    <PhoneIphoneIcon />
                                </InputAdornment>)}
                                className={classes.joinInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                        <Input type="text" name="userAddr" placeholder={address}
+                        <Input type="text" name="userAddr" placeholder={userAddress}
                                startAdornment={( <InputAdornment position="start">
                                    <HomeIcon />
                                </InputAdornment>)}
-                               disabled="true"
+                               disabled={true}
                                className={classes.addressInput}/>
                         <Button color="secondary" variant="outlined" className={classes.addressBtn} onClick={modalOpenHandler}>주소찾기</Button>
-                        {IsModalOpen && <AddressModal modalOpen={IsModalOpen} closeModal={modalCloseHandler} getAddress={addressHandler}/>}
+                        {IsModalOpen && <AddressModal modalOpen={IsModalOpen} closeModal={modalCloseHandler} getAddress={signupAddressHandler}/>}
                     </Grid>
                     <Grid item xs={12}>
                         <Button type="submit" className={classes.joinBtn} >회원가입</Button>

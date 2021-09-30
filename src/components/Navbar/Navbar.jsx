@@ -29,10 +29,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     title:{
-        fontSize: "40px",
+        fontSize: "30px",
         fontWeight:"bold",
-        paddingTop: "10px",
-        paddingBottom: "20px",
+        paddingTop: "21px",
+        paddingBottom: "21px",
         color: "#84bc44",
         textDecoration:"none",
     },
@@ -79,19 +79,25 @@ export default function Navbar() {
     const classes = useStyles();
 
     const menu1 = [
-        {소개: "/business"},
-        {개발팀: "/team"},
-        {사업소개: "/business"},
-        {토큰메뉴얼: "/tokenManual"},
+        {소개: "/introduction"},
+        {회사: "/introduction"},
+        {팀: "/introduction/team"},
+        {사업: "/introduction/business"},
+        {토큰메뉴얼: "/introduction/manual"},
     ];
     const menu2 = [
         {쇼핑하기: "/shop"}
         ];
     const menu3 = [
-        {공지사항: "/notification"},
+        {판매등록: "/service/request"},
+        {서비스신청: "/service/request"},
+        ];
+    const menu4 = [
+        {"공지 및 문의": "/notice"},
+        {공지사항: "/notice"},
         {QnA: "/qna"},
-        {질문등록: "/ask"},
-        {자주묻는질문: "/fnq"},
+        {질문등록: "/qna/write"},
+        {자주묻는질문: "/faq"},
     ];
 
 
@@ -112,6 +118,9 @@ export default function Navbar() {
                 <Divider />
                 <List className={classes.list}>
                     <MenuList menu={menu1} />
+                </List>
+                <List className={classes.list}>
+                    <MenuList menu={menu4}/>
                 </List>
                 <List className={classes.list}>
                     <MenuList menu={menu2}/>

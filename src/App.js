@@ -6,11 +6,22 @@ import Join from "./components/Join/Join";
 import Dashboard from "./components/Admin/Dashboard";
 import ShoppingMain from "./components/Shopping/ShoppingMain";
 import DetailedProduct from "./components/Shopping/Product/DetailedProduct";
-import CartProvider from "./components/store/CartProvider";
+import CartProvider from "./store/CartProvider";
+import Introduction from "./components/Introduction/Introduction";
+import Team from "./components/Introduction/Team";
+import Business from "./components/Introduction/Business";
+import Manual from "./components/Introduction/Manual";
+import ProductRegistrationForm from "./components/Shopping/Product_Registration/ProductRegistrationForm";
+import Notice from "./components/Board/Notice";
+import QnA from "./components/Board/QnA";
+import FaQ from "./components/Board/FaQ";
+import QnAForm from "./components/Board/QnAForm";
+import {BoardDataUse} from "./components/Board/BoardDataUse";
 
 
 function App() {
     const [cartIsShown, setCartIsShown] = useState(false);
+    const [noticeList, qnaList]       = BoardDataUse([]);
 
     const showCartHandler = ()=>{
         setCartIsShown(true);
@@ -21,7 +32,19 @@ function App() {
   return (
     <Router>
       <Switch>
-          <Route exact path="/" exact component={Main}/>
+          <Route path="/" exact component={Main}/>
+          <Route path="/main" component={Main}/>
+          <Route path="/introduction" exact component={Introduction}/>
+          <Route path="/introduction/team" component={Team}/>
+          <Route path="/introduction/business" component={Business}/>
+          <Route path="/introduction/manual" component={Manual}/>
+
+          <Route path="/service/request" exact component={ProductRegistrationForm}/>
+          <Route path="/notice" component={Notice} noticeData={noticeList}/>
+          <Route path="/qna" component={QnA} qnaData={qnaList}/>
+          <Route path="/qna/write" component={QnAForm}/>
+          <Route path="/faq" component={FaQ}/>
+
           <Route path="/member/login" component={Login}/>
           <Route path="/member/register" component={Join}/>
           <CartProvider>

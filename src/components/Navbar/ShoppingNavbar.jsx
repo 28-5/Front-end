@@ -18,7 +18,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
 import {Link} from "react-router-dom";
 import Cart from "../Shopping/Cart/Cart";
-import CartContext from "../store/Cart-context";
+import CartContext from "../../store/Cart-context";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor:"#fff",
         color: "black",
         boxShadow: "none",
+        width:"1245px",
+        [theme.breakpoints.down('md')]: {
+            width:"100%",
+        },
     },
     toolBar:{
         paddingLeft:0,
@@ -89,7 +93,8 @@ const useStyles = makeStyles((theme) => ({
     },
 
     cartIcon:{
-      fontSize:35
+      fontSize:35,
+        marginLeft:20,
     },
     accountIcon:{
       fontSize:35
@@ -192,12 +197,12 @@ const ShoppingNavbar = () => {
                                     주문조회
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/">
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/mypage">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     마이페이지
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/notification">
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/notice">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     공지사항
                                 </Typography>

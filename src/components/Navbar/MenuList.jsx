@@ -13,6 +13,7 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import clsx from "clsx";
 import {makeStyles} from "@material-ui/core";
+import RoomServiceIcon from '@material-ui/icons/RoomService';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,15 +52,15 @@ const MenuList = props => {
     const menu_addr = props.menu.map(addr => {
         return Object.values(addr).toString();
     });
-
+    const iconCondition = menu_name[0] !== "쇼핑하기" && menu_name[0] !== "서비스신청";
     return (
         <>
             <ListItem button onClick={listClick} component={menu_name[0] === "쇼핑하기"? Link: undefined} to={menu_name[0] === "쇼핑하기"?menu_addr[0]: undefined} >
                 <ListItemIcon>
-                    {menu_name[0] === "소개"? <InfoIcon/>: (menu_name[0] ==="쇼핑하기"? <LocalMallIcon/>: <QuestionAnswerIcon/>)}
+                    {menu_name[0] === "소개"? <InfoIcon/>: (menu_name[0] ==="쇼핑하기"? <LocalMallIcon/>:(menu_name[0] ==="서비스신청"? <RoomServiceIcon/>:<QuestionAnswerIcon/>))}
                 </ListItemIcon>
                 <ListItemText primary={<Typography className={classes.menuTxt}>{menu_name[0]}</Typography>}/>
-                {isOpen ? <ExpandLess/> : <ExpandMore/>}
+                {iconCondition === true? (isOpen ? <ExpandLess/> : <ExpandMore/>): null}
             </ListItem>
             <Collapse in={isOpen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>

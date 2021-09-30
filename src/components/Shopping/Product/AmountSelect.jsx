@@ -36,10 +36,6 @@ const AmountSelect = props =>{
         setOpen(true);
     };
 
-    const valueHandler = event =>{
-        console.log(event.target.value);
-    };
-
 
     return(
         <div>

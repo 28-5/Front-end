@@ -19,15 +19,10 @@ const Address = props => {
             fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
             setDaumAddress(fullAddress);
         }
-
-        console.log(fullAddress);  // e.g. '서울 성동구 왕십리로2길 20 (성수동1가)'
     }
     props.getAddress(daumAddress);
-
     return (
-        <DaumPostcode
-            onComplete={handleComplete} closeModal={isOpen} autoClose="true" animation="true"
-        />
+        <DaumPostcode onComplete={handleComplete} closeModal={isOpen} autoClose="true" animation="true"/>
     )
 };
 

@@ -68,8 +68,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = () => {
-    const classes = useStyles();
-    const [open, setOpen] = useState(false);
+    const classes               = useStyles();
+    const [open, setOpen]       = useState(false);
+    const [userEmail, setUserEmail]   = useState(null);
+    const [userPass, setUserPass]   = useState(null);
+
+    const loginEmailHandler = event =>{
+        setUserEmail(event.target.value);
+    };
+    const loginPassHandler = event =>{
+        setUserPass(event.target.value);
+    };
+
     const handleClose = () => {
         setOpen(false);
     };
@@ -81,14 +91,15 @@ const Login = () => {
         }, 500);
     };
 
-    const fetchLoginInfo = (event) =>{
+    const loginHandler = (event) =>{
         event.preventDefault();
         axios.post("/member/login", {
-            email : event.target.userEmail.value,
-            pass: event.target.userPass.value,
+            email : userEmail,
+            pass: userPass,
         }).then(res => {
             console.log("Post success! + res.data: " + res.data);
         }).catch(err => {
+            console.log(userEmail + " " + userPass);
             console.log("Login Failed");
             handleToggle();
         });
@@ -100,16 +111,16 @@ const Login = () => {
                 <CircularProgress color="primary" />
             </Backdrop>
             <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.loginBox}>
-                <form onSubmit={fetchLoginInfo}>
+                <form>
                 <Grid item xs={12} >
-                    <Input type="text" name="userEmail" placeholder="이메일"
+                    <Input type="email" name="userEmail" placeholder="이메일" onChange={loginEmailHandler}
                            startAdornment={( <InputAdornment position="start">
                                                 <EmailIcon className={classes.icon}/>
                                             </InputAdornment>)}
                            className={classes.loginInput}/>
                 </Grid>
                 <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
-                    <Input type="password" name="userPass" placeholder="비밀번호"
+                    <Input type="password" name="userPass" placeholder="비밀번호" onChange={loginPassHandler}
                            startAdornment={( <InputAdornment position="start">
                                <LockIcon className={classes.icon}/>
                            </InputAdornment>)}
@@ -120,7 +131,7 @@ const Login = () => {
                     <Typography  display="inline" align="left" className={classes.findTxt} component={Link} to="/">비밀번호 찾기</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" className={classes.loginBtn} >로그인</Button>
+                    <Button type="submit" className={classes.loginBtn} onClick={loginHandler}>로그인</Button>
                 </Grid>
                 <Grid item xs={12}>
                     <Button type="submit" href="/member/register" className={clsx(classes.joinBtn)}>회원가입</Button>

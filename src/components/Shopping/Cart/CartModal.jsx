@@ -1,14 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
-const useStyles = makeStyles((theme) => ({
-
-}));
 
 const CartModal = props => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
     return (
         <div>

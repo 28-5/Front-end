@@ -45,8 +45,8 @@ const Footer = () => {
             </div>
             <div className={classes.footer_menu}>
                 <ul className={classes.footerUl}>
-                    <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>메인</Link></li>
-                    <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>회사소개</Link></li>
+                    <li className={classes.footerLi}><Link to="/main" className={classes.footerLink}>메인</Link></li>
+                    <li className={classes.footerLi}><Link to="/introduction" className={classes.footerLink}>회사소개</Link></li>
                     <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>이용약관</Link></li>
                     <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>개인정보처리방침</Link></li>
                     <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>Contact Us</Link></li>
