@@ -31,8 +31,9 @@ const ShoppingMain = ({match}) => {
         setError(null);
 
         try{
-            // const response = await axios.get("http://localhost:8089/shop/product");
-            const response = await axios.get("https://swapi.dev/api/films");
+            const response = await axios.get("/shop/product");
+            // const response = await axios.get("https://swapi.dev/api/films");
+            console.log("shopping response: " + response);
             if(response.status !== 200){
                 throw new Error("Something went wrong!");
             }
@@ -53,6 +54,7 @@ const ShoppingMain = ({match}) => {
                 };
             });
             setProductItems(receivedProductData);
+            console.log(productItems);
         }catch (error) {
             setError(error.message);
         }
@@ -73,7 +75,6 @@ const ShoppingMain = ({match}) => {
                     <ProductCardList data={productData}/>
                 </Grid>
             </Container>
-            <Footer />
         </section>
     );
 };

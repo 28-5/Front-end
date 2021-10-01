@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,9 +10,14 @@ import MenuList from "./MenuList";
 import Typography from '@material-ui/core/Typography';
 import {Link } from "react-router-dom";
 import PersonIcon from '@material-ui/icons/Person';
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Toolbar from "@material-ui/core/Toolbar";
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     '@global': {
         '*::-webkit-scrollbar': {
             width: '0.4em'
@@ -27,6 +32,9 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         display: 'flex',
+        [theme.breakpoints.down('sm')]: {
+            display:"inline",
+        },
     },
     title:{
         fontSize: "30px",
@@ -39,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
+        [theme.breakpoints.down('sm')]: {
+            display:"none",
+        },
     },
     drawerPaper: {
         width: drawerWidth,
@@ -71,12 +82,26 @@ const useStyles = makeStyles((theme) => ({
 
     link:{
         color:"black"
-    }
+    },
+
+    mobileMenu:{
+        display: 'none',
+        [theme.breakpoints.down('sm')]: {
+            display:"inline",
+            marginBottom:0,
+        },
+    },
+    menuIcon:{
+      marginTop: 6,
+    },
 }));
 
 
 export default function Navbar() {
     const classes = useStyles();
+    const [mobileAnchorEl, setMobileAnchorEl]             = useState(null);
+    const [isMobileButtonOpened, setisMobileButtonOpened] = useState(null);
+    const [anchorEl, setAnchorEl]                         = useState(null);
 
     const menu1 = [
         {소개: "/introduction"},
@@ -100,12 +125,23 @@ export default function Navbar() {
         {자주묻는질문: "/faq"},
     ];
 
+    const mobileHandleProfileMenuOpen = (event) => {
+        setMobileAnchorEl(event.currentTarget);
+    };
+    const mobileHandleMenuClose = () => {
+        setMobileAnchorEl(null);
+    };
+    const mobileHandleClick = (event) => {
+        setisMobileButtonOpened(event.currentTarget);
+    };
+    const mobileHandleClose = () => {
+        setisMobileButtonOpened(null);
+    };
+
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-
-                <PersonIcon/>
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -138,6 +174,21 @@ export default function Navbar() {
                 </Link>
                 </List>
             </Drawer>
+
+            {/*---------모바일-----------*/}
+            <div className={classes.mobileMenu}>
+                <IconButton onClick={mobileHandleClick} color="inherit">
+                    <MenuIcon className={classes.menuIcon}/>
+                </IconButton>
+                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(isMobileButtonOpened)} onClose={mobileHandleClose}
+                      getContentAnchorEl={null}>
+                    <MenuItem onClick={mobileHandleMenuClose}>전체 카테고리</MenuItem>
+                    <MenuItem onClick={mobileHandleMenuClose}>베스트</MenuItem>
+                    <MenuItem onClick={mobileHandleMenuClose}>주문조회</MenuItem>
+                    <MenuItem onClick={mobileHandleMenuClose}>마이페이지</MenuItem>
+                    <MenuItem onClick={mobileHandleMenuClose}>공지사항</MenuItem>
+                </Menu>
+            </div>
         </div>
     );
 }

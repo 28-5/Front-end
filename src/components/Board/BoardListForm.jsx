@@ -58,16 +58,16 @@ const rows = [
 const useStyles = makeStyles({
     root: {
         width: '100%',
-        height:"100%"
+        height:"100%",
+        boxShadow: "none"
     },
     container: {
         maxHeight: "100%",
     },
     mainContainer:{
         paddingLeft:"260px",
-        paddingTop: "50px",
-        // backgroundColor:"#fff",
-        height:"100%"
+        paddingTop: "0px",
+        height:"100%",
     },
     tableColumns:{
         fontFamily: "twayair",
@@ -76,6 +76,9 @@ const useStyles = makeStyles({
     tableRows:{
         fontFamily: "twayair",
         textAlign:"center",
+    },
+    boardTable:{
+
     }
 });
 

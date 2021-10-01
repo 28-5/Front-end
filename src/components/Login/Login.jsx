@@ -95,7 +95,7 @@ const Login = () => {
         event.preventDefault();
         axios.post("/member/login", {
             email : userEmail,
-            pass: userPass,
+            password: userPass,
         }).then(res => {
             console.log("Post success! + res.data: " + res.data);
         }).catch(err => {

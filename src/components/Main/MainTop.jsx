@@ -5,27 +5,29 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 
 const useStyles = makeStyles((theme) => ({
-    mainContainer:{
-        paddingLeft:"200px",
-    },
     mainImg: {
         width: "100%",
-            height:"700px",
-            objectFit:"cover",
+        height:"700px",
+        objectFit:"cover",
     },
     mainImgGrid:{
         position:"relative",
     },
     mainMessage:{
         color:"#fff",
-            textAlign:"center",
-            fontFamily:"twayair",
-            fontWeight:"550",
-            position:"absolute",
-            zIndex:"1",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-25%, -50%)"
+        textAlign:"center",
+        fontFamily:"twayair",
+        fontWeight:"550",
+        position:"absolute",
+        zIndex:"1",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-25%, -50%)",
+        [theme.breakpoints.down('sm')]: {
+            top: "40%",
+            left: "37%",
+            width: "50%",
+        },
     },
     mainMessageGrid:{
         // verticalAlign:"center"

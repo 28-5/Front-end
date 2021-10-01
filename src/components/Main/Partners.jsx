@@ -8,7 +8,9 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft:"260px",
         paddingTop: "50px",
         fontFamily: "twayair",
-        backgroundColor: "#fff",
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft:"16px",
+        },
     },
 
     partnerImg:{
@@ -20,9 +22,6 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: 20,
         paddingBottom: "40px",
         fontSize: 25,
-        // borderBottom: "1px solid",
-        backgroundColor:"#fff"
-        // width: 800,
     },
     line_dec:{
         width: "30px",

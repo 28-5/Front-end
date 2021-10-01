@@ -10,7 +10,10 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft:"260px",
         paddingTop: "50px",
         fontFamily: "twayair",
-        backgroundColor:"#fff"
+        backgroundColor:"#fff",
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft:"16px",
+        },
     },
     bodyTitle:{
         fontFamily: "twayair",

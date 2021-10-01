@@ -2,16 +2,16 @@ import {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 
 export const BoardDataUse = () =>{
-    const [noticeList, setNoticeList] = useState([]);
-    const [qnaList, setQnaList] = useState([]);
-    const [error, setError]               = useState(null);
+    const [noticeListData, setNoticeListData] = useState([]);
+    const [qnaListData, setQnaListData]       = useState([]);
+    const [error, setError]                   = useState(null);
 
     const boardDataAxiosHandler= useCallback(async () => {
         setError(null);
 
         try{
-            const responseNotice  = await axios.get("http://localhost:8089/notice");
-            const responseQnA     = await axios.get("http://localhost:8089/qna");
+            const responseNotice  = await axios.get("/notice");
+            const responseQnA     = await axios.get("/qna");
             if(responseNotice.status !== 200 || responseQnA.status !== 200){
                 throw new Error("Something went wrong!");
             }
@@ -19,9 +19,10 @@ export const BoardDataUse = () =>{
             console.log(responseQnA.data);
             const noticeList = responseNotice.data.map(list => {
                 return{
-                    postNum: list.postN,
+                    postNum: list.idx,
                     postTitle: list.title,
-                    userId: list.userId,
+                    postContent: list.content,
+                    userId: list.name,
                     postDate: list.postDate,
                 };
             });
@@ -33,8 +34,9 @@ export const BoardDataUse = () =>{
                     postDate: list.postDate,
                 };
             });
-            setNoticeList(noticeList);
-            setQnaList(qnaList);
+            setNoticeListData(noticeList);
+            setQnaListData(qnaList);
+            console.log("boardData: " + noticeListData + ", " + qnaListData);
         }catch (error) {
             setError(error.message);
         }
@@ -44,5 +46,5 @@ export const BoardDataUse = () =>{
         boardDataAxiosHandler();
     }, [boardDataAxiosHandler]);
 
-    return [noticeList, qnaList];
+    return [noticeListData, qnaListData];
 };

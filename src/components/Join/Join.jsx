@@ -117,9 +117,9 @@ const Join = ({history}) => {
 
     const fetchJoinInfo = (event) =>{
         event.preventDefault();
-        axios.post("/member/register", {
+        axios.post("/member/", {
             email : userEmail,
-            pass: userPass,
+            password: userPass,
             name: userName,
             phone: userPhoneNum,
             address: userAddress,

@@ -14,9 +14,7 @@ const Main = () => {
           <MainTop />
           <MainBody/>
           <Partners/>
-          <Footer />
-
-    </>
+        </>
     );
 };
 

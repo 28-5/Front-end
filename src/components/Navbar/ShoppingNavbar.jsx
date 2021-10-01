@@ -214,7 +214,8 @@ const ShoppingNavbar = () => {
                         <IconButton onClick={mobileHandleClick} color="inherit">
                             <MenuIcon className={classes.menuIcon}/>
                         </IconButton>
-                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(isMobileButtonOpened)} onClose={mobileHandleClose}>
+                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(isMobileButtonOpened)} onClose={mobileHandleClose}  getContentAnchorEl={null}
+                              anchorOrigin={{ vertical: 145, horizontal: 80 }}>
                             <MenuItem onClick={mobileHandleMenuClose}>전체 카테고리</MenuItem>
                             <MenuItem onClick={mobileHandleMenuClose}>베스트</MenuItem>
                             <MenuItem onClick={mobileHandleMenuClose}>주문조회</MenuItem>
@@ -255,7 +256,8 @@ const ShoppingNavbar = () => {
                         <IconButton onClick={mobileHandleProfileMenuOpen} color="inherit">
                             <MoreIcon />
                         </IconButton>
-                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(mobileAnchorEl)} onClose={mobileHandleMenuClose}>
+                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(mobileAnchorEl)} onClose={mobileHandleMenuClose} getContentAnchorEl={null}
+                              anchorOrigin={{ vertical: 150, horizontal: 500 }}>
                             <MenuItem onClick={mobileHandleMenuClose}>프로필 보기</MenuItem>
                             <MenuItem onClick={mobileHandleMenuClose}>개인정보 수정</MenuItem>
                             <MenuItem onClick={mobileHandleMenuClose}>로그아웃</MenuItem>

@@ -3,11 +3,13 @@ import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     footer:{
-        color: "red",
+        borderTop: "0.01px solid #E2E2E2",
         textAlign:"center",
-        marginBottom: 40,
         margin: "0px 15px",
         backgroundColor: "#fff",
+        marginTop: 80,
+        paddingTop: 20,
+
      },
     footerUl:{
       padding: 0,
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     footer_menu:{
       marginTop: 20,
-      marginBottom: 40
+      paddingBottom: 20,
     },
     footerLink:{
       fontSize: 15,

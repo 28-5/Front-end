@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
 import Join from "./components/Join/Join";
@@ -15,9 +15,10 @@ import ProductRegistrationForm from "./components/Shopping/Product_Registration/
 import Notice from "./components/Board/Notice";
 import QnA from "./components/Board/QnA";
 import FaQ from "./components/Board/FaQ";
-import QnAForm from "./components/Board/QnAForm";
+import WrtForm from "./components/Board/WrtForm";
 import {BoardDataUse} from "./components/Board/BoardDataUse";
-
+import "./App.css";
+import Footer from "./components/Main/Footer";
 
 function App() {
     const [cartIsShown, setCartIsShown] = useState(false);
@@ -41,8 +42,9 @@ function App() {
 
           <Route path="/service/request" exact component={ProductRegistrationForm}/>
           <Route path="/notice" component={Notice} noticeData={noticeList}/>
-          <Route path="/qna" component={QnA} qnaData={qnaList}/>
-          <Route path="/qna/write" component={QnAForm}/>
+          <Route path="/notice/write" render={props => <WrtForm path="/notice" {...props} />}/>
+          <Route path="/qna" exact component={QnA} qnaData={qnaList}/>
+          <Route path="/qna/write" render={props => <WrtForm path="/qna" {...props} />} />
           <Route path="/faq" component={FaQ}/>
 
           <Route path="/member/login" component={Login}/>
@@ -55,6 +57,7 @@ function App() {
           </CartProvider>
           <Route path="/admin" component={Dashboard}/>
       </Switch>
+      <Footer />
     </Router>
   );
 }

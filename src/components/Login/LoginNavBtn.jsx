@@ -1,11 +1,18 @@
 import {Link } from "react-router-dom";
-import PersonIcon from '@material-ui/icons/Person';
 import React from "react";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(() => ({
-
+const useStyles = makeStyles((theme) => ({
+    loginJoinDiv:{
+      paddingTop: 20,
+      paddingBottom: 57,
+        [theme.breakpoints.down('sm')]: {
+            display:"inline-block",
+            paddingBottom: 0,
+            float: "right",
+        },
+    },
     loginBtn:{
         display:"block",
         float: "right",
@@ -15,6 +22,9 @@ const useStyles = makeStyles(() => ({
         display:"block",
         float: "right",
         paddingRight:"50px",
+        [theme.breakpoints.down('sm')]: {
+            paddingRight: 10
+        },
     },
     icon:{
         fontSize: "40px",
@@ -23,11 +33,13 @@ const useStyles = makeStyles(() => ({
 
 }));
 
-const LoginNavBtn = () => {
+const LoginNavBtn = props => {
    const classes = useStyles();
-    return (
-        <>
-            <div className={classes.joinBtn}>
+   const customPaddingNum = props.paddingNum;
+
+   return (
+        <div className={classes.loginJoinDiv}>
+            <div className={classes.joinBtn} style={{paddingRight: customPaddingNum}}>
                <Link to={"/member/login"} >
                    <Typography variant={"subtitle1"} display={"inline"}>회원가입</Typography>
                </Link>
@@ -38,7 +50,7 @@ const LoginNavBtn = () => {
                </Link>
             </div>
                {/*<PersonIcon className={classes.icon}/>*/}
-        </>
+        </div>
     );
 }
 
