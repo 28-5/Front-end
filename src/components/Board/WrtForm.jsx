@@ -6,7 +6,7 @@ import Navbar from "../Navbar/Navbar";
 import LoginNavBtn from "../Login/LoginNavBtn";
 import Button from '@material-ui/core/Button';
 import axios from "axios";
-
+import IconButton from '@material-ui/core/IconButton';
 const useStyles = makeStyles((theme) => ({
     mainContainer:{
         paddingLeft:"120px",
@@ -32,16 +32,17 @@ const useStyles = makeStyles((theme) => ({
     formBtn:{
       float:"right",
     },
+    input:{
+        display: 'none',
+    }
 }));
 
 const WrtForm = props => {
     const classes               =   useStyles();
     const path                  =   props.path;
-    console.log(path);
     const [title, setTitle]     =   useState(null);
     const [content, setContent] =   useState(null);
     const [error, setError]     = useState(null);
-
     const titleChangeHandler    =   event =>{
         setTitle(event.target.value);
     };
@@ -51,19 +52,19 @@ const WrtForm = props => {
 
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        axios.post("/qna", {
-            title : title,
-            content: content,
+        axios.post(path, {
+            headers: { Authorization: `${localStorage.getItem("jwt")}`, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+            data: {
+                title: title,
+                content: content,
+            }
         }).then(res => {
-            console.log("Post success! + res.data: " + res.data);
+            // axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
+            props.history.push(path);
         }).catch(err => {
-            console.log("Post Failed");
-            props.history.push("/main");
+            console.log(err.response.request);
         });
     };
-
-
-
 
     return (
             <Container maxWidth="lg" className={classes.mainContainer}>
@@ -85,6 +86,12 @@ const WrtForm = props => {
                         <Button variant="outlined" color="primary" className={classes.formBtn} onClick={formFetchHandler}>
                                 올리기
                         </Button>
+                        <input accept="image/*" className={classes.input} id="contained-button-file" multiple type="file"/>
+                            <label htmlFor="contained-button-file">
+                                <Button variant="contained" color="primary" component="span">
+                                    Upload
+                                </Button>
+                            </label>
                     </div>
                     </form>
             </Container>

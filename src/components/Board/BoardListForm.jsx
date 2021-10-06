@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -13,6 +13,7 @@ import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import LoginNavBtn from "../Login/LoginNavBtn";
 import {Link} from "react-router-dom";
+import LoaddingSpinner from "../UI/LoaddingSpinner";
 
 const columns = [
     { id: 'postNum', label: '번호', maxWidth: 30 },
@@ -28,31 +29,16 @@ const columns = [
         label: '작성일자',
         maxWidth: 50,
         align: 'right',
+        format: (value) => value.slice(0,10),
+    },
+    {
+        id: 'views',
+        label: '조회수',
+        maxWidth: 50,
+        align: 'right',
         // format: (value) => value.toLocaleString('en-US'),
     },
 
-];
-
-function createData(postNum, postTitle, userId, postDate) {
-    return { postNum, postTitle, userId, postDate };
-}
-
-const rows = [
-    createData('1', 'India',  'user1234', "2021-09-30"),
-    createData('2', 'China',  1403500365, 9596961),
-    createData('3', 'Italy',  60483973, 301340),
-    createData( '4', 'United States', 327167434, 9833520),
-    createData('5', 'Canada',  37602103, 9984670),
-    createData('6', 'Australia',  25475400, 7692024),
-    createData('7', 'Germany',  83019200, 357578),
-    createData('8', 'Ireland',  4857000, 70273),
-    createData('9', 'Mexico',  126577691, 1972550),
-    createData('100', 'Japan',  126317000, 377973),
-    createData('12134', 'France',  67022000, 640679),
-    createData( '123456', 'United Kingdom', 67545757, 242495),
-    createData('123', 'Russia',  146793744, 17098246),
-    createData('4', 'Nigeria',  200962417, 923768),
-    createData('12312', 'Brazil',  210147125, 8515767),
 ];
 
 const useStyles = makeStyles({
@@ -77,16 +63,19 @@ const useStyles = makeStyles({
         fontFamily: "twayair",
         textAlign:"center",
     },
-    boardTable:{
-
+    boardLink:{
+        textDecoration: "none",
+        color:"black"
     }
 });
 
 const BoardListForm = props => {
-    const classes = useStyles();
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+    const classes                       = useStyles();
+    const [page, setPage]               = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const boardData                     = props.data.sort((a, b) => {
+                                                return b.postNum - a.postNum;
+                                            });;
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -95,12 +84,12 @@ const BoardListForm = props => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
     return (
         <>
             <Navbar />
             <LoginNavBtn />
             <Container maxWidth="xl" className={classes.mainContainer}>
+                {boardData ===undefined? <LoaddingSpinner/>:
                 <Paper className={classes.root}>
                     <TableContainer className={classes.container}>
                         <Table stickyHeader aria-label="sticky table">
@@ -113,29 +102,36 @@ const BoardListForm = props => {
                                     ))}
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align} className={classes.tableRows}>
-                                                    <Link to={"/main"} >
-                                                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                                                    </Link>
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
+                                <TableBody>
+                                    {boardData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                                {columns.map((column) => {
+                                                    const value = row[column.id];
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align} className={classes.tableRows}>
+                                                            {column.label==="제목"?
+                                                            <Link to={{ pathname: props.path +"/article/"+row.postNum,
+                                                                    state: {
+                                                                    data: row
+                                                                    }}} className={classes.boardLink}>
+                                                            {/*<Link to={props.path +"/"+row.postNum} state={{ from: "asdfasdf" }} className={classes.boardLink}>*/}
+                                                                {value}
+                                                            </Link>:
+                                                            column.label==="작성일자"? column.format(value) : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
                         </Table>
                     </TableContainer>
-                    <TablePagination rowsPerPageOptions={[10, 25, 100]} component="div" count={rows.length} rowsPerPage={rowsPerPage} page={page}
+                    <TablePagination rowsPerPageOptions={[10, 25, 100]} component="div" count={boardData.length} rowsPerPage={rowsPerPage} page={page}
                                      onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} />
                 </Paper>
+                }
             </Container>
         </>
     );

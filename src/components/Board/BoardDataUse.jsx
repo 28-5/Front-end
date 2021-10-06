@@ -15,28 +15,29 @@ export const BoardDataUse = () =>{
             if(responseNotice.status !== 200 || responseQnA.status !== 200){
                 throw new Error("Something went wrong!");
             }
-            console.log(responseNotice.data);
-            console.log(responseQnA.data);
-            const noticeList = responseNotice.data.map(list => {
+            const noticeList = responseNotice.data.dtoList.map(list => {
                 return{
                     postNum: list.idx,
                     postTitle: list.title,
                     postContent: list.content,
                     userId: list.name,
-                    postDate: list.postDate,
+                    postDate: list.regDate,
+                    views: list.views,
                 };
             });
-            const qnaList = responseQnA.data.map(list => {
+            const qnaList = responseQnA.data.dtoList.map(list => {
                 return{
-                    postNum: list.postN,
+                    postNum: list.idx,
                     postTitle: list.title,
+                    postContent: list.content,
                     userId: list.userId,
-                    postDate: list.postDate,
+                    postDate: list.regDate,
+                    views: list.views,
                 };
             });
+            console.log("notice: " + noticeList);
             setNoticeListData(noticeList);
             setQnaListData(qnaList);
-            console.log("boardData: " + noticeListData + ", " + qnaListData);
         }catch (error) {
             setError(error.message);
         }

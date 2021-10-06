@@ -119,9 +119,9 @@ const DetailedProduct = (props) => {
 
     //Database 연결해야 하는 부분?
     const data = ProductData;
-    const productNumer = props.match.params.productNum;
+    const productNumber = props.match.params.productNum;
     const productInfo = data.filter(d => {
-        return d.product_id === productNumer;
+        return d.product_id === productNumber;
     });
     const addToCartHandler = amount =>{
         cartCtx.addItem({
@@ -138,7 +138,7 @@ const DetailedProduct = (props) => {
             <ShoppingTopNav/>
             <Container maxWidth="lg">
                 <ShoppingNavbar />
-                <Breadcrumb showPath={productNumer} />
+                <Breadcrumb showPath={productNumber} />
                 <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridContainer}>
                     <Grid item sm={12} md={6} >
                         <img src={productInfo[0].img} className={classes.productImg} alt="productImg"/>

@@ -114,8 +114,9 @@ export default function Navbar() {
         {쇼핑하기: "/shop"}
         ];
     const menu3 = [
-        {판매등록: "/service/request"},
-        {서비스신청: "/service/request"},
+        {서비스신청: ""},
+        {픽업신청: "/service/request"},
+        {판매제품등록: "/service/seller/request"},
         ];
     const menu4 = [
         {"공지 및 문의": "/notice"},
