@@ -125,6 +125,7 @@ const Join = ({history}) => {
             address: userAddress,
         }).then(res => {
             console.log("Post success! + res.data: " + res.data);
+            history.push("/welcome");
         }).catch(err => {
             console.log("Login Failed");
             console.log(userEmail);
@@ -132,9 +133,7 @@ const Join = ({history}) => {
             console.log(userName);
             console.log(userPhoneNum);
             console.log(userAddress);
-            handleToggle();
-           alert("메인으로!")
-            history.push("/main");
+           alert("실패!")
         });
     }
 

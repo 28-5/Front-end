@@ -67,12 +67,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = () => {
+const Login = props => {
     const classes               = useStyles();
     const [open, setOpen]       = useState(false);
     const [userEmail, setUserEmail]   = useState(null);
     const [userPass, setUserPass]   = useState(null);
-
+    const JWT_EXPIRY_TIME = 1 * 3600 * 1000;
     const loginEmailHandler = event =>{
         setUserEmail(event.target.value);
     };
@@ -93,15 +93,21 @@ const Login = () => {
 
     const loginHandler = (event) =>{
         event.preventDefault();
-        axios.post("/member/login", {
+        const loginData = {
             email : userEmail,
             password: userPass,
-        }).then(res => {
-            console.log("Post success! + res.data: " + res.data);
-        }).catch(err => {
-            console.log(userEmail + " " + userPass);
-            console.log("Login Failed");
-            handleToggle();
+        };
+        axios.post("/member/login", loginData)
+            .then(res => {
+                const jwtToken    =   res.data;
+                localStorage.setItem("jwt", jwtToken);
+                props.hasToken(true);
+                props.setEmail(loginData.email);
+                props.history.push("/main");
+            }).catch(err => {
+                console.log(userEmail + " " + userPass);
+                console.log("Login Failed");
+                handleToggle();
         });
     }
 

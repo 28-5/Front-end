@@ -7,11 +7,11 @@ import Partners from "./Partners";
 import Footer from "./Footer";
 import LoggedInNavBtn from "../Login/LoggedInNavBtn";
 
-const Main = props => {
+const LoggedInMain = props => {
     return(
         <>
           <Navbar />
-          <LoginNavBtn />
+          <LoggedInNavBtn tokenHandler={props.tokenHandler} history={props.history} userEmail={props.userEmail}/>
           <MainTop />
           <MainBody/>
           <Partners/>
@@ -19,4 +19,4 @@ const Main = props => {
     );
 };
 
-export default Main;
+export default LoggedInMain;
