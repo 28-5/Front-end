@@ -114,8 +114,8 @@ const BoardListForm = props => {
                                                             <Link to={{ pathname: props.path +"/article/"+row.postNum,
                                                                     state: {
                                                                     data: row
-                                                                    }}} className={classes.boardLink}>
-                                                            {/*<Link to={props.path +"/"+row.postNum} state={{ from: "asdfasdf" }} className={classes.boardLink}>*/}
+                                                                    }}}
+                                                                  className={classes.boardLink}>
                                                                 {value}
                                                             </Link>:
                                                             column.label==="작성일자"? column.format(value) : value}

@@ -94,6 +94,10 @@ const useStyles = makeStyles(theme => ({
     menuIcon:{
       marginTop: 6,
     },
+    mobileLink:{
+      textDecoration:"none",
+      color:"black",
+    },
 }));
 
 
@@ -183,11 +187,12 @@ export default function Navbar() {
                 </IconButton>
                 <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(isMobileButtonOpened)} onClose={mobileHandleClose}
                       getContentAnchorEl={null}>
-                    <MenuItem onClick={mobileHandleMenuClose}>전체 카테고리</MenuItem>
-                    <MenuItem onClick={mobileHandleMenuClose}>베스트</MenuItem>
-                    <MenuItem onClick={mobileHandleMenuClose}>주문조회</MenuItem>
-                    <MenuItem onClick={mobileHandleMenuClose}>마이페이지</MenuItem>
-                    <MenuItem onClick={mobileHandleMenuClose}>공지사항</MenuItem>
+                    <Link to={"/introduction"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>소개</MenuItem></Link>
+                    <Link to={"/notice"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>공지</MenuItem></Link>
+                    <Link to={"/qna"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>QnA</MenuItem></Link>
+                    <Link to={"/shop"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>쇼핑</MenuItem></Link>
+                    <Link to={"/service/request"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>픽업신청</MenuItem></Link>
+                    <Link to={"/service/seller/request"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>제품등록</MenuItem></Link>
                 </Menu>
             </div>
         </div>

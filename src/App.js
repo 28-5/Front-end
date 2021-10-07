@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import { CookiesProvider, withCookies, useCookies } from 'react-cookie';
 import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
 import Join from "./components/Join/Join";
@@ -26,6 +25,7 @@ import MyPageMain from "./components/MyPage/MyPageMain";
 import axios from "axios";
 import {BoardDataUse} from "./components/Board/BoardDataUse";
 import Article from "./components/Board/Article";
+import ServiceRequestForm from "./components/Service/ServiceRequestForm";
 
 function App() {
     const [userEmail, setUserEmail]             = useState(false);
@@ -52,7 +52,6 @@ function App() {
     console.log(noticeList);
   return (
     <Router>
-        <CookiesProvider>
         <CartProvider>
           <Switch>
 
@@ -76,7 +75,7 @@ function App() {
               <Route exact path="/faq" component={FaQ}/>
 
               {/*service*/}
-              <Route exact path="/service/request" component={ProductRegistrationForm}/>
+              <Route exact path="/service/request" component={ServiceRequestForm}/>
               <Route exact path="/service/seller/request" component={ProductRegistrationForm}/>
 
               {/*Login & Join*/}
@@ -98,7 +97,6 @@ function App() {
           </Switch>
         </CartProvider>
         <Footer />
-        </CookiesProvider>
     </Router>
   );
 }

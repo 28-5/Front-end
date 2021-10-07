@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: "50px",
         paddingBottom: 100,
         fontFamily: "twayair",
+        [theme.breakpoints.down('md')]: {
+            paddingLeft:"260px",
+        },
         [theme.breakpoints.down('sm')]: {
             paddingLeft:"16px",
         },
@@ -39,19 +42,30 @@ const useStyles = makeStyles((theme) => ({
 
 const WrtForm = props => {
     const classes               =   useStyles();
+    const imgInput              =   useRef();
     const path                  =   props.path;
+    const [loading, setLoadding]=   useState(false);
     const [title, setTitle]     =   useState(null);
     const [content, setContent] =   useState(null);
-    const [error, setError]     = useState(null);
+    const [image, setImage]     =   useState(null);
+    const [error, setError]     =   useState(null);
     const titleChangeHandler    =   event =>{
         setTitle(event.target.value);
     };
     const contentChangeHandler  =   event =>{
         setContent(event.target.value);
     };
+    const imageBtnHandler       =   async (event) =>{
+      event.preventDefault();
+      setLoadding(true);
+      const formData    = new FormData();
+      formData.append("file", event.target.files[0]);
+      setImage(formData);
+    };
 
     const formFetchHandler      =   event =>{
         event.preventDefault();
+        console.log("image: " + image);
         axios.post(path, {
             headers: { Authorization: `${localStorage.getItem("jwt")}`, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
             data: {
@@ -86,12 +100,6 @@ const WrtForm = props => {
                         <Button variant="outlined" color="primary" className={classes.formBtn} onClick={formFetchHandler}>
                                 올리기
                         </Button>
-                        <input accept="image/*" className={classes.input} id="contained-button-file" multiple type="file"/>
-                            <label htmlFor="contained-button-file">
-                                <Button variant="contained" color="primary" component="span">
-                                    Upload
-                                </Button>
-                            </label>
                     </div>
                     </form>
             </Container>

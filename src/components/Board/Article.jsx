@@ -1,4 +1,6 @@
 import { useLocation } from 'react-router-dom';
+import Navbar from "../Navbar/Navbar";
+import React from "react";
 
 const Article = props => {
     const location = useLocation();
@@ -7,6 +9,7 @@ const Article = props => {
     console.log(data);
     return(
         <div className={"container-fluid"}>
+            {/*<Navbar />*/}
             <div className={"blog-card"}>
                 <div className={"media col-sm-6 col-xs-6"}></div>
                 <div className={"card-body col-sm-6 col-xs-6"}>

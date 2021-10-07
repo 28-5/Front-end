@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="55627cf2-ea3c-4899-8bed-06cd63839ca7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/hooks/use-input.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/Article.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/Article.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Service" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Service" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2" timestamp="1633586819529">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1633586819529" />
+  </component>
+</project>
