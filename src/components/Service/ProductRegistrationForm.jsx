@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     },
 });
 
-const ProductRegistrationForm = () =>{
+const ProductRegistrationForm = (props) =>{
     const classes                       = useStyles();
     const { value: enteredSeller ,
         valueChangeHandler: sellerChangeHandler,
@@ -61,16 +61,16 @@ const ProductRegistrationForm = () =>{
     const formFetchHandler      =   event =>{
         event.preventDefault();
         // console.log("image: " + image);
-        axios.post("/", {
-            headers: { Authorization: `${localStorage.getItem("jwt")}`, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        axios.post("/shop", {
+            headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'},
             data: {
-                // title: enteredSeller,
-                // brand:,
-                // rank:,
-                // quantity:,
-                // price:,
-                // content: content,
-                // image:,
+                title: enteredTitle,
+                brand:enteredBrand,
+                rank:enteredRate,
+                quantity:enteredAmount,
+                price:enteredPrice,
+                content: enteredContent,
+                // imageDtoList:,
             }
         }).then(res => {
             // axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
@@ -84,9 +84,13 @@ const ProductRegistrationForm = () =>{
             resetPrice();
             resetTitle();
             resetContent();
+            console.log("성공");
+            // props.history.push("/service/success");
 
         }).catch(err => {
-            console.log(err.response.request);
+            console.log(err.request);
+            console.log(err.response);
+            console.log(err.response.message);
         });
     };
 

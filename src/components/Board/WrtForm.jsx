@@ -65,21 +65,37 @@ const WrtForm = props => {
 
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        console.log("image: " + image);
-        axios.post(path, {
-            headers: { Authorization: `${localStorage.getItem("jwt")}`, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-            data: {
-                title: title,
-                content: content,
-            }
-        }).then(res => {
+        let json={title:title, content:content};
+        // axios.post(path, json, {headers:{ Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'}})
+        axios.post(path, json, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+            .then(res => {
             // axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
             props.history.push(path);
         }).catch(err => {
-            console.log(err.response.request);
+            console.log(err.request);
+            console.log(err.response);
+            console.log(err.response.message);
         });
-    };
 
+
+
+
+        // axios.post(path, {
+        //
+        //     headers: { Authorization: `${localStorage.getItem("jwt")}`, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        //     data: {
+        //         title: title,
+        //         content: content,
+        //     }
+        // }).then(res => {
+        //     // axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
+        //     props.history.push(path);
+        // }).catch(err => {
+        //     console.log(err.request);
+        //     console.log(err.response);
+        //     console.log(err.response.message);
+        // });
+    };
     return (
             <Container maxWidth="lg" className={classes.mainContainer}>
                 <LoginNavBtn paddingNum={0}/>

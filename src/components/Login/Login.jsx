@@ -12,6 +12,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {authActions} from "../../store/auth-slice";
 
 const useStyles = makeStyles((theme) => ({
     section:{
@@ -69,26 +71,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = props => {
     const classes               = useStyles();
-    const [open, setOpen]       = useState(false);
+    const dispatch              = useDispatch();
     const [userEmail, setUserEmail]   = useState(null);
     const [userPass, setUserPass]   = useState(null);
-    const JWT_EXPIRY_TIME = 1 * 3600 * 1000;
     const loginEmailHandler = event =>{
         setUserEmail(event.target.value);
     };
     const loginPassHandler = event =>{
         setUserPass(event.target.value);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleToggle = () => {
-        setOpen(!open);
-        setTimeout(() => {
-            setOpen(false);
-            console.log("hi");
-        }, 500);
     };
 
     const loginHandler = (event) =>{
@@ -100,22 +90,18 @@ const Login = props => {
         axios.post("/member/login", loginData)
             .then(res => {
                 const jwtToken    =   res.data;
-                localStorage.setItem("jwt", jwtToken);
-                props.hasToken(true);
-                props.setEmail(loginData.email);
+                dispatch(authActions.login({
+                    token: jwtToken,
+                    email: loginData.email,
+                }));
                 props.history.push("/main");
             }).catch(err => {
-                console.log(userEmail + " " + userPass);
                 console.log("Login Failed");
-                handleToggle();
         });
     }
 
     return (
         <section className={classes.section}>
-            <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
-                <CircularProgress color="primary" />
-            </Backdrop>
             <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.loginBox}>
                 <form>
                 <Grid item xs={12} >

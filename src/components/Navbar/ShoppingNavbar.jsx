@@ -18,7 +18,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Input from "@material-ui/core/Input";
 import {Link} from "react-router-dom";
 import Cart from "../Shopping/Cart/Cart";
-import CartContext from "../../store/Cart-context";
+import {useDispatch, useSelector} from "react-redux";
+import {uiActions} from "../../store/ui-slice";
+import {authActions} from "../../store/auth-slice";
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -123,23 +125,25 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ShoppingNavbar = () => {
+const ShoppingNavbar = (props) => {
     const classes                                         = useStyles();
-    const cartCtx                                         = useContext(CartContext);
+    const dispatch                                        = useDispatch();
+    const numberOfCartItems                               = useSelector(state => state.cart.totalQuantity);
+    const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
     const [anchorEl, setAnchorEl]                         = useState(null);
     const [mobileAnchorEl, setMobileAnchorEl]             = useState(null);
     const [isButtonOpened, setisButtonOpened]             = useState(null);
     const [isMobileButtonOpened, setisMobileButtonOpened] = useState(null);
-    const [cartIsShown, setCartIsShown]                   = useState(false);
-    const numberOfCartItems                               = cartCtx.items.reduce((curNum, item) => {
-        return curNum + item.amount;
-    }, 0);
+    // const numberOfCartItems                               = cartCtx.items.reduce((curNum, item) => {
+    //     return curNum + item.amount;
+    // }, 0);
+    const showCart = useSelector(state => state.ui.isCartVisible);
 
-    const showCartHandler = ()=>{
-        setCartIsShown(true);
+    const showCartHandler = () => {
+        dispatch(uiActions.toggle());
     };
     const hideCartHandler = ()=>{
-        setCartIsShown(false);
+        dispatch(uiActions.toggle());
     };
 
     const handleProfileMenuOpen = (event) => {
@@ -150,6 +154,10 @@ const ShoppingNavbar = () => {
     };
 
     const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+    const handleMenuCloseLogout = () => {
+        dispatch(authActions.logout());
         setAnchorEl(null);
     };
     const mobileHandleMenuClose = () => {
@@ -169,8 +177,6 @@ const ShoppingNavbar = () => {
     const mobileHandleClose = () => {
         setisMobileButtonOpened(null);
     };
-
-
     return (
         <Container maxWidth="lg" className={classes.grow}>
             <AppBar position="static" className={classes.appBar}>
@@ -240,11 +246,17 @@ const ShoppingNavbar = () => {
                         <IconButton edge="end" onClick={handleProfileMenuOpen} color="inherit">
                             <AccountCircle className={classes.accountIcon}/>
                         </IconButton>
+                        {isAuth === true?
                         <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMenuClose}>
-                            <MenuItem onClick={handleMenuClose}>프로필 보기</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>개인정보 수정</MenuItem>
-                            <MenuItem onClick={handleMenuClose}>로그아웃</MenuItem>
+                            <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">프로필 보기</MenuItem>
+                            <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">개인정보 수정</MenuItem>
+                            <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>
                         </Menu>
+                        :<Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                                <MenuItem onClick={handleMenuClose} component={Link} to="/member/login">로그인</MenuItem>
+                                <MenuItem onClick={handleMenuClose} component={Link} to="/member/register">회원가입</MenuItem>
+                            </Menu>
+                        }
                     </div>
 
                     <div className={classes.sectionMobile}>
@@ -256,16 +268,25 @@ const ShoppingNavbar = () => {
                         <IconButton onClick={mobileHandleProfileMenuOpen} color="inherit">
                             <MoreIcon />
                         </IconButton>
+                        {isAuth === true?
                         <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(mobileAnchorEl)} onClose={mobileHandleMenuClose} getContentAnchorEl={null}
                               anchorOrigin={{ vertical: 150, horizontal: 500 }}>
-                            <MenuItem onClick={mobileHandleMenuClose}>프로필 보기</MenuItem>
-                            <MenuItem onClick={mobileHandleMenuClose}>개인정보 수정</MenuItem>
-                            <MenuItem onClick={mobileHandleMenuClose}>로그아웃</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose} component={Link} to="/mypage">프로필 보기</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose} component={Link} to="/mypage">개인정보 수정</MenuItem>
+                            <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>
                         </Menu>
+                        :
+                        <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(mobileAnchorEl)} onClose={mobileHandleMenuClose} getContentAnchorEl={null}
+                              anchorOrigin={{ vertical: 150, horizontal: 500 }}>
+                            <MenuItem onClick={mobileHandleMenuClose} component={Link} to="/member/login">로그인</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose} component={Link} to="/member/register">회원가입</MenuItem>
+                        </Menu>
+                        }
+
                     </div>
                 </Toolbar>
             </AppBar>
-            {cartIsShown && <Cart onClose={hideCartHandler} isOpen={cartIsShown} numberOfItems={numberOfCartItems}/>}
+            {showCart && <Cart onClose={hideCartHandler} isOpen={showCart}/>}
         </Container>
     );
 }

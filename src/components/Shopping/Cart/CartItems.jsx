@@ -171,22 +171,22 @@ const useStyles = makeStyles((theme) => ({
 
 const CartItems = props => {
     const classes       = useStyles();
-    return props.data.items.map(item =>
+    return props.data.map(item =>
         <div className={classes.cart_Items} key={item.id}>
             <div className={classes.image_box}>
                 <img src={item.img} className={classes.cartImg} alt="product"/>
             </div>
             <div className={classes.about}>
                 <h1 className={classes.title}>{item.title}</h1>
-                <h3 className={classes.subtitle}>{item.price.toLocaleString('ko-KR')}</h3>
+                <h3 className={classes.subtitle}>{item.price}</h3>
             </div>
             <div className={classes.counter}>
                 <div className={classes.btn} onClick={props.onAdd.bind(null, item)}>+</div>
-                <div className={classes.count}>{item.amount}</div>
+                <div className={classes.count}>{item.quantity}</div>
                 <div className={classes.btn} onClick={props.onRemove.bind(null, item.id)}>-</div>
             </div>
             <div className={classes.prices}>
-                <div className={classes.amount}>{item.price.toLocaleString('ko-KR')}</div>
+                <div className={classes.amount}>{(item.price*item.quantity).toLocaleString('ko-KR')}</div>
                 <div className={classes.save}><u>나중에 주문</u></div>
                 <div className={classes.remove} onClick={props.removeItem.bind(null, item.id)}><u>제거</u></div>
             </div>

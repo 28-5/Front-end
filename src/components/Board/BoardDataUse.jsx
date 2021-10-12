@@ -35,7 +35,7 @@ export const BoardDataUse = () =>{
                     views: list.views,
                 };
             });
-            console.log("notice: " + noticeList);
+            console.log(qnaList);
             setNoticeListData(noticeList);
             setQnaListData(qnaList);
         }catch (error) {

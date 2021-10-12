@@ -12,9 +12,12 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AmountSelect from "./AmountSelect";
 import Cart from "../Cart/Cart";
 import Footer from "../../Main/Footer";
-import CartContext from "../../../store/Cart-context";
 import Typography from "@material-ui/core/Typography";
 import DetailedProductContent from "./DetailedProductContent";
+import axios from "axios";
+import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {cartActions} from "../../../store/cart-slice";
 
 const useStyles = makeStyles((theme) => ({
     shoppingMainSection:{
@@ -114,7 +117,7 @@ function stringNumberToNumber(num){
 
 const DetailedProduct = (props) => {
     const classes = useStyles();
-    const cartCtx = useContext(CartContext);
+    const dispatch= useDispatch();
     const [selectedAmount, setSelectedAmount]   =   useState(1);
 
     //Database 연결해야 하는 부분?
@@ -123,14 +126,25 @@ const DetailedProduct = (props) => {
     const productInfo = data.filter(d => {
         return d.product_id === productNumber;
     });
-    const addToCartHandler = amount =>{
-        cartCtx.addItem({
+    const addToCartHandler = () =>{
+        dispatch(cartActions.addItem({
             id: productInfo[0].product_id,
             title: productInfo[0].title,
-            price: stringNumberToNumber(productInfo[0].price),
+            price:stringNumberToNumber(productInfo[0].price),
             img: productInfo[0].img,
-            amount: selectedAmount,
-        });
+        }));
+        // cartCtx.addItem({
+        //     id: productInfo[0].product_id,
+        //     title: productInfo[0].title,
+        //     price: stringNumberToNumber(productInfo[0].price),
+        //     img: productInfo[0].img,
+        //     amount: selectedAmount,
+        // });
+        // axios.post("/order", cartCtx)
+        //     .then(res => {
+        //         console.log("카트 상품 보내짐");
+        //     })
+        //     .catch(err => console.log(err));
     };
 
     return(
@@ -166,7 +180,7 @@ const DetailedProduct = (props) => {
                         <Button variant="contained" color="secondary" onClick={addToCartHandler} className={classes.cartBtn} startIcon={<ShoppingCartIcon>send</ShoppingCartIcon>}>
                                 장바구니 담기
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.buyBtn} startIcon={<LocalShippingIcon>send</LocalShippingIcon>}                        >
+                        <Button variant="contained" color="primary" className={classes.buyBtn} component={Link} to={"/shop/order"} startIcon={<LocalShippingIcon>send</LocalShippingIcon>}                        >
                                 구매하기
                         </Button>
                         </div>
@@ -175,7 +189,6 @@ const DetailedProduct = (props) => {
                 </Grid>
                 <DetailedProductContent/>
             </Container>
-            <Footer />
         </section>
     );
 }

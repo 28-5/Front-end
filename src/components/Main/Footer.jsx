@@ -1,5 +1,7 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Link} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
     footer:{
@@ -34,6 +36,12 @@ const useStyles = makeStyles((theme) => ({
         color:"#3a8bcd"
       },
     },
+    footerEmail:{
+      fontSize: 15,
+      color: "#7a7a7a",
+      fontFamily :"twayair",
+
+    },
 
 
 }));
@@ -46,6 +54,7 @@ const Footer = () => {
                 <img src="img/logo/logo.png" alt=""/>
             </div>
             <div className={classes.footer_menu}>
+                <Typography variant={"subtitle1"} display={"inline"} className={classes.footerEmail}>서울시 구로구 가산동 1 8층</Typography>
                 <ul className={classes.footerUl}>
                     <li className={classes.footerLi}><Link to="/main" className={classes.footerLink}>메인</Link></li>
                     <li className={classes.footerLi}><Link to="/introduction" className={classes.footerLink}>회사소개</Link></li>

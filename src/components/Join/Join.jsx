@@ -124,10 +124,10 @@ const Join = ({history}) => {
             phone: userPhoneNum,
             address: userAddress,
         }).then(res => {
-            console.log("Post success! + res.data: " + res.data);
+            console.log("Join success! + res.data: " + res.data);
             history.push("/welcome");
         }).catch(err => {
-            console.log("Login Failed");
+            console.log("Join Failed");
             console.log(userEmail);
             console.log(userPass);
             console.log(userName);

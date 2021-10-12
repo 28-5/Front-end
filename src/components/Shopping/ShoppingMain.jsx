@@ -8,7 +8,6 @@ import Container from "@material-ui/core/Container";
 import productData from "./Product/ProductData";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Typography from "@material-ui/core/Typography";
-import Footer from "../Main/Footer";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ShoppingMain = ({match}) => {
+const ShoppingMain = (props) => {
     const classes = useStyles();
     const [productItems, setProductItems] = useState([]);
     const [error, setError]               = useState(null);
@@ -31,8 +30,7 @@ const ShoppingMain = ({match}) => {
         setError(null);
 
         try{
-            const response = await axios.get("/shop/product");
-            // const response = await axios.get("https://swapi.dev/api/films");
+            const response = await axios.get("/shop");
             console.log("shopping response: " + response);
             if(response.status !== 200){
                 throw new Error("Something went wrong!");
@@ -68,7 +66,7 @@ const ShoppingMain = ({match}) => {
         <section className={classes.shoppingMainSection}>
             <ShoppingTopNav/>
             <Container maxWidth="lg">
-                <ShoppingNavbar />
+                <ShoppingNavbar/>
                 <ShoppingCarousel />
                 <Typography variant="h3" className={classes.bestTitle}>베스트 상품</Typography>
                 <Grid container direction="row" justifyContent="center" alignItems="center"  >

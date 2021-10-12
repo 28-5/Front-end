@@ -32,11 +32,19 @@ const ImageUpload = props => {
         const formData    = new FormData();
         formData.append("uploadFiles", imgName, imgName.name);
 
-        console.log(imgName);
-        console.log(formData.has("uploadFiles"));
-        axios.post("/uploadAjax", formData)
-            .then(res => {
-            }).catch(err => console.log(err));
+        axios.post("/uploadAjax", {
+            headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'},
+            data: {
+                uploadFiles: formData,
+                 },
+            }).then(res => {
+            console.log("Image upload success");
+            })
+            .catch(err =>{
+            console.log(err.request);
+            console.log(err.response);
+            console.log(err.response.message);
+        });
         setLoadding(false);
     };
 

@@ -2,17 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55627cf2-ea3c-4899-8bed-06cd63839ca7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/hooks/use-input.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Board/ModificationForm.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Service/RegistrationSuccess.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Shopping/Order/Order.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Shopping/Order/Order.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/auth-slice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/cart-slice.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/store/ui-slice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Board/Article.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/Article.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardDataUse.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardDataUse.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/Navbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Introduction/Introduction.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Introduction/Introduction.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Join/Join.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/Join.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/LoggedInNavBtn.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/LoginNavBtn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/LoginNavBtn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main/LoggedInMain.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Main/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Main/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Navbar/ShoppingNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Navbar/ShoppingNavbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Cart/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Cart/Cart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Cart/CartItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Cart/CartItems.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/ShoppingMain.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingMain.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/Cart-context.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/CartProvider.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,15 +51,33 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectId" id="1zCbKRhJKRWBDRuIejDfX8F7Zje" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Service" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Users\admin\AppData\Local\JetBrains\IntelliJ IDEA 2020.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\public\img\board" />
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\boardImage" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Service" />
     </key>
@@ -46,12 +86,38 @@
     <configuration />
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="55627cf2-ea3c-4899-8bed-06cd63839ca7" name="Default Changelist" comment="" />
+      <created>1633654952867</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633654952867</updated>
+      <workItem from="1633654955746" duration="9857000" />
+      <workItem from="1633738687031" duration="43000" />
+      <workItem from="1633738740913" duration="11154000" />
+      <workItem from="1633999442702" duration="25356000" />
+    </task>
     <servers />
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2" timestamp="1633586819529">
+    <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1634016626061">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1633586819529" />
+    <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634016626061" />
+    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2" timestamp="1633681793620">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1016" y="188" key="Vcs.Push.Dialog.v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1633681793620" />
+    <state x="-1372" y="42" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1634024133440">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1372" y="42" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634024133440" />
+    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634028356641">
+      <screen x="-1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634028356641" />
   </component>
 </project>

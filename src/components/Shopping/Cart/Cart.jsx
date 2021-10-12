@@ -1,10 +1,13 @@
 import CartModal from "./CartModal";
 import React, {useContext} from "react";
+import {history, Link} from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from "@material-ui/core/styles";
-import CartContext from "../../../store/Cart-context";
 import CartItems from "./CartItems";
-
+import axios from "axios";
+import Button from '@material-ui/core/Button';
+import {useDispatch, useSelector} from "react-redux";
+import {cartActions} from "../../../store/cart-slice";
 const useStyles = makeStyles((theme) => ({
     paper: {
         position: 'absolute',
@@ -147,28 +150,33 @@ const getModalStyle = () =>  {
 }
 
 const Cart = props => {
-    const classes = useStyles();
-    const [modalStyle] = React.useState(getModalStyle);
-    const cartCtx = useContext(CartContext);
-    const hasItems = cartCtx.items.length > 0;
+    const classes                               = useStyles();
+    const dispatch                              = useDispatch();
+    const numberOfCartItems                     = useSelector(state => state.cart.totalQuantity);
+    const totalPrice                            = useSelector(state => state.cart.totalPrice);
+    const cartItemData                          = useSelector(state => state.cart.items);
+    const hasItems                              = useSelector(state => state.cart.items.length > 0);
+    const [modalStyle]                          = React.useState(getModalStyle);
+
     const cartItemAddHandler = item => {
-        cartCtx.addItem({
-            ...item, amount:1
-        });
+        dispatch(cartActions.addItem({
+            id: item.id,
+            title: item.title,
+            price: item.price,
+        }));
     };
     const cartItemRemoveHandler = id => {
-        cartCtx.removeItem(id);
+        dispatch(cartActions.removeItem(id));
     };
-
     const cartItemAllRemoveHandler = id =>{
-        const findIndex = cartCtx.items.findIndex(item => item.id === id);
-        const foundItemLength = cartCtx.items[findIndex].amount;
+        const findIndex = cartItemData.findIndex(item => item.id === id);
+        const foundItemLength = cartItemData[findIndex].quantity;
         for(var a = 0; a < foundItemLength ; a++){
-            cartCtx.removeItem(id);
+            cartItemRemoveHandler(id);
         }
     };
     const cartCleaner = () =>{
-        cartCtx.cleanCart();
+        dispatch(cartActions.cleanCart());
     };
     return(
         <>
@@ -178,18 +186,18 @@ const Cart = props => {
                         <Typography variant={"h3"} className={classes.heading}>장바구니</Typography>
                         {hasItems && <Typography variant={"h5"} className={classes.action} onClick={cartCleaner}>모두 지우기</Typography>}
                     </div>
-                    {<CartItems data={cartCtx} onAdd={cartItemAddHandler} onRemove={cartItemRemoveHandler} removeItem={cartItemAllRemoveHandler}/>}
+                    {<CartItems data={cartItemData} onAdd={cartItemAddHandler} onRemove={cartItemRemoveHandler} removeItem={cartItemAllRemoveHandler}/>}
 
                     <hr className={classes.hr}/>
                         <div className={classes.checkout}>
                             <div className={classes.total}>
                                 <div>
                                     <div className={classes.subtotal}>전체 금액</div>
-                                    <div className={classes.items}>전체수량: {props.numberOfItems}</div>
+                                    <div className={classes.items}>전체수량: {numberOfCartItems}</div>
                                 </div>
-                                <div className={classes.total_amount}>{cartCtx.totalAmount.toLocaleString('ko-KR')}</div>
+                                <div className={classes.total_amount}>{totalPrice.toLocaleString('ko-KR')}</div>
                             </div>
-                            {hasItems && <button className={classes.button}>주문하기</button>}
+                            {hasItems && <Button className={classes.button} component={Link} to={"/shop/order"}>주문하기</Button>}
                         </div>
                 </div>
             </CartModal>
