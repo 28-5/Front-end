@@ -65,6 +65,7 @@ function App() {
   return (
     <Router>
           <Switch>
+              <Layout>
               {/*
                 1. 상품등록 및 리스트 가져오는거 백엔드 체크.
               */}
@@ -110,7 +111,7 @@ function App() {
 
                   {/*Mypage*/}
                   <Route exact path="/mypage" component={MyPageMain}/>
-                  <Layout>
+
               {/*Shop Main Page*/}
          </Layout>
               {/*Page Not Found Page*/}

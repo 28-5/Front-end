@@ -5,6 +5,7 @@ import "./index.css";
 import axios from "axios";
 import {Provider} from "react-redux";
 import store from "./store";
+import 'bootstrap/dist/css/bootstrap.min.css';
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("jwt")}`;
 ReactDOM.render(

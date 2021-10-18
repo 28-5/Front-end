@@ -19,13 +19,14 @@ const Layout = props =>{
                                     "/introduction/manual", "/admin"];
     return (
         <>
-            <Container maxWidth="lg">
-                <ShoppingTopNav/>
-                {isNotificationVisible &&
-                <Notification status={notification.status} title={notification.title} message={notification.message}/>}
-                {differentNavPath.indexOf(pathname) === -1 ? <ShoppingNavbar/> : <Navbar/>}
-                {(pathname !== "/admin" && !isAuth) && <LoginNavBtn/>}
-            </Container>
+            <ShoppingNavbar/>
+            {/*<Container maxWidth="lg">*/}
+            {/*    <ShoppingTopNav/>*/}
+            {/*    {isNotificationVisible &&*/}
+            {/*    <Notification status={notification.status} title={notification.title} message={notification.message}/>}*/}
+            {/*    {differentNavPath.indexOf(pathname) === -1 ? <ShoppingNavbar/> : <Navbar/>}*/}
+            {/*    {(pathname !== "/admin" && !isAuth) && <LoginNavBtn/>}*/}
+            {/*</Container>*/}
             {props.children}
             <Footer/>
         </>

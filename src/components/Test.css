@@ -308,6 +308,9 @@ ol {
     float: right;
     margin-right: 150px;
 }
+.inner-header .mobile-menu {
+    display: none;
+}
 
 .inner-header .main-menu ul li {
     display: inline-block;
@@ -956,6 +959,7 @@ ol {
 .social-links a {
     margin-right: 88px;
     display: inline-block;
+    color: white;
 }
 
 .social-links a:last-child {
@@ -2179,6 +2183,9 @@ ol {
     }
     .main-menu {
         display: none;
+    }
+    .mobile-menu {
+        display: inline;
     }
     .header-section {
         overflow: hidden;
