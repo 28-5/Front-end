@@ -8,10 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import Navbar from "../Navbar/Navbar";
-import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
-import LoginNavBtn from "../Login/LoginNavBtn";
 import {Link} from "react-router-dom";
 import LoaddingSpinner from "../UI/LoaddingSpinner";
 
@@ -86,8 +83,6 @@ const BoardListForm = props => {
     };
     return (
         <>
-            <Navbar />
-            <LoginNavBtn />
             <Container maxWidth="xl" className={classes.mainContainer}>
                 {boardData ===undefined? <LoaddingSpinner/>:
                 <Paper className={classes.root}>

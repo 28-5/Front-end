@@ -1,7 +1,5 @@
-import Navbar from "../Navbar/Navbar";
-import LoginNavBtn from "../Login/LoginNavBtn";
 import Container from "@material-ui/core/Container";
-import React, {useRef, useState} from "react";
+import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import "./ServiceRequestForm.css";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -22,23 +20,18 @@ const useStyles = makeStyles({
 
 const ServiceRequestForm = () => {
     const classes                       = useStyles();
-    const { value: enteredSeller ,
-        valueChangeHandler: sellerChangeHandler,
+    const {valueChangeHandler: sellerChangeHandler,
         reset: resetSellerInput}        = useInput();
-    const { value: enteredPhone ,
-        valueChangeHandler: phoneChangeHandler,
+    const {valueChangeHandler: phoneChangeHandler,
         reset: resetPhoneInput}         = useInput();
-    const { value: enteredProductType,
-        nameChangeHandler: productTypeNameChangeHandler,
+    const {nameChangeHandler: productTypeNameChangeHandler,
         reset: resetProductTypeInput}   = useInput();
     const { value: enteredPickup,
         valueChangeHandler: pickupChangeHandler,
         reset: resetPickup}             = useInput();
-    const { value: entereDay,
-        valueChangeHandler: dayChangeHandler,
+    const {valueChangeHandler: dayChangeHandler,
         reset: resetday}                = useInput();
-    const { value: enteredContent,
-        valueChangeHandler: contentChangeHandler,
+    const {valueChangeHandler: contentChangeHandler,
         reset: resetContent}            = useInput();
 
     const formFetchHandler      =   event =>{
@@ -71,8 +64,6 @@ const ServiceRequestForm = () => {
 
     return(
       <>
-          <Navbar />
-          <LoginNavBtn />
           <Container maxWidth="xl" className={classes.mainContainer}>
               <form className="form-card">
                   <fieldset className="form-fieldset">
@@ -122,7 +113,7 @@ const ServiceRequestForm = () => {
                       </div>
                       <div className="form-element form-select">
                           <InputLabel id="demo-controlled-open-select-label">원하시는 픽업 방법을 선택해주세요</InputLabel>
-                          <Select labelId="demo-simple-select-label" className="rate" value={enteredPickup} onChange={pickupChangeHandler} >
+                          <Select labelId="demo-simple-select-label" className="rate" value={enteredPickup} onChange={pickupChangeHandler} defaultValue="" >
                               <MenuItem value="1">리본 픽업 서비스 (3,000)</MenuItem>
                               <MenuItem value="2">택배(2,500)</MenuItem>
                               <MenuItem value="3">지점 방문</MenuItem>

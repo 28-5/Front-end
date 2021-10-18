@@ -19,9 +19,9 @@ const Notice = props =>{
     const classes               =   useStyles();
     return(
         <>
-            <BoardListForm data={props.noticeData} path={"/notice"}/>
+            <BoardListForm data={props.noticeData} path={"/notices"}/>
             <div className={classes.registerBtnDiv}>
-                <Button variant="outlined" color="primary" component={Link} to={"/notice/write"} className={classes.formBtn} >
+                <Button variant="outlined" color="primary" component={Link} to={"/notices/write"} className={classes.formBtn} >
                     질문등록
                 </Button>
             </div>

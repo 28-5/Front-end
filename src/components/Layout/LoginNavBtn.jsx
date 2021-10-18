@@ -10,23 +10,25 @@ import {authActions} from "../../store/auth-slice";
 
 const useStyles = makeStyles((theme) => ({
     loginJoinDiv:{
-      paddingTop: 20,
-      paddingBottom: 57,
+      paddingBottom: 10,
         [theme.breakpoints.down('sm')]: {
             display:"inline-block",
             paddingBottom: 0,
             float: "right",
         },
     },
+    btnLink:{
+        zIndex:1,
+        paddingRight:0,
+    },
     loginBtn:{
         display:"block",
         float: "right",
-        paddingRight:"20px",
+
     },
     joinBtn:{
         display:"block",
         float: "right",
-        paddingRight:"50px",
         [theme.breakpoints.down('sm')]: {
             paddingRight: 10
         },
@@ -34,7 +36,13 @@ const useStyles = makeStyles((theme) => ({
     icon:{
         fontSize: "40px",
         color:"#6c844c",
-    }
+    },
+    logNavText:{
+        fontSize: "18px",
+        fontFamily: "twayair",
+        fontWeight: 600,
+        color: "black",
+    },
 
 }));
 
@@ -54,7 +62,7 @@ const LoginNavBtn = props => {
        <div className={classes.loginJoinDiv}>
            <div className={classes.joinBtn} style={{paddingRight: customPaddingNum}}>
                <div className={classes.emailTextDiv}>
-                   <Typography variant={"subtitle1"} display={"inline"} className={classes.emailText}>{userEmail}</Typography>
+                   <Typography variant={"subtitle1"} display={"inline"} className={classes.logNavText}>{userEmail}</Typography>
                </div>
                <Button type="button" color="primary" variant="contained" className={classes.loginBtn} onClick={logoutHandler}>로그아웃</Button>
                <IconButton color="primary" component={Link} to="/mypage" className={classes.iconBtn}>
@@ -66,14 +74,17 @@ const LoginNavBtn = props => {
        </div>:
         <div className={classes.loginJoinDiv}>
             <div className={classes.joinBtn} style={{paddingRight: customPaddingNum}}>
-               <Link to={"/member/login"} >
-                   <Typography variant={"subtitle1"} display={"inline"}>회원가입</Typography>
-               </Link>
+                <Button type="button" color="primary" component={Link} to={"/member/register"} className={classes.btnLink}>
+                    <Typography variant={"subtitle1"} display={"inline"} className={classes.logNavText}>회원가입</Typography>
+                </Button>
+               {/*<Link to={"/member/login"} >*/}
+               {/*    <Typography variant={"subtitle1"} display={"inline"} className={classes.logNavText}>회원가입</Typography>*/}
+               {/*</Link>*/}
             </div>
             <div className={classes.loginBtn}>
-               <Link to={"/member/login"} >
-                   <Typography variant={"subtitle1"} display={"inline"}>로그인</Typography>
-               </Link>
+                <Button type="button" color="primary" component={Link} to={"/member/login"} className={classes.btnLink}>
+                    <Typography variant={"subtitle1"} display={"inline"} className={classes.logNavText}>로그인</Typography>
+                </Button>
             </div>
 
                {/*<PersonIcon className={classes.icon}/>*/}

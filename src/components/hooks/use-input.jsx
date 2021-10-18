@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 
 const useInput = validateValue => {
@@ -41,6 +40,7 @@ const useInput = validateValue => {
 
     return{
         value: enteredValue,
+        chkValue: checkboxItem,
         validation,
         valueChangeHandler,
         nameChangeHandler,

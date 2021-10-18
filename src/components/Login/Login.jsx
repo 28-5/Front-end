@@ -7,8 +7,6 @@ import clsx from "clsx";
 import EmailIcon from '@material-ui/icons/Email';
 import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useState} from "react";
 import {Link} from "react-router-dom";
@@ -94,7 +92,7 @@ const Login = props => {
                     token: jwtToken,
                     email: loginData.email,
                 }));
-                props.history.push("/main");
+                props.history.push("/shop");
             }).catch(err => {
                 console.log("Login Failed");
         });

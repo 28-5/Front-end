@@ -9,12 +9,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuList from "./MenuList";
 import Typography from '@material-ui/core/Typography';
 import {Link } from "react-router-dom";
-import PersonIcon from '@material-ui/icons/Person';
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Toolbar from "@material-ui/core/Toolbar";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -123,16 +121,16 @@ export default function Navbar() {
         {판매제품등록: "/service/seller/request"},
         ];
     const menu4 = [
-        {"공지 및 문의": "/notice"},
-        {공지사항: "/notice"},
-        {QnA: "/qna"},
-        {질문등록: "/qna/write"},
+        {"공지 및 문의": "/notices"},
+        {공지사항: "/notices"},
+        {QnA: "/qnas"},
+        {질문등록: "/qnas/write"},
         {자주묻는질문: "/faq"},
     ];
 
-    const mobileHandleProfileMenuOpen = (event) => {
-        setMobileAnchorEl(event.currentTarget);
-    };
+    // const mobileHandleProfileMenuOpen = (event) => {
+    //     setMobileAnchorEl(event.currentTarget);
+    // };
     const mobileHandleMenuClose = () => {
         setMobileAnchorEl(null);
     };
@@ -188,8 +186,8 @@ export default function Navbar() {
                 <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(isMobileButtonOpened)} onClose={mobileHandleClose}
                       getContentAnchorEl={null}>
                     <Link to={"/introduction"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>소개</MenuItem></Link>
-                    <Link to={"/notice"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>공지</MenuItem></Link>
-                    <Link to={"/qna"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>QnA</MenuItem></Link>
+                    <Link to={"/notices"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>공지</MenuItem></Link>
+                    <Link to={"/qnas"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>QnA</MenuItem></Link>
                     <Link to={"/shop"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>쇼핑</MenuItem></Link>
                     <Link to={"/service/request"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>픽업신청</MenuItem></Link>
                     <Link to={"/service/seller/request"} className={classes.mobileLink}><MenuItem onClick={mobileHandleMenuClose}>제품등록</MenuItem></Link>

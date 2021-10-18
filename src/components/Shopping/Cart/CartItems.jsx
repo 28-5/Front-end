@@ -178,7 +178,7 @@ const CartItems = props => {
             </div>
             <div className={classes.about}>
                 <h1 className={classes.title}>{item.title}</h1>
-                <h3 className={classes.subtitle}>{item.price}</h3>
+                <h3 className={classes.subtitle}>{item.price.toLocaleString('ko-KR')}</h3>
             </div>
             <div className={classes.counter}>
                 <div className={classes.btn} onClick={props.onAdd.bind(null, item)}>+</div>

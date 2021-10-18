@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#fff",
         marginTop: 80,
         paddingTop: 20,
-
      },
     footerUl:{
       padding: 0,
@@ -56,7 +55,7 @@ const Footer = () => {
             <div className={classes.footer_menu}>
                 <Typography variant={"subtitle1"} display={"inline"} className={classes.footerEmail}>서울시 구로구 가산동 1 8층</Typography>
                 <ul className={classes.footerUl}>
-                    <li className={classes.footerLi}><Link to="/main" className={classes.footerLink}>메인</Link></li>
+                    <li className={classes.footerLi}><Link to="/company" className={classes.footerLink}>메인</Link></li>
                     <li className={classes.footerLi}><Link to="/introduction" className={classes.footerLink}>회사소개</Link></li>
                     <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>이용약관</Link></li>
                     <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>개인정보처리방침</Link></li>

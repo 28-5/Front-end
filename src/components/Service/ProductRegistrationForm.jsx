@@ -1,17 +1,13 @@
-import Navbar from "../Navbar/Navbar";
-import LoginNavBtn from "../Login/LoginNavBtn";
 import Container from "@material-ui/core/Container";
-import React, {useRef, useState} from "react";
+import {useHistory} from "react-router-dom";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import "./ProductRegistrationForm.css";
-import Button from "@material-ui/core/Button";
 import axios from "axios";
-import LoaddingSpinner from "../UI/LoaddingSpinner";
 import useInput from "../hooks/use-input";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import ImageUpload from "./ImageUpload";
 const useStyles = makeStyles({
     mainContainer:{
@@ -30,20 +26,18 @@ const useStyles = makeStyles({
 
 const ProductRegistrationForm = (props) =>{
     const classes                       = useStyles();
-    const { value: enteredSeller ,
-        valueChangeHandler: sellerChangeHandler,
+    const history                       = useHistory();
+    const [imageInfo, setImageInfo]     = useState(null);
+    const {valueChangeHandler: sellerChangeHandler,
         reset: resetSellerInput}        = useInput();
-    const { value: enteredPhone ,
-        valueChangeHandler: phoneChangeHandler,
+    const {valueChangeHandler: phoneChangeHandler,
         reset: resetPhoneInput}         = useInput();
-    const { value: enteredProductType,
-        nameChangeHandler: productTypeNameChangeHandler,
+    const {nameChangeHandler: productTypeNameChangeHandler,
         reset: resetProductTypeInput}   = useInput();
     const { value: enteredBrand,
-        nameChangeHandler: brandNameChangeHandler,
+        valueChangeHandler: brandChangeHandler,
         reset: resetBrand}              = useInput();
-    const { value: enteredRate,
-        valueChangeHandler: rateChangeHandler,
+    const {valueChangeHandler: rateChangeHandler,
         reset: resetRate}               = useInput();
     const { value: enteredAmount,
         valueChangeHandler: amountChangeHandler,
@@ -60,19 +54,23 @@ const ProductRegistrationForm = (props) =>{
 
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        // console.log("image: " + image);
-        axios.post("/shop", {
-            headers: {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'},
-            data: {
-                title: enteredTitle,
-                brand:enteredBrand,
-                rank:enteredRate,
-                quantity:enteredAmount,
-                price:enteredPrice,
-                content: enteredContent,
-                // imageDtoList:,
-            }
-        }).then(res => {
+        let productData = {
+            title: enteredTitle,
+            brand:enteredBrand,
+            quantity:enteredAmount,
+            price:enteredPrice,
+            content: enteredContent,
+            imageDtoList:[
+                {
+                    imgName: imageInfo[0].imgName,
+                    uuid: imageInfo[0].uuid,
+                    path: imageInfo[0].path,
+                }
+            ],
+        };
+        ///categories/8/products
+        axios.post(`/categories/${enteredContent}/products`, productData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+            .then(res => {
             // axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
             // props.history.push(path);
             resetSellerInput();
@@ -84,21 +82,20 @@ const ProductRegistrationForm = (props) =>{
             resetPrice();
             resetTitle();
             resetContent();
+            setImageInfo(null);
             console.log("성공");
             // props.history.push("/service/success");
+            history.push("/service/success");
 
         }).catch(err => {
             console.log(err.request);
-            console.log(err.response);
+            console.log(err.response.data);
             console.log(err.response.message);
         });
     };
 
-
     return(
         <>
-            <Navbar />
-            <LoginNavBtn />
             <Container maxWidth="xl" className={classes.mainContainer}>
                 <form className="form-card">
                     <fieldset className="form-fieldset">
@@ -148,60 +145,22 @@ const ProductRegistrationForm = (props) =>{
                         </div>
                         <div className="form-checkbox form-checkbox-inline">
                             <div className="form-checkbox-legend">어떤 브랜드인가요?</div>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="타이틀리스트" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>타이틀리스트</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="캘러웨이" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>캘러웨이</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="테일러메이드" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>테일러메이드</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="핑" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>핑</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="미즈노" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>미즈노</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="클리브랜드" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>클리브랜드</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="혼마" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>혼마</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="PXG" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>PXG</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="코브라킹" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>코브라킹</span>
-                            </label>
-                            <label className="form-checkbox-label" onClick={brandNameChangeHandler}>
-                                <input name="브리지스톤" className="form-checkbox-field" type="checkbox"/>
-                                <i className="form-checkbox-button"></i>
-                                <span>브리지스톤</span>
-                            </label>
+                            <Select labelId="demo-simple-select-label" className="rate" onClick={brandChangeHandler} defaultValue="" >
+                                <MenuItem value="타이틀리스트">타이틀리스트</MenuItem>
+                                <MenuItem value="캘러웨이">캘러웨이</MenuItem>
+                                <MenuItem value="테일러메이드">테일러메이드</MenuItem>
+                                <MenuItem value="핑">핑</MenuItem>
+                                <MenuItem value="미즈노">미즈노</MenuItem>
+                                <MenuItem value="클리브랜드">클리브랜드</MenuItem>
+                                <MenuItem value="혼마">혼마</MenuItem>
+                                <MenuItem value="PXG">PXG</MenuItem>
+                                <MenuItem value="코브라킹">코브라킹</MenuItem>
+                                <MenuItem value="브리지스톤">브리지스톤</MenuItem>
+                            </Select>
                         </div>
                         <div className="form-element form-select">
                             <InputLabel id="demo-controlled-open-select-label" >제품 등급</InputLabel>
-                            <Select labelId="demo-simple-select-label" className="rate" onChange={rateChangeHandler} >
+                            <Select labelId="demo-simple-select-label" className="rate" onClick={rateChangeHandler} defaultValue="" >
                                 <MenuItem value="A+">A+</MenuItem>
                                 <MenuItem value="A">A</MenuItem>
                                 <MenuItem value="B+">B+</MenuItem>
@@ -236,7 +195,7 @@ const ProductRegistrationForm = (props) =>{
                             <label className="form-element-label" htmlFor="field-3naeph-0f3yuw-x153ph-dzmahy-qhkmgm">
                                 상품내용
                             </label>
-                            <ImageUpload />
+                            <ImageUpload setImgInfo={setImageInfo}/>
                         </div>
                     </fieldset>
                     <div className="form-actions">

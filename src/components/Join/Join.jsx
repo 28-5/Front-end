@@ -82,13 +82,6 @@ const Join = ({history}) => {
     const handleClose = () => {
         setOpen(false);
     };
-    const handleToggle = () => {
-        setOpen(!open);
-        setTimeout(() => {
-            setOpen(false);
-        }, 500);
-    };
-
     const modalOpenHandler = () => {
         setModalOpen(true);
     };

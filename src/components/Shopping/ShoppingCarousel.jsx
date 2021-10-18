@@ -10,6 +10,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles((theme) => ({
     carouselSlider:{
         top: -20,
+        zIndex:0,
     },
     wrap:{
         position:"relative",
@@ -67,7 +68,6 @@ const ShoppingCarousel = () => {
         </span>
         );
     }
-
     const settings = {
         dots: true,
         slidesToShow: 1,

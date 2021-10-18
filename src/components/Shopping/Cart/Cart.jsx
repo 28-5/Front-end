@@ -1,10 +1,9 @@
 import CartModal from "./CartModal";
-import React, {useContext} from "react";
-import {history, Link} from "react-router-dom";
+import React from "react";
+import {Link} from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from "@material-ui/core/styles";
 import CartItems from "./CartItems";
-import axios from "axios";
 import Button from '@material-ui/core/Button';
 import {useDispatch, useSelector} from "react-redux";
 import {cartActions} from "../../../store/cart-slice";

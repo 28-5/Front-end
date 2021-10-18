@@ -1,12 +1,10 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
-import Navbar from "../Navbar/Navbar";
-import LoginNavBtn from "../Login/LoginNavBtn";
+import LoginNavBtn from "../Layout/LoginNavBtn";
 import Button from '@material-ui/core/Button';
 import axios from "axios";
-import IconButton from '@material-ui/core/IconButton';
 import {useLocation} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     mainContainer:{
@@ -45,7 +43,7 @@ const ModificationForm = props => {
     const classes               =   useStyles();
     const location              = useLocation();
     const { data }              = location.state;
-    const path                  =   props.path;
+    let path                  =   props.path;
     const [title, setTitle]     =   useState(data.postTitle);
     const [content, setContent] =   useState(data.postContent);
     const titleChangeHandler    =   event =>{
@@ -54,6 +52,7 @@ const ModificationForm = props => {
     const contentChangeHandler  =   event =>{
         setContent(event.target.value);
     };
+    console.log(path);
     const formFetchHandler      =   event =>{
         event.preventDefault();
         const modifiedData      ={
@@ -75,7 +74,6 @@ const ModificationForm = props => {
     return (
         <Container maxWidth="lg" className={classes.mainContainer}>
             <LoginNavBtn paddingNum={0}/>
-            <Navbar />
             <form>
                 <div className={classes.root}>
                     <div>

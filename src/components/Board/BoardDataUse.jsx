@@ -10,8 +10,8 @@ export const BoardDataUse = () =>{
         setError(null);
 
         try{
-            const responseNotice  = await axios.get("/notice");
-            const responseQnA     = await axios.get("/qna");
+            const responseNotice  = await axios.get("/notices");
+            const responseQnA     = await axios.get("/qnas");
             if(responseNotice.status !== 200 || responseQnA.status !== 200){
                 throw new Error("Something went wrong!");
             }
@@ -35,7 +35,6 @@ export const BoardDataUse = () =>{
                     views: list.views,
                 };
             });
-            console.log(qnaList);
             setNoticeListData(noticeList);
             setQnaListData(qnaList);
         }catch (error) {

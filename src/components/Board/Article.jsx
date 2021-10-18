@@ -1,5 +1,4 @@
 import {Link, useLocation} from 'react-router-dom';
-import Navbar from "../Navbar/Navbar";
 import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -10,7 +9,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Container from "@material-ui/core/Container";
-import LoginNavBtn from "../Login/LoginNavBtn";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 const useStyles = makeStyles({
@@ -30,12 +28,21 @@ const Article = props => {
     const classes = useStyles();
     const location = useLocation();
     const { data } = location.state;
-    const path     = props.match.url.slice(0,4) + props.match.url.slice(12);
+    let deletePath;
+    let modifyPath;
+    switch (props.match.url.slice(0,3)) {
+        case "/no": modifyPath = props.match.url.slice(0,8);
+                    deletePath = props.match.url.slice(0,8) + props.match.url.slice(16);
+                    break;
+        default: modifyPath = props.match.url.slice(0,5);
+                 deletePath = props.match.url.slice(0,6) + props.match.url.slice(14);
+                 break;
+    }
     const deleteHandler = () => {
-        axios.delete(path,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+        axios.delete(deletePath,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
             .then(res => {
                 console.log("글 삭제 성공");
-                props.history.push(props.match.url.slice(0,4));
+                // props.history.push(props.match.url.slice(0,6));
             }).catch(err => {
             console.log(err.request);
             console.log(err.response);
@@ -44,8 +51,6 @@ const Article = props => {
     };
     return(
         <>
-        <Navbar />
-        <LoginNavBtn/>
             <Container maxWidth="xl" className={classes.mainContainer}>
             <TableContainer component={Paper}>
                 <Table className={classes.table} aria-label="simple table">
@@ -77,7 +82,7 @@ const Article = props => {
                 <p className={"tagline text-center"}>{data.postContent}</p>
             </div>
                 <Button variant="outlined" color="primary" component={Link} to={{
-                    pathname: props.match.url.slice(0, 4) + "/modify",
+                    pathname: modifyPath + "/modify",
                     state: {
                         data: data
                     }}}

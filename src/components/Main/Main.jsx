@@ -1,15 +1,11 @@
 import React from "react";
-import LoginNavBtn from "../Login/LoginNavBtn";
-import Navbar from "../Navbar/Navbar";
 import MainTop from "./MainTop";
 import MainBody from "./MainBody";
 import Partners from "./Partners";
 
-const Main = props => {
+const Main = () => {
     return(
         <>
-          <Navbar />
-          <LoginNavBtn history={props.history}/>
           <MainTop />
           <MainBody/>
           <Partners/>

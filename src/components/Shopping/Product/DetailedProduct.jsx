@@ -1,6 +1,4 @@
-import ShoppingTopNav from "../ShoppingTopNav";
-import ShoppingNavbar from "../../Navbar/ShoppingNavbar";
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import Container from "@material-ui/core/Container";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Breadcrumb from "./Breadcrumb";
@@ -11,10 +9,8 @@ import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AmountSelect from "./AmountSelect";
 import Cart from "../Cart/Cart";
-import Footer from "../../Main/Footer";
 import Typography from "@material-ui/core/Typography";
 import DetailedProductContent from "./DetailedProductContent";
-import axios from "axios";
 import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {cartActions} from "../../../store/cart-slice";
@@ -149,9 +145,7 @@ const DetailedProduct = (props) => {
 
     return(
         <section className={classes.shoppingMainSection}>
-            <ShoppingTopNav/>
             <Container maxWidth="lg">
-                <ShoppingNavbar />
                 <Breadcrumb showPath={productNumber} />
                 <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridContainer}>
                     <Grid item sm={12} md={6} >

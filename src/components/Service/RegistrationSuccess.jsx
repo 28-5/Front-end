@@ -1,5 +1,3 @@
-import Navbar from "../Navbar/Navbar";
-import LoginNavBtn from "../Login/LoginNavBtn";
 import Container from "@material-ui/core/Container";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
@@ -17,8 +15,6 @@ const RegistrationSuccess = () =>{
     const classes = useStyles();
     return(
         <>
-            <Navbar />
-            <LoginNavBtn />
             <Container maxWidth="xl" className={classes.mainContainer}>
                 <div>
                     <Typography align="center" variant={"h3"}>성공적으로 요청되었습니다!</Typography>

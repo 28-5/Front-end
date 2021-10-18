@@ -20,14 +20,17 @@ body {
     position: relative;
     float: left;
     width: 50%;
-    height: 100%;
+    height: 626px;
     background: #fff;
-    padding: 30px;
+    padding: 10px;
     border-radius: 10px 0px 0px 0px;
+}
+#container #info h1{
+    text-align: center;
 }
 #container #info label {
     color: #8A8A8C;
-    font-size: 13px;
+    font-size: 20px;
     font-weight: 300;
     margin-bottom: 10px;
     float: left;
@@ -41,7 +44,7 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
     padding: 10px 20px;
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 300;
 }
 #container #info input[name=cardDate] {
@@ -106,8 +109,8 @@ body {
 #container #description {
     float: right;
     width: 50%;
-    height: 575px;
-    background: linear-gradient(to bottom, #76D2FF, #07E7D7);
+    height: 590px;
+    /*background: linear-gradient(to bottom, #76D2FF, #07E7D7);*/
     text-align: center;
     border-radius: 0px 10px 10px 0px;
 }
@@ -126,7 +129,7 @@ body {
     background: none;
     border: 1px solid #FFF;
     color: #FFF;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 300;
     height: 45px;
     margin-top: 20px;
@@ -157,4 +160,144 @@ body {
     font-size: 13px;
     font-weight: 300;
     text-transform: uppercase;
+}
+
+*:focus {
+    outline: none;
+}
+
+.left {
+    width: 70%;
+    float: left;
+    clear: both;
+}
+
+body {
+    height: auto;
+    min-height: calc(100vh);
+    font-family: twayair;
+    font-weight: 400;
+}
+body #wrapper {
+    height: 100vh;
+    display: flex;
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+body #wrapper #container {
+    background: white;
+    height: 100%;
+    min-width: 600px;
+    width: 100%;
+    z-index: 1;
+    -webkit-box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.2);
+}
+body #wrapper #container #left-col {
+    padding-top: 20px;
+    width: 100%;
+    min-width: 240px;
+    height: 100%;
+    float: left;
+    background: #34495e;
+    overflow: scroll;
+}
+body #wrapper #container #left-col #left-col-cont {
+    margin: 20px 25px;
+    color: white;
+}
+body #wrapper #container #left-col #left-col-cont h2 {
+    margin: 25px 0 0 0;
+    text-align: center;
+    font-size: 30px;
+}
+body #wrapper #container #left-col #left-col-cont div.item {
+    margin: 30px 0;
+    clear: both;
+}
+body #wrapper #container #left-col #left-col-cont div.item .img-col {
+    width: 30%;
+    float: left;
+}
+body #wrapper #container #left-col #left-col-cont div.item .img-col img {
+    width: 100%;
+    max-height: 100px;
+}
+body #wrapper #container #left-col #left-col-cont div.item .meta-col {
+    width: 70%;
+    float: left;
+    font-size: 30px;
+}
+body #wrapper #container #left-col #left-col-cont div.item .meta-col h3 {
+    margin: 10px 0 0 5px;
+    display: inline-block;
+    display: inline-block;
+}
+body #wrapper #container #left-col #left-col-cont div.item .meta-col p {
+    font-size: 0.9em;
+    margin: 5px 0 0 5px;
+    opacity: 0.5;
+}
+body #wrapper #container #left-col #left-col-cont div.item .meta-col .amount {
+    /*font-size: 0.9em;*/
+    margin: 5px 0 0 5px;
+    opacity: 0.5;
+    float: right;
+    display: inline-block;
+}
+body #wrapper #container #left-col #left-col-cont .totalPrice {
+    float: right;
+    width: 70%;
+}
+body #wrapper #container #left-col #left-col-cont .totalPriceMeta {
+    font-size: 1.9em;
+}
+
+body #wrapper #container #left-col #left-col-cont h1#total {
+    text-transform: uppercase;
+    text-align: right;
+    font-size: 0.9em;
+    opacity: 0.5;
+}
+body #wrapper #container #left-col #left-col-cont h4#total-price {
+    text-align: right;
+    font-size: 2em;
+    margin: 0;
+}
+body #wrapper #container #left-col #left-col-cont h4#total-price span {
+    color: #1c2834;
+}
+
+.radioDiv{
+    padding-left: 30px;
+}
+.paymentDiv{
+    padding-top: 50px;
+}
+.paymentWireDiv{
+    padding-left: 30px;
+    display: block;
+}
+.paymentLabel{
+    padding-top: 10px;
+    text-align: left;
+}
+
+@media (max-width: 1028px)  {
+    body #wrapper {
+        display: block;
+    }
+    #container #info {
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 500px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 10px 0px 0px 0px;
+    }
 }

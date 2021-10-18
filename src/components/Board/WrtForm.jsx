@@ -2,11 +2,9 @@ import React, {useRef, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Container from "@material-ui/core/Container";
-import Navbar from "../Navbar/Navbar";
-import LoginNavBtn from "../Login/LoginNavBtn";
+import LoginNavBtn from "../Layout/LoginNavBtn";
 import Button from '@material-ui/core/Button';
 import axios from "axios";
-import IconButton from '@material-ui/core/IconButton';
 const useStyles = makeStyles((theme) => ({
     mainContainer:{
         paddingLeft:"120px",
@@ -42,27 +40,15 @@ const useStyles = makeStyles((theme) => ({
 
 const WrtForm = props => {
     const classes               =   useStyles();
-    const imgInput              =   useRef();
     const path                  =   props.path;
-    const [loading, setLoadding]=   useState(false);
     const [title, setTitle]     =   useState(null);
     const [content, setContent] =   useState(null);
-    const [image, setImage]     =   useState(null);
-    const [error, setError]     =   useState(null);
     const titleChangeHandler    =   event =>{
         setTitle(event.target.value);
     };
     const contentChangeHandler  =   event =>{
         setContent(event.target.value);
     };
-    const imageBtnHandler       =   async (event) =>{
-      event.preventDefault();
-      setLoadding(true);
-      const formData    = new FormData();
-      formData.append("file", event.target.files[0]);
-      setImage(formData);
-    };
-
     const formFetchHandler      =   event =>{
         event.preventDefault();
         let json={title:title, content:content};
@@ -76,9 +62,6 @@ const WrtForm = props => {
             console.log(err.response);
             console.log(err.response.message);
         });
-
-
-
 
         // axios.post(path, {
         //
@@ -99,7 +82,6 @@ const WrtForm = props => {
     return (
             <Container maxWidth="lg" className={classes.mainContainer}>
                 <LoginNavBtn paddingNum={0}/>
-                    <Navbar />
                     <form>
                     <div className={classes.root}>
                         <div>

@@ -17,12 +17,11 @@ const useStyles = makeStyles((theme) => ({
 const QnA = props =>{
     const classes               =   useStyles();
 
-
     return(
         <>
-            <BoardListForm data={props.qnaData} path={"/qna"}/>
+            <BoardListForm data={props.qnaData} path={"/qnas"}/>
             <div className={classes.registerBtnDiv}>
-                <Button variant="outlined" color="primary" component={Link} to={"/qna/write"} className={classes.formBtn} >
+                <Button variant="outlined" color="primary" component={Link} to={"/qnas/write"} className={classes.formBtn} >
                     질문등록
                 </Button>
             </div>

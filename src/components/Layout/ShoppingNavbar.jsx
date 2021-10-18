@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft:0,
 
     },
+    navMenu:{
+        width: "500px"
+    },
     menuContainer:{
         [theme.breakpoints.down('sm')]: {
             display:"none",
@@ -53,7 +56,10 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         display: 'none',
-        fontSize: 24,
+        fontSize: "25px",
+        fontFamily: "twayair",
+        fontWeight: 500,
+        color: "black",
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
@@ -130,14 +136,11 @@ const ShoppingNavbar = (props) => {
     const dispatch                                        = useDispatch();
     const numberOfCartItems                               = useSelector(state => state.cart.totalQuantity);
     const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
+    const showCart                                        = useSelector(state => state.ui.isCartVisible);
     const [anchorEl, setAnchorEl]                         = useState(null);
     const [mobileAnchorEl, setMobileAnchorEl]             = useState(null);
     const [isButtonOpened, setisButtonOpened]             = useState(null);
     const [isMobileButtonOpened, setisMobileButtonOpened] = useState(null);
-    // const numberOfCartItems                               = cartCtx.items.reduce((curNum, item) => {
-    //     return curNum + item.amount;
-    // }, 0);
-    const showCart = useSelector(state => state.ui.isCartVisible);
 
     const showCartHandler = () => {
         dispatch(uiActions.toggle());
@@ -187,7 +190,7 @@ const ShoppingNavbar = (props) => {
                                     전체 카테고리
                                 </Typography>
                             </Button>
-                            <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClose={handleClose}>
+                            <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
                                 <MenuItem onClick={handleMenuClose}>베스트</MenuItem>
                                 <MenuItem onClick={handleMenuClose}>주문조회</MenuItem>
                                 <MenuItem onClick={handleMenuClose}>마이페이지</MenuItem>
@@ -203,12 +206,12 @@ const ShoppingNavbar = (props) => {
                                     주문조회
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/mypage">
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/company">
                                 <Typography className={classes.title} variant="h6" noWrap>
-                                    마이페이지
+                                    회사소개
                                 </Typography>
                             </Button>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/notice">
+                            <Button aria-controls="simple-menu" aria-haspopup="true" className={classes.menuButton} component={Link} to="/notices">
                                 <Typography className={classes.title} variant="h6" noWrap>
                                     공지사항
                                 </Typography>
@@ -225,8 +228,8 @@ const ShoppingNavbar = (props) => {
                             <MenuItem onClick={mobileHandleMenuClose}>전체 카테고리</MenuItem>
                             <MenuItem onClick={mobileHandleMenuClose}>베스트</MenuItem>
                             <MenuItem onClick={mobileHandleMenuClose}>주문조회</MenuItem>
-                            <MenuItem onClick={mobileHandleMenuClose}>마이페이지</MenuItem>
-                            <MenuItem onClick={mobileHandleMenuClose}>공지사항</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}  component={Link} to="/company">회사소개</MenuItem>
+                            <MenuItem onClick={mobileHandleMenuClose}  component={Link} to="/notices">공지사항</MenuItem>
                         </Menu>
                     </div>
                     <div className={classes.search}>

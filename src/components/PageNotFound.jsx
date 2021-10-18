@@ -28,7 +28,7 @@ const PageNotFound = () =>{
                 </div>
 
                 <div className={classes.text}>잘못된 주소로 접근하셨습니다.</div>
-                <a className={classes.button} href="/main">메인으로</a>
+                <a className={classes.button} href="/shop">메인으로</a>
             </div>
             </>
     )
