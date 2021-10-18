@@ -1,68 +1,87 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import {Link} from "react-router-dom";
-import Typography from "@material-ui/core/Typography";
 import React from "react";
-
-const useStyles = makeStyles((theme) => ({
-    footer:{
-        borderTop: "0.01px solid #E2E2E2",
-        textAlign:"center",
-        margin: "0px 15px",
-        backgroundColor: "#fff",
-        marginTop: 80,
-        paddingTop: 20,
-     },
-    footerUl:{
-      padding: 0,
-      margin: 0,
-    },
-    footerLi:{
-      listStyle: "none",
-      display: "inline-block",
-      margin: "0px 15px",
-    },
-    footer_menu:{
-      marginTop: 20,
-      paddingBottom: 20,
-    },
-    footerLink:{
-      fontSize: 15,
-      fontFamily :"twayair",
-      color: "#7a7a7a",
-      textTransform: "uppercase",
-      transition: "all 0.5s",
-      "&:hover":{
-        color:"#3a8bcd"
-      },
-    },
-    footerEmail:{
-      fontSize: 15,
-      color: "#7a7a7a",
-      fontFamily :"twayair",
-
-    },
-
-
-}));
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "./Footer.css";
 
 const Footer = () => {
-    const classes = useStyles();
     return(
-        <div className={classes.footer}>
-            <div className={classes.logo}>
-                <img src="img/logo/logo.png" alt=""/>
+
+        <footer className="footer-section spad">
+            <Container className="container">
+                <div className="footer-widget">
+                    <Row className="row">
+                        <Col sm={6} lg={3}>
+                            <div className="single-footer-widget">
+                                <h4>회사소개</h4>
+                                <ul>
+                                    <li><Link to={"/introduction"}>리본</Link></li>
+                                    <li><Link to={"/introduction/team"}>사업소개</Link></li>
+                                    <li><Link to={"/introduction/business"}>팀</Link></li>
+                                    <li><Link to={"/introduction/manual"}>리본 토큰</Link></li>
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col sm={6} lg={3}>
+                            <div className="single-footer-widget">
+                                <h4>쇼핑</h4>
+                                <ul>
+                                    <li><Link to={"/introduction"}>골프클럽</Link></li>
+                                    <li><Link to={"/introduction"}>용품</Link></li>
+                                    <li><Link to={"/introduction"}>웨어</Link></li>
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col lg={3} sm={6} className="col-lg-3 col-sm-6">
+                            <div className="single-footer-widget">
+                                <h4>게시판</h4>
+                                <ul>
+                                    <li><Link to={"/notices"}>공지사항</Link></li>
+                                    <li><Link to={"/qnas"}>질문게시판</Link></li>
+                                    <li><Link to={"/faq"}>자주묻는질문</Link></li>
+                                </ul>
+                            </div>
+                        </Col>
+                        <Col lg={3} sm={6} className="col-lg-3 col-sm-6">
+                            <div className="single-footer-widget">
+                                <h4>마이페이지</h4>
+                                <ul>
+                                    <li><Link to={"/mypage"}>정보조회</Link></li>
+                                    <li><Link to={"/introduction"}>주문조회</Link></li>
+                                    <li><Link to={"/introduction"}>리본</Link></li>
+                                </ul>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
+            </Container>
+            <div className="social-links-warp">
+                <Container className="container">
+                    <div className="social-links">
+                        <Row className="row">
+                            <Col sm={6} lg={12}>
+                                <Link to="/company" >메인</Link>
+                                <Link to="/shop" >이용약관</Link>
+                                <Link to="/shop" >개인정보처리방침</Link>
+                                <Link to="/shop" >Contact Us</Link>
+                            </Col>
+                            <Col sm={6} lg={6}>
+                            </Col>
+                        </Row>
+                    </div>
+                </Container>
+                <Container className="text-center pt-5">
+                                <p>서울시 구로구 가산동 1 8층</p>
+                    <p> Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0
+                        Copyright &copy;
+                        All rights reserved | This template is made with <i className="icon-heart color-danger"
+                                                                            aria-hidden="true"></i> by <a
+                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                    </p>
+                </Container>
             </div>
-            <div className={classes.footer_menu}>
-                <Typography variant={"subtitle1"} display={"inline"} className={classes.footerEmail}>서울시 구로구 가산동 1 8층</Typography>
-                <ul className={classes.footerUl}>
-                    <li className={classes.footerLi}><Link to="/company" className={classes.footerLink}>메인</Link></li>
-                    <li className={classes.footerLi}><Link to="/introduction" className={classes.footerLink}>회사소개</Link></li>
-                    <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>이용약관</Link></li>
-                    <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>개인정보처리방침</Link></li>
-                    <li className={classes.footerLi}><Link to="#" className={classes.footerLink}>Contact Us</Link></li>
-                </ul>
-            </div>
-        </div>
+        </footer>
     )
 };
 

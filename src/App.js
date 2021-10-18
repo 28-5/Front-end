@@ -30,6 +30,7 @@ import {getCartData, sendCartData} from "./store/cart-actions";
 import Layout from "./components/Layout/Layout";
 import {getProductdata} from "./store/product-actions";
 import Test from "./components/Test";
+import {authActions} from "./store/auth-slice";
 
 let isInitial = true;
 
@@ -47,6 +48,14 @@ function App() {
         setCartIsShown(false);
     };
 
+    useEffect(() => {
+        if(localStorage.getItem("jwt")){
+            dispatch(authActions.auth());
+            console.log("auth");
+        }else{
+            console.log("no auth");
+        }
+    }, [dispatch]);
     useEffect(() => {
         dispatch(getCartData());
         dispatch(getProductdata());
@@ -70,13 +79,13 @@ function App() {
                 1. 상품등록 및 리스트 가져오는거 백엔드 체크.
               */}
                   <Route exact path="/test"component={Test} />
+                  {/*Shop Main Page*/}
                   <Route exact path="/">
                       <Redirect to="/shop"/>
                   </Route>
                   <Route exact path="/shop" render={props => <ShoppingMain {...props}/>}/>
                   <Route exact path={"/shop/product/:productNum"} render={
-                      props => <DetailedProduct showCart={showCartHandler} closeCart={hideCartHandler}
-                                                isShown={cartIsShown} setCart={setCartIsShown} {...props}/> } />
+                      props => <DetailedProduct {...props}/> } />
                   <Route exact path="/shop/order" render={props => <Order {...props}/>}/>
                   {/*Company*/}
                   <Route exact path="/company" render={props =><Main {...props} /> }/>
@@ -112,10 +121,9 @@ function App() {
                   {/*Mypage*/}
                   <Route exact path="/mypage" component={MyPageMain}/>
 
-              {/*Shop Main Page*/}
-         </Layout>
               {/*Page Not Found Page*/}
               <Route path="/*" component={PageNotFound} />
+         </Layout>
           </Switch>
     </Router>
   );

@@ -1,0 +1,21 @@
+.carousel-inner{
+    height: 100%;
+}
+.carousel-item img {
+    height: 700px;
+    /*position: absolute;*/
+    object-fit:cover;
+    top: 0;
+    left: 0;
+}
+.carousel-caption h3{
+    color: black;
+    font-size: 110px;
+    font-weight: 700;
+}
+.carousel-caption p{
+    color: black;
+    font-size: 96px;
+    font-weight: 400;
+    padding-bottom: 150px;
+}

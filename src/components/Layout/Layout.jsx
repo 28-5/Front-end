@@ -20,10 +20,10 @@ const Layout = props =>{
     return (
         <>
             <ShoppingNavbar/>
+            {/*{isNotificationVisible &&*/}
+            {/*<Notification status={notification.status} title={notification.title} message={notification.message}/>}*/}
             {/*<Container maxWidth="lg">*/}
             {/*    <ShoppingTopNav/>*/}
-            {/*    {isNotificationVisible &&*/}
-            {/*    <Notification status={notification.status} title={notification.title} message={notification.message}/>}*/}
             {/*    {differentNavPath.indexOf(pathname) === -1 ? <ShoppingNavbar/> : <Navbar/>}*/}
             {/*    {(pathname !== "/admin" && !isAuth) && <LoginNavBtn/>}*/}
             {/*</Container>*/}

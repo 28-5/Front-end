@@ -25,121 +25,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {uiActions} from "../../store/ui-slice";
 import {authActions} from "../../store/auth-slice";
 import "./ShoppingNavbar.css";
-
-// const useStyles = makeStyles((theme) => ({
-//     grow: {
-//         flexGrow: 1,
-//         marginLeft: theme.spacing(0),
-//         paddingLeft:0,
-//     },
-//     appBar:{
-//         backgroundColor:"#fff",
-//         color: "black",
-//         boxShadow: "none",
-//         width:"1245px",
-//         [theme.breakpoints.down('md')]: {
-//             width:"100%",
-//         },
-//     },
-//     toolBar:{
-//         paddingLeft:0,
-//
-//     },
-//     navMenu:{
-//         width: "500px"
-//     },
-//     menuContainer:{
-//         [theme.breakpoints.down('sm')]: {
-//             display:"none",
-//         },
-//     },
-//     menuButton: {
-//         paddingLeft: 0,
-//         marginRight: theme.spacing(2),
-//
-//     },
-//     title: {
-//         display: 'none',
-//         fontSize: "25px",
-//         fontFamily: "twayair",
-//         fontWeight: 500,
-//         color: "black",
-//         [theme.breakpoints.up('sm')]: {
-//             display: 'block',
-//         },
-//     },
-//     search: {
-//         position: 'relative',
-//         borderRadius: theme.shape.borderRadius,
-//         backgroundColor: alpha(theme.palette.common.white, 0.15),
-//         '&:hover': {
-//             backgroundColor: alpha(theme.palette.common.white, 0.25),
-//         },
-//         marginRight: theme.spacing(2),
-//         marginLeft: 0,
-//         width: '100%',
-//         [theme.breakpoints.up('sm')]: {
-//             marginLeft: theme.spacing(2),
-//             width: 'auto',
-//         },
-//         [theme.breakpoints.down('md')]: {
-//             position:"relative",
-//             float:"center",
-//             textAlign:"center",
-//             justifyContent: "center",
-//             alignItems: "center"
-//         },
-//
-//     },
-//     searchInput:{
-//         width:"18rem",
-//         [theme.breakpoints.down('md')]: {
-//             width: "20rem"
-//         },
-//         [theme.breakpoints.down('sm')]: {
-//             width: "15rem"
-//         },
-//         [theme.breakpoints.down('xs')]: {
-//             width: "9rem"
-//         },
-//     },
-//
-//     cartIcon:{
-//       fontSize:35,
-//         marginLeft:20,
-//     },
-//     accountIcon:{
-//       fontSize:35
-//     },
-//     menuIcon:{
-//       fontSize:35
-//     },
-//     sectionDesktop: {
-//         display: 'none',
-//         [theme.breakpoints.up('md')]: {
-//             display: 'flex',
-//         },
-//     },
-//     sectionMobile: {
-//         display: 'flex',
-//         [theme.breakpoints.up('md')]: {
-//             display: 'none',
-//         },
-//     },
-//
-//     mobileMenu:{
-//         display: 'none',
-//         [theme.breakpoints.down('sm')]: {
-//             display:"flex",
-//         },
-//     },
-// }));
+import Col from "react-bootstrap/Col";
 
 const ShoppingNavbar = (props) => {
-    // const classes                                         = useStyles();
     const dispatch                                        = useDispatch();
     const numberOfCartItems                               = useSelector(state => state.cart.totalQuantity);
     const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
+    const userEmail                                       = useSelector(state => state.auth.userEmail);
     const showCart                                        = useSelector(state => state.ui.isCartVisible);
     const [anchorEl, setAnchorEl]                         = useState(null);
     const [mobileAnchorEl, setMobileAnchorEl]             = useState(null);
@@ -198,24 +90,33 @@ const ShoppingNavbar = (props) => {
                     <Container fluid>
                         <div className="inner-header">
                             <div className="logo">
-                                <a href="./index.html"><img src="img/logo/logo.png" alt=""/></a>
+                                <Link to="/shop"><img src="/img/logo/logo.png" alt="logo"/></Link>
                             </div>
                             <div className="header-right">
-                                <img src="img/icons/search.png" alt="" className="search-trigger"/>
-                                <img src="img/icons/man.png" alt=""/>
-                                <a href="#">
-                                    <img src="img/icons/bag.png" alt=""/>
-                                    <span>2</span>
-                                </a>
+                                <img src="/img/icons/search.png" alt="searchImg" className="search-trigger"/>
+                                <img src="/img/icons/man.png" alt="accountImg" onClick={handleClick}/>
+                                <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
+                                   <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">프로필</MenuItem>
+                                   <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">개인정보수정</MenuItem>
+                                   <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>
+                                </Menu>
+                                <IconButton aria-label="show 4 new mails" color="inherit" onClick={showCartHandler}>
+                                    <Badge badgeContent={numberOfCartItems} color="secondary">
+                                        <ShoppingCartIcon />
+                                    </Badge>
+                                </IconButton>
                             </div>
-                            <div className="user-access">
+                            {isAuth === false ? <div className="user-access">
                                 <Link to={"/member/register"}>회원가입</Link>
                                 <Link to={"/member/login"} className={"in"}>로그인</Link>
-                            </div>
-                            <Navbar className="main-menu">
+                            </div>:
+                            <div className="user-access">
+                                <a>{userEmail}</a>
+                            </div>}
+                            <Navbar className={isAuth === false? "main-menu" : "main-menu auth"}>
                                 <ul>
-                                    <li><Link to={"/shop"} className={"active"}>메인</Link></li>
-                                    <li><Link to={"/shop"}>쇼핑하기</Link>
+                                    <li><Link to={"/shop"} >전체상품</Link></li>
+                                    <li><Link to={"/shop"}>카테고리</Link>
                                         <ul className="sub-menu">
                                             <li><a href="product-page.html">제품 카테고리1</a></li>
                                             <li className="sub-category-menu"><a href="product-page.html">제품</a></li>
@@ -227,8 +128,21 @@ const ShoppingNavbar = (props) => {
                                         </ul>
                                     </li>
                                     <li><Link to={""}>주문조회</Link></li>
-                                    <li><Link to={"/notices"}>공지사항</Link></li>
-                                    <li><Link to={"/introduction"}>회사소개</Link></li>
+                                    <li><Link to={"/notices"}>공지사항</Link>
+                                        <ul className="sub-menu submenuBoard">
+                                            <li><Link to="/notices">공지사항</Link></li>
+                                            <li><Link to="/qnas">Q&A</Link></li>
+                                            <li><Link to="/service/request">물품 픽업 신청</Link></li>
+                                            <li><Link to="/service/seller/request">제품 등록</Link></li>
+                                        </ul>
+                                    </li>
+                                    <li><Link to={"/introduction"}>회사소개</Link>
+                                        <ul className="sub-menu submenuBoard">
+                                            <li><Link to="/introduction/team">팀</Link></li>
+                                            <li><Link to="/qnas">사업</Link></li>
+                                            <li><Link to="/introduction/business">토큰</Link></li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </Navbar>
                             <Navbar className="mobile-menu">
@@ -252,7 +166,32 @@ const ShoppingNavbar = (props) => {
                             </Navbar>
                         </div>
                     </Container>
+                    {showCart && <Cart onClose={hideCartHandler} isOpen={showCart}/>}
                 </header>
+                <div className="header-info">
+                    <Container fluid="lg">
+                        <Row>
+                            <Col md={4}>
+                                <div className="header-item">
+                                    <img src="/img/icons/delivery.png" alt=""/>
+                                    <p>국내 배송 2,500원 및 도서지역 3,000원</p>
+                                </div>
+                            </Col>
+                            <Col md={4} className="text-left text-lg-center">
+                                <div className="header-item">
+                                    <img src="/img/icons/voucher.png" alt=""/>
+                                    <p>리본 토큰 최대 20% 사용 가능</p>
+                                </div>
+                            </Col>
+                            <Col md={4} className="text-left text-xl-right">
+                                <div className="header-item">
+                                    <img src="/img/icons/sales.png" alt=""/>
+                                    <p>무상 A/S 서비스 1년 제공</p>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
             </>
 
         // <Container maxWidth="lg" className={classes.grow}>
@@ -363,7 +302,7 @@ const ShoppingNavbar = (props) => {
             //         </div>
             //     </Toolbar>
             // </AppBar>
-            // {showCart && <Cart onClose={hideCartHandler} isOpen={showCart}/>}
+            //
         // </Container>
     );
 }

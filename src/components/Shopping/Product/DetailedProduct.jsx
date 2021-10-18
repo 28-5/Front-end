@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Container from "@material-ui/core/Container";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Breadcrumb from "./Breadcrumb";
@@ -142,7 +142,9 @@ const DetailedProduct = (props) => {
         //     })
         //     .catch(err => console.log(err));
     };
-
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
     return(
         <section className={classes.shoppingMainSection}>
             <Container maxWidth="lg">
@@ -179,7 +181,6 @@ const DetailedProduct = (props) => {
                         </Button>
                         </div>
                     </Grid>
-                        {props.isShown && <Cart onClose={props.closeCart} isOpen={props.isShown} data={productInfo[0]}/>}
                 </Grid>
                 <DetailedProductContent/>
             </Container>
