@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
     },
     joinBox:{
-        paddingTop: "10%",
+        paddingTop: "5%",
+        paddingBottom: "5%",
         textAlign:"right",
     },
     joinBtn:{

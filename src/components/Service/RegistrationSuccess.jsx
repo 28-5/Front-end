@@ -1,26 +1,31 @@
-import Container from "@material-ui/core/Container";
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import React, {useEffect} from "react";
 import Button from "@material-ui/core/Button";
-const useStyles = makeStyles({
-    mainContainer:{
-        paddingLeft:"260px",
-        paddingTop: "0px",
-        height:"100%",
-    },
-});
+import {Link} from "react-router-dom";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "./RegistrationSuccess.css";
 
 const RegistrationSuccess = () =>{
-    const classes = useStyles();
+
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
     return(
         <>
-            <Container maxWidth="xl" className={classes.mainContainer}>
-                <div>
-                    <Typography align="center" variant={"h3"}>성공적으로 요청되었습니다!</Typography>
-                    <Button type="button" href="/main">메인으로</Button>
+            <div className="card">
+
+                <div className="messageBox">
+                    <i className="checkmark">✓</i>
                 </div>
-            </Container>
+                <Row>
+                    <Col lg={12}>
+                        <h1>성공</h1>
+                        <p>성공적으로 제품등록 하였습니다.</p>
+                    </Col>
+                        <Button variant="outlined" component={Link} to={"/service/seller/request"} className="btn">다시 등록</Button>
+                        <Button variant="outlined" color={"primary"} component={Link} to={"/shop"} className="btn">메인으로</Button>
+                </Row>
+            </div>
         </>
     )
 }

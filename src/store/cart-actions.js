@@ -11,12 +11,10 @@ export const getCartData = () => {
                 throw new Error("카트 정보를 읽어올 수가 없습니다!");
             }
             const data = (await response).data;
-            console.log(data);
             return data;
         };
         try{
             const cartData = await getData();
-            console.log(cartData);
             dispatch(cartActions.replaceCart({
                 //이부분 다시 확인
                 items: cartData.items || [],

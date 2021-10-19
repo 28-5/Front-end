@@ -37,7 +37,6 @@ const ShoppingNavbar = (props) => {
     const [mobileAnchorEl, setMobileAnchorEl]             = useState(null);
     const [isButtonOpened, setisButtonOpened]             = useState(null);
     const [isMobileButtonOpened, setisMobileButtonOpened] = useState(null);
-
     const showCartHandler = () => {
         dispatch(uiActions.toggle());
     };
@@ -98,7 +97,7 @@ const ShoppingNavbar = (props) => {
                                 <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
                                    <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">프로필</MenuItem>
                                    <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">개인정보수정</MenuItem>
-                                   <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>
+                                    {isAuth && <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>}
                                 </Menu>
                                 <IconButton aria-label="show 4 new mails" color="inherit" onClick={showCartHandler}>
                                     <Badge badgeContent={numberOfCartItems} color="secondary">
@@ -115,16 +114,25 @@ const ShoppingNavbar = (props) => {
                             </div>}
                             <Navbar className={isAuth === false? "main-menu" : "main-menu auth"}>
                                 <ul>
-                                    <li><Link to={"/shop"} >전체상품</Link></li>
+                                    <li><Link to={"/shop/allproducts"} >전체상품</Link></li>
                                     <li><Link to={"/shop"}>카테고리</Link>
                                         <ul className="sub-menu">
-                                            <li><a href="product-page.html">제품 카테고리1</a></li>
-                                            <li className="sub-category-menu"><a href="product-page.html">제품</a></li>
-                                            <li className="sub-category-menu"><a href="product-page.html">제품</a></li>
-                                            <li className="sub-category-menu"><a href="product-page.html">제품</a></li>
-                                            <li className="sub-category-menu"><a href="product-page.html">제품</a></li>
-                                            <li><a href="shopping-cart.html">제품 카테고리2</a></li>
-                                            <li><a href="check-out.html">제품 카테고리3</a></li>
+                                            <li><a href="product-page.html">골프클럽</a></li>
+                                                <li className="sub-category-menu"><Link to="#">드라이버</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">우드</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">아이언</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">풀세트</Link></li>
+                                            <li><a href="shopping-cart.html">골프용품</a></li>
+                                                <li className="sub-category-menu"><Link to="#">골프공</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">골프가방</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">골프장갑</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">골프모자</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">골프화</Link></li>
+                                            <li><a href="check-out.html">골프웨어</a></li>
+                                                <li className="sub-category-menu"><Link to="#">아우터</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">상의</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">하의</Link></li>
+                                                <li className="sub-category-menu"><Link to="#">양말</Link></li>
                                         </ul>
                                     </li>
                                     <li><Link to={""}>주문조회</Link></li>

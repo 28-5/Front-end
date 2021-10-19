@@ -10,7 +10,7 @@ const ShoppingMain = (props) => {
         <>
             <ShoppingCarousel />
             <ShoppingAds/>
-            <ProductCardList data={productData}/>
+            {/*<ProductCardList data={productData}/>*/}
         </>
     );
 };

@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
     },
     loginBox:{
-        paddingTop: "16%",
+        paddingTop: "6%",
+        paddingBottom: "6%",
         textAlign:"right",
     },
     loginBtn:{

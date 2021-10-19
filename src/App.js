@@ -31,6 +31,8 @@ import Layout from "./components/Layout/Layout";
 import {getProductdata} from "./store/product-actions";
 import Test from "./components/Test";
 import {authActions} from "./store/auth-slice";
+import axios from "axios";
+import ShoppingAllProducts from "./components/Shopping/ShoppingAllProducts";
 
 let isInitial = true;
 
@@ -38,19 +40,15 @@ function App() {
     const dispatch                              = useDispatch();
     const cart                                  = useSelector(state => state.cart);
     const [userEmail, setUserEmail]             = useState(false);
-    const [cartIsShown, setCartIsShown]         = useState(false);
     const [noticeList, qnaList]                 = BoardDataUse([]);
-
-    const showCartHandler = ()=>{
-        setCartIsShown(true);
-    };
-    const hideCartHandler = ()=>{
-        setCartIsShown(false);
-    };
 
     useEffect(() => {
         if(localStorage.getItem("jwt")){
-            dispatch(authActions.auth());
+            axios.get("/member", {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    dispatch(authActions.auth({userEmail: res.data.email}));
+                })
+                .catch(err => console.log(err));
             console.log("auth");
         }else{
             console.log("no auth");
@@ -69,12 +67,10 @@ function App() {
             dispatch(sendCartData(cart));
         }
     }, [cart, dispatch]);
-
-
   return (
     <Router>
+        <Layout>
           <Switch>
-              <Layout>
               {/*
                 1. 상품등록 및 리스트 가져오는거 백엔드 체크.
               */}
@@ -84,6 +80,7 @@ function App() {
                       <Redirect to="/shop"/>
                   </Route>
                   <Route exact path="/shop" render={props => <ShoppingMain {...props}/>}/>
+                  <Route exact path="/shop/allproducts" component={ShoppingAllProducts}/>
                   <Route exact path={"/shop/product/:productNum"} render={
                       props => <DetailedProduct {...props}/> } />
                   <Route exact path="/shop/order" render={props => <Order {...props}/>}/>
@@ -121,10 +118,10 @@ function App() {
                   {/*Mypage*/}
                   <Route exact path="/mypage" component={MyPageMain}/>
 
-              {/*Page Not Found Page*/}
-              <Route path="/*" component={PageNotFound} />
-         </Layout>
+                  {/*Page Not Found Page*/}
+                  <Route component={PageNotFound} />
           </Switch>
+         </Layout>
     </Router>
   );
 }

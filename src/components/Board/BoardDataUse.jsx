@@ -20,7 +20,8 @@ export const BoardDataUse = () =>{
                     postNum: list.idx,
                     postTitle: list.title,
                     postContent: list.content,
-                    userId: list.name,
+                    userEmail: list.email,
+                    userName: list.name,
                     postDate: list.regDate,
                     views: list.views,
                 };
@@ -30,8 +31,10 @@ export const BoardDataUse = () =>{
                     postNum: list.idx,
                     postTitle: list.title,
                     postContent: list.content,
-                    userId: list.userId,
+                    userEmail: list.email,
+                    userName: list.name,
                     postDate: list.regDate,
+                    postAnswer: list.answer,
                     views: list.views,
                 };
             });

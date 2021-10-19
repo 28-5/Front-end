@@ -301,6 +301,88 @@ const Test = () => {
             </section>
 
 
+            <div className="contact-section">
+                <Container className="container">
+                    <Row className="row">
+                        <Col lg={8} >
+                            <form action="#" className="contact-form">
+                                <Row className="row">
+                                    <Col lg={12} >
+                                        <input type="text" placeholder="제목"/>
+                                        <textarea placeholder="내용"></textarea>
+                                    </Col>
+                                    <Col lg={12} className="text-right">
+                                        <button type="submit">올리기</button>
+                                    </Col>
+                                </Row>
+                            </form>
+                        </Col>
+                        <Col lg={3} className="offset-lg-1">
+                            <div className="contact-widget">
+                                <div className="cw-item">
+                                    <h5>사무실 위치</h5>
+                                    <ul>
+                                        <li>서울시 구로구 가산동</li>
+                                        <li>우림라이온스밸리 A동 804호</li>
+                                    </ul>
+                                </div>
+                                <div className="cw-item">
+                                    <h5>연락처</h5>
+                                    <ul>
+                                        <li>+82 2 123-4592</li>
+                                    </ul>
+                                </div>
+                                <div className="cw-item">
+                                    <h5>E-mail</h5>
+                                    <ul>
+                                        <li>contact@reborn.com</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+
+
+            <Container className="content">
+                <Row className="row">
+                    <Col>
+                        <div className="card">
+                            <div className="card-header">Chat</div>
+                            <div className="card-body height3">
+                                <ul className="chat-list">
+                                    <li className="in">
+                                        <div className="chat-img">
+                                            <img alt="Avtar" src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"/>
+                                        </div>
+                                        <div className="chat-body">
+                                            <div className="chat-message">
+                                                <h5>Jimmy Willams</h5>
+                                                <p>Raw denim heard of them tofu master cleanse</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li className="out">
+                                        <div className="chat-img">
+                                            <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar3.png"/>
+                                        </div>
+                                        <div className="chat-body">
+                                            <div className="chat-message">
+                                                <h5>Serena</h5>
+                                                <p>Next level veard</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+
+
+
 
                 <footer className="footer-section spad">
                     <Container>

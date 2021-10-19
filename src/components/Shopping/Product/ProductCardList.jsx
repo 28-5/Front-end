@@ -5,14 +5,27 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./ProductCardList.css";
+import LoaddingSpinner from "../../UI/LoaddingSpinner";
 
 const ProductCardList = (props) => {
-    return(
+const { pathname }          = useLocation();
+console.log(props.data);
+
+const imageTest = testUrl => {
+    const reader      = new FileReader();
+    let result;
+    reader.readAsDataURL(testUrl);
+    reader.onload = () =>{
+       result = reader.result;
+    }
+    return result;
+};
+    return (
         <>
             <section className="latest-products spad">
                 <Container>
@@ -20,24 +33,26 @@ const ProductCardList = (props) => {
                         <Row>
                             <Col lg={12} className="text-center">
                                 <div className="section-title">
-                                    <h2>최신 상품</h2>
+                                    {pathname === "/shop/allproducts" ? <h2>전체 상품</h2> : <h2>최신 상품</h2>}
                                 </div>
                                 <ul className="product-controls">
                                     <li data-filter="*">전체</li>
-                                    <li data-filter=".bags">골프공</li>
-                                    <li data-filter=".shoes">클럽</li>
-                                    <li data-filter=".dresses">의상</li>
-                                    <li data-filter=".accesories">모자</li>
+                                    <li data-filter=".bags">골프클럽</li>
+                                    <li data-filter=".shoes">골프용품</li>
+                                    <li data-filter=".dresses">골프웨어</li>
                                 </ul>
                             </Col>
                         </Row>
                     </div>
                     <Row className="row" id="product-list">
                         {props.data.map(item => (
-                            <Col lg={3} sm={6} className="mix all dresses bags" key={item.title}>
-                                <div className="single-product-item" >
+                            <Col lg={3} sm={6} className="mix all dresses bags" key={item.idx}>
+                                <div className="single-product-item">
                                     <figure>
-                                        <Link to={"/shop/product/"+item.product_id}><img src={item.img} alt=""/></Link>
+                                        <Link to={"/shop/product/" + item.idx}>
+                                            {/*<img src={"/"+item.imageDtoList[0].path+ "/" +  item.imageDtoList[0].imgName} alt=""/>*/}
+                                            <img src={"/"+item.imageDtoList[0].uuid + item.imageDtoList[0].imageURL} alt=""/>
+                                        </Link>
                                         <div className="p-status">new</div>
                                     </figure>
                                     <div className="product-text">
@@ -47,6 +62,7 @@ const ProductCardList = (props) => {
                                 </div>
                             </Col>
                         ))}
+
                         {/*<Col lg={3} sm={6} className="mix all dresses bags">*/}
                         {/*    <div className="single-product-item">*/}
                         {/*        <figure>*/}

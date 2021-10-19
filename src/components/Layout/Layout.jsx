@@ -1,13 +1,9 @@
-import ShoppingTopNav from "../Shopping/ShoppingTopNav";
 import ShoppingNavbar from "./ShoppingNavbar";
 import Footer from "./Footer";
 import {useSelector} from "react-redux";
-import Notification from "../UI/Notification";
-import Container from "@material-ui/core/Container";
 import React from "react";
-import LoginNavBtn from "./LoginNavBtn";
 import { useLocation } from 'react-router-dom';
-import Navbar from "./Navbar";
+import Notification from "../UI/Notification";
 const Layout = props =>{
     const notification          = useSelector(state => state.ui.notification);
     const isNotificationVisible = useSelector(state => state.ui.notificationVisible);
@@ -20,8 +16,8 @@ const Layout = props =>{
     return (
         <>
             <ShoppingNavbar/>
-            {/*{isNotificationVisible &&*/}
-            {/*<Notification status={notification.status} title={notification.title} message={notification.message}/>}*/}
+            {isNotificationVisible &&
+            <Notification status={notification.status} title={notification.title} message={notification.message}/>}
             {/*<Container maxWidth="lg">*/}
             {/*    <ShoppingTopNav/>*/}
             {/*    {differentNavPath.indexOf(pathname) === -1 ? <ShoppingNavbar/> : <Navbar/>}*/}

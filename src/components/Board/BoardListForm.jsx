@@ -16,7 +16,7 @@ const columns = [
     { id: 'postNum', label: '번호', maxWidth: 30 },
     { id: 'postTitle', label: '제목', minWidth: 300 },
     {
-        id: 'userId',
+        id: 'userName',
         label: '작성자',
         maxWidth: 50,
         align: 'right',
@@ -48,8 +48,7 @@ const useStyles = makeStyles({
         maxHeight: "100%",
     },
     mainContainer:{
-        paddingLeft:"260px",
-        paddingTop: "0px",
+        paddingTop: "20px",
         height:"100%",
     },
     tableColumns:{

@@ -8,12 +8,12 @@ const useStyles = makeStyles({
         paddingTop: "0px",
         height:"100%",
     },
-    input:{
-        // display: 'none',
-    },
     imgBtn:{
         paddingTop:20,
         float:"right"
+    },
+    input:{
+        float: "left"
     },
 });
 
@@ -22,14 +22,19 @@ const ImageUpload = props => {
     const imgInput                      =   useRef();
     const [imgName, setImgName]         =   useState(null);
     const [loading, setLoadding]        =   useState(false);
-
     const imageFileHandler              =   event =>{
         setImgName(event.target.files[0]);
+        const reader      = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = () =>{
+        props.setPrevImg(reader.result);
+        }
     };
     const imageUploadHandler            =   async (event) =>{
         event.preventDefault();
         setLoadding(true);
         const formData    = new FormData();
+
         formData.append("uploadFiles", imgName);
         axios.post("/img", formData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': "multipart/form-data"})
             .then(res => {
@@ -48,7 +53,7 @@ const ImageUpload = props => {
             {/*<input accept="image/*" ref={imgInput} className={classes.input} id="contained-button-file" multiple type="file" onChange={imageFileHandler}/>*/}
             <input accept="image/*" ref={imgInput} className={classes.input} id="contained-button-file" type="file" onChange={imageFileHandler}/>
             {imgName && <label htmlFor="contained-button-file" className={classes.imgBtn}>
-                <Button variant="contained" color="primary" component="span" onClick={imageUploadHandler}>
+                <Button variant="contained" color="primary" component="span" className={classes.uploadBtn} onClick={imageUploadHandler}>
                     사진첨부
                 </Button>
             </label>}

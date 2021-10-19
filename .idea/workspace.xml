@@ -2,28 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55627cf2-ea3c-4899-8bed-06cd63839ca7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Layout/Footer.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Shopping/Product/ProductCardList.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingAds.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingAds.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingCarousel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Board/Article.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Board/WrtForm.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Service/RegistrationSuccess.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingAllProducts.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/Article.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/Article.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardDataUse.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardDataUse.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/ModificationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/ModificationForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/Notice.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/Notice.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/QnA.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/QnA.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Join/Join.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/Join.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Layout/Layout.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Layout.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/RegistrationSuccess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/RegistrationSuccess.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/ProductCardList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/ProductCardList.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/ProductCardList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/ProductCardList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/ProductData.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/ProductData.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Shopping/ShoppingCarousel.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingCarousel.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Shopping/ShoppingMain.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingMain.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Test.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Test.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/ShoppingTopNav.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Test.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Test.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/auth-slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/auth-slice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/cart-actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/cart-actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/product-actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/product-actions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +103,8 @@
       <workItem from="1634359367076" duration="8490000" />
       <workItem from="1634398471246" duration="36000" />
       <workItem from="1634427413412" duration="4816000" />
-      <workItem from="1634518799424" duration="28895000" />
+      <workItem from="1634518799424" duration="29035000" />
+      <workItem from="1634606647987" duration="27725000" />
     </task>
     <servers />
   </component>
@@ -101,10 +112,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1634204033936">
+    <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1634626196742">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634204033936" />
+    <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634626196742" />
     <state x="-1233" y="216" key="FileChooserDialogImpl" timestamp="1634518832566">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
@@ -120,9 +131,9 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1372" y="42" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634024133440" />
-    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634028356641">
+    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1634624839054">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634028356641" />
+    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634624839054" />
   </component>
 </project>
