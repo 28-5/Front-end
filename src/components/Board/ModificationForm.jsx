@@ -6,41 +6,8 @@ import {useLocation} from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
-const useStyles = makeStyles((theme) => ({
-    mainContainer:{
-        paddingLeft:"120px",
-        paddingTop: "50px",
-        paddingBottom: 100,
-        fontFamily: "twayair",
-        [theme.breakpoints.down('md')]: {
-            paddingLeft:"260px",
-        },
-        [theme.breakpoints.down('sm')]: {
-            paddingLeft:"16px",
-        },
-    },
-    root: {
-        flexWrap: 'wrap',
-        width:"99%"
-    },
-    textField: {
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
-        width: '25ch',
-    },
-    formBtnDiv:{
-        paddingRight:0
-    },
-    formBtn:{
-        float:"right",
-    },
-    input:{
-        display: 'none',
-    }
-}));
 
 const ModificationForm = props => {
-    const classes               =   useStyles();
     const location              = useLocation();
     const { data }              = location.state;
     let path                  =   props.path;

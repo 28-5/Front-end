@@ -17,22 +17,22 @@ import FaQ from "./components/Board/FaQ";
 import WrtForm from "./components/Board/WrtForm";
 import JoinSuccess from "./components/Join/JoinSuccess";
 import PageNotFound from "./components/PageNotFound";
-import MyPageMain from "./components/MyPage/MyPageMain";
 import {BoardDataUse} from "./components/Board/BoardDataUse";
 import Article from "./components/Board/Article";
 import ServiceRequestForm from "./components/Service/ServiceRequestForm";
 import Order from "./components/Shopping/Order/Order";
 import {useDispatch, useSelector} from "react-redux";
-import "./App.css";
 import RegistrationSuccess from "./components/Service/RegistrationSuccess";
 import ModificationForm from "./components/Board/ModificationForm";
-import {getCartData, sendCartData} from "./store/cart-actions";
+import {clearCartData, getCartData, sendCartData} from "./store/cart-actions";
 import Layout from "./components/Layout/Layout";
 import {getProductdata} from "./store/product-actions";
-import Test from "./components/Test";
 import {authActions} from "./store/auth-slice";
 import axios from "axios";
 import ShoppingAllProducts from "./components/Shopping/ShoppingAllProducts";
+import MyPageMain from "./components/MyPage/MyPageMain";
+import "./App.css";
+import ModifyUserInfo from "./components/MyPage/ModifyUserInfo";
 
 let isInitial = true;
 
@@ -49,9 +49,6 @@ function App() {
                     dispatch(authActions.auth({userEmail: res.data.email}));
                 })
                 .catch(err => console.log(err));
-            console.log("auth");
-        }else{
-            console.log("no auth");
         }
     }, [dispatch]);
     useEffect(() => {
@@ -61,10 +58,14 @@ function App() {
     useEffect(() => {
         if(isInitial){
             isInitial = false;
-            return
+            return;
         };
         if(cart.changed){
             dispatch(sendCartData(cart));
+        }
+
+        if(cart.clear){
+            dispatch(clearCartData());
         }
     }, [cart, dispatch]);
   return (
@@ -72,7 +73,8 @@ function App() {
         <Layout>
           <Switch>
               {/*
-                1. 상품등록 및 리스트 가져오는거 백엔드 체크.
+                1. 세부 카테고리별 출력
+                2.
               */}
                   <Route exact path="/test"component={Test} />
                   {/*Shop Main Page*/}
@@ -117,6 +119,7 @@ function App() {
 
                   {/*Mypage*/}
                   <Route exact path="/mypage" component={MyPageMain}/>
+                  <Route exact path="/mypage/:userinfo" component={ModifyUserInfo}/>
 
                   {/*Page Not Found Page*/}
                   <Route component={PageNotFound} />

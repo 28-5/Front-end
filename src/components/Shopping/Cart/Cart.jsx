@@ -158,11 +158,12 @@ const Cart = props => {
     const [modalStyle]                          = React.useState(getModalStyle);
 
     const cartItemAddHandler = item => {
-        dispatch(cartActions.addItem({
-            id: item.id,
+        dispatch(cartActions.addOneItem({
+            productIdx: item.productIdx,
             title: item.title,
             price: item.price,
         }));
+
     };
     const cartItemRemoveHandler = id => {
         dispatch(cartActions.removeItem(id));

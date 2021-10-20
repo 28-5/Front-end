@@ -168,13 +168,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 const CartItems = props => {
     const classes       = useStyles();
+    console.log(props.data);
     return props.data.map(item =>
-        <div className={classes.cart_Items} key={item.id}>
+        <div className={classes.cart_Items} key={item.cartIdx}>
             <div className={classes.image_box}>
-                <img src={item.img} className={classes.cartImg} alt="product"/>
+                <img src={"/display?fileName="+item.imageDtoList.imageURL} className={classes.cartImg} alt="product"/>
             </div>
             <div className={classes.about}>
                 <h1 className={classes.title}>{item.title}</h1>
@@ -183,12 +183,12 @@ const CartItems = props => {
             <div className={classes.counter}>
                 <div className={classes.btn} onClick={props.onAdd.bind(null, item)}>+</div>
                 <div className={classes.count}>{item.quantity}</div>
-                <div className={classes.btn} onClick={props.onRemove.bind(null, item.id)}>-</div>
+                <div className={classes.btn} onClick={props.onRemove.bind(null, item.productIdx)}>-</div>
             </div>
             <div className={classes.prices}>
                 <div className={classes.amount}>{(item.price*item.quantity).toLocaleString('ko-KR')}</div>
                 <div className={classes.save}><u>나중에 주문</u></div>
-                <div className={classes.remove} onClick={props.removeItem.bind(null, item.id)}><u>제거</u></div>
+                <div className={classes.remove} onClick={props.removeItem.bind(null, item.productIdx)}><u>제거</u></div>
             </div>
         </div>
     )

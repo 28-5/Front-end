@@ -14,11 +14,10 @@ const ShoppingAllProducts = () => {
             });
         }
     }
-    console.log(allItems);
     return(
         <>
             {allItemsRedeux.length < 1 && <LoaddingSpinner color="#00BFFF" height={100} width={100}/>}
-            <ProductCardList data={allItems}/>
+            <ProductCardList data={allItems} categorizedData={allItemsRedeux}/>
         </>
     );
 };

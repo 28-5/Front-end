@@ -19,7 +19,6 @@ export const getProductdata = () =>{
         };
         try{
             const productData = await getData();
-            console.log(productData);
             dispatch(productActions.updateProductList({
                 items: productData || null
             }));

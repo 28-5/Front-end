@@ -2,16 +2,14 @@ import React, {useEffect, useState} from "react";
 import Container from "@material-ui/core/Container";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Breadcrumb from "./Breadcrumb";
-import ProductData from "./ProductData"
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AmountSelect from "./AmountSelect";
-import Cart from "../Cart/Cart";
 import Typography from "@material-ui/core/Typography";
 import DetailedProductContent from "./DetailedProductContent";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {cartActions} from "../../../store/cart-slice";
 
@@ -110,63 +108,49 @@ const useStyles = makeStyles((theme) => ({
 function stringNumberToNumber(num){
     return parseInt(num.replace(/,/g , ''));
 }
-
 const DetailedProduct = (props) => {
-    const classes = useStyles();
-    const dispatch= useDispatch();
-    const [selectedAmount, setSelectedAmount]   =   useState(1);
-
-    //Database 연결해야 하는 부분?
-    const data = ProductData;
-    const productNumber = props.match.params.productNum;
-    const productInfo = data.filter(d => {
-        return d.product_id === productNumber;
-    });
+    const classes                               = useStyles();
+    const dispatch                              = useDispatch();
+    const [selectedAmount, setSelectedAmount]   = useState(1);
+    const location                              = useLocation();
+    const { data }                              = location.state;
+    const today                                 = new Date();
+    const month                                 = today.getMonth() + 1;  // 월
+    const date                                  = today.getDate()+2;  // 날짜
     const addToCartHandler = () =>{
         dispatch(cartActions.addItem({
-            id: productInfo[0].product_id,
-            title: productInfo[0].title,
-            price:stringNumberToNumber(productInfo[0].price),
-            img: productInfo[0].img,
+            productIdx: data.idx,
+            title: data.title,
+            price:data.price,
+            quantity: selectedAmount,
         }));
-        // cartCtx.addItem({
-        //     id: productInfo[0].product_id,
-        //     title: productInfo[0].title,
-        //     price: stringNumberToNumber(productInfo[0].price),
-        //     img: productInfo[0].img,
-        //     amount: selectedAmount,
-        // });
-        // axios.post("/order", cartCtx)
-        //     .then(res => {
-        //         console.log("카트 상품 보내짐");
-        //     })
-        //     .catch(err => console.log(err));
     };
     useEffect(() => {
-        window.scrollTo(0,0);
+        window.scrollTo(0,200);
     }, [])
     return(
         <section className={classes.shoppingMainSection}>
             <Container maxWidth="lg">
-                <Breadcrumb showPath={productNumber} />
+                <Breadcrumb showPath={data.brand} />
                 <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.gridContainer}>
                     <Grid item sm={12} md={6} >
-                        <img src={productInfo[0].img} className={classes.productImg} alt="productImg"/>
+                        <img src={"/display?fileName="+data.imageDtoList[0].imageURL} className={classes.productImg} alt="productImg"/>
                     </Grid>
                     <Grid item sm={12} md={6}>
                         <div className={classes.detailedProductInfoTitleDiv}>
-                            <Typography variant="h5" className={classes.infoTitle}>{productInfo[0].title}</Typography>
-                            <Typography variant="h5" className={classes.infoStar}>{productInfo[0].star}</Typography>
+                            <Typography variant="h5" className={classes.infoTitle}>{data.brand}</Typography>
+                            <Typography variant="h5" className={classes.infoTitle}>{data.title}</Typography>
                         {/*<hr className={classes.hr}/>*/}
-                            <Typography variant="h5" className={classes.infoPrice}>{productInfo[0].price} 원</Typography>
+                            <Typography variant="h5" className={classes.infoPrice}>{data.price.toLocaleString('ko-KR')} 원</Typography>
                         <hr className={classes.hr}/>
                         </div>
                         <Typography variant="h5" className={classes.cardTitle}>카드혜택가</Typography>
-                        <Typography variant="h5" className={classes.cardPrice}>{(stringNumberToNumber(productInfo[0].price)*0.9).toLocaleString('ko-KR')} 원</Typography>
+                        {/*<Typography variant="h5" className={classes.cardPrice}>{(stringNumberToNumber(data.price)*0.9).toLocaleString('ko-KR')} 원</Typography>*/}
+                        <Typography variant="h5" className={classes.cardPrice}>{(data.price*0.9).toLocaleString('ko-KR')} 원</Typography>
                         <hr className={classes.hr}/>
 
                         <Typography variant="h5" className={classes.deliveryTitle}>배송정보</Typography>
-                        <Typography variant="h5" className={classes.deliveryDate}>9월 20일 도착 예정</Typography><br/>
+                        <Typography variant="h5" className={classes.deliveryDate}>{month + "월 " + date}도착 예정</Typography><br/>
                         <Typography variant="h5" className={classes.deliveryTitle}>배송비</Typography>
                         <Typography variant="h5" className={classes.deliveryFee}>배송무료</Typography>
 
