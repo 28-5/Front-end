@@ -27,7 +27,6 @@ const ProductCardList = (props) => {
         case 3: productData = props.categorizedData[2];
                 break;
     }
-console.log(pathname);
 return (
         <>
             <section className="latest-products spad">

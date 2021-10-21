@@ -1,62 +1,46 @@
 import React from "react";
-import Typography from "@material-ui/core/Typography";
-import TextField from '@material-ui/core/TextField';
-
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import IamPortPay from "./Payment/IamPortPay";
 const PaymentForm = (props) => {
     return(
         <>
-            <h1>결제방법 선택</h1>
-            <div className={"radioDiv"}>
-            <label className="form-radio-label">
-                <input name="eat" className="form-radio-field" type="radio" value="무통장" onClick={props.methodChangeHandler}/>
-                <i className="form-radio-button"></i>
-                <span>무통장입금</span>
-            </label>
-            <label className="form-radio-label">
-                <input name="eat" className="form-radio-field" type="radio" value="카드" onClick={props.methodChangeHandler}/>
-                <i className="form-radio-button"></i>
-                <span>카드 결제</span>
-            </label>
-            <label className="form-radio-label">
-                <input name="eat" className="form-radio-field" type="radio" value="계좌이체" onClick={props.methodChangeHandler} />
-                <i className="form-radio-button"></i>
-                <span>실시간 계좌이체</span>
-            </label>
-            <label className="form-radio-label">
-                <input name="eat" className="form-radio-field" type="radio" value="카카오" onClick={props.methodChangeHandler} />
-                <i className="form-radio-button"></i>
-                <span>카카오페이</span>
-            </label>
-            <label className="form-radio-label">
-                <input name="eat" className="form-radio-field" type="radio" value="토큰" onClick={props.methodChangeHandler}/>
-                <i className="form-radio-button"></i>
-                <span>토큰 결제</span>
-            </label><br/>
-            </div>
-            {props.selectedMethod === "무통장"&&
-                <div className="paymentDiv">
-                    <h1>무통장입금</h1>
-                    <div className={"paymentWireDiv"}>
-                        <label htmlFor='cardDate'className={"paymentLabel"} >입금자 성명</label>
-                        <TextField required id="standard-basic" />
-                    </div><br/>
-                    <div className={"paymentWireDiv"}>
-                        <label htmlFor='cardDate'className={"paymentLabel"} >은행 계좌</label>
-                        <Typography variant={"h6"}>신한은행 110-123123-123</Typography>
-                        {/*<input type='text' name='cardDate' className={"paymentLabel"}/>*/}
-                    </div>
-                </div>}
-            {/*<select name='paymentMethod'>*/}
-            {/*    <option>Visa</option>*/}
-            {/*    <option>MasterCard</option>*/}
-            {/*    <option>Elo</option>*/}
-            {/*</select>*/}
+            <Col lg={12}>
+                <h3>결제방법</h3>
+            </Col>
+            <Col lg={9}>
+                <Row>
+                    <ButtonGroup aria-label="Basic example" className="btnGroup">
+                        <Button variant="outline-primary" value="무통장" onClick={props.methodChangeHandler}>무통장입금</Button>
+                        <Button variant="outline-primary" value="카드" onClick={props.methodChangeHandler}>카드</Button>
+                        <Button variant="outline-primary" value="계좌이체" onClick={props.methodChangeHandler}>실시간 계좌이체</Button>
+                        <Button variant="outline-primary" value="카카오" onClick={props.methodChangeHandler}>카카오페이</Button>
+                    </ButtonGroup>
+                    {props.selectedMethod === "무통장"&&
+                    <>
+                        <Row>
+                            <Col lg={2}>
+                                <p className="in-name">입금인*</p>
+                            </Col>
+                            <Col lg={4}>
+                                <input type="text" value={props.wireName} onChange={props.wireNameChangeHandler}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col lg={2}>
+                                <p className="in-name">입금계좌</p>
+                            </Col>
+                            <Col lg={10}>
+                                <input type="text" value={"신한은행 110-123123-123"} readOnly/>
+                            </Col>
+                        </Row>
+                    </>}
 
-            {/*<label htmlFor='cardDate'>Expiration Date</label>*/}
-            {/*<input type='text' name='cardDate'/>*/}
-
-            {/*<label htmlFor='cvv'>CVV</label>*/}
-            {/*<input type='text' name='cvv'/>*/}
+                    {props.selectedMethod === "카카오" && <IamPortPay/>}
+                </Row>
+            </Col>
         </>
     )
 };

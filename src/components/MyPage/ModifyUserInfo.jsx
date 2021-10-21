@@ -27,6 +27,7 @@ const ModifyUserInfo = props =>{
         event.preventDefault();
         const changedInfo = {
             idx : data.idx,
+            email: data.email,
             address: data.address,
             phone: enteredPhoneNum,
             password: enteredPass,

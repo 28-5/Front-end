@@ -170,7 +170,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CartItems = props => {
     const classes       = useStyles();
-    console.log(props.data);
     return props.data.map(item =>
         <div className={classes.cart_Items} key={item.cartIdx}>
             <div className={classes.image_box}>

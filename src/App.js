@@ -33,11 +33,14 @@ import ShoppingAllProducts from "./components/Shopping/ShoppingAllProducts";
 import MyPageMain from "./components/MyPage/MyPageMain";
 import "./App.css";
 import ModifyUserInfo from "./components/MyPage/ModifyUserInfo";
+import AuthRoute from "./components/AuthRoute";
+import PaymentResult from "./components/Shopping/Order/Payment/PaymentResult";
 
 let isInitial = true;
 
 function App() {
     const dispatch                              = useDispatch();
+    const isAuth                                = useSelector(state => state.auth.isAuthenticated);
     const cart                                  = useSelector(state => state.cart);
     const [userEmail, setUserEmail]             = useState(false);
     const [noticeList, qnaList]                 = BoardDataUse([]);
@@ -76,7 +79,6 @@ function App() {
                 1. 세부 카테고리별 출력
                 2.
               */}
-                  <Route exact path="/test"component={Test} />
                   {/*Shop Main Page*/}
                   <Route exact path="/">
                       <Redirect to="/shop"/>
@@ -86,6 +88,7 @@ function App() {
                   <Route exact path={"/shop/product/:productNum"} render={
                       props => <DetailedProduct {...props}/> } />
                   <Route exact path="/shop/order" render={props => <Order {...props}/>}/>
+                  <Route exact path="/payment/result" component={PaymentResult} />
                   {/*Company*/}
                   <Route exact path="/company" render={props =><Main {...props} /> }/>
 
@@ -118,7 +121,7 @@ function App() {
                   <Route exact path="/admin" component={Dashboard}/>
 
                   {/*Mypage*/}
-                  <Route exact path="/mypage" component={MyPageMain}/>
+                  <AuthRoute exact authenticated={isAuth} path="/mypage" render={props => <MyPageMain/>}/>
                   <Route exact path="/mypage/:userinfo" component={ModifyUserInfo}/>
 
                   {/*Page Not Found Page*/}

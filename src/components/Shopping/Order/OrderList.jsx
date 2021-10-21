@@ -1,142 +1,74 @@
-import React from "react";
+import React, {useEffect, useState, Fragment} from "react";
+import Col from "react-bootstrap/Col";
+import {useSelector} from "react-redux";
+import axios from "axios";
 
 const OrderList = () => {
+    const numberOfCartItems                = useSelector(state => state.cart.totalQuantity);
+    const totalPrice                       = useSelector(state => state.cart.totalPrice);
+    const [orderList, setOrderList]        = useState(null);
+    useEffect(() => {
+        const getOrderData = () => {
+            axios.get("/carts")
+                .then(res => setOrderList(res.data.cartDtos))
+                .catch(err => console.log(err));
+
+            // const getCartData = async () => {
+            //     const response = axios.get("/carts");
+            //
+            //     if (!response) {
+            //         throw new Error("카트 정보를 읽어올 수가 없습니다!");
+            //     }
+            //     const data = (await response).data.cartDtos;
+            //     return data;
+            // };
+            // try{
+            //     const orderData = await getCartData();
+            //     setOrderList(orderData);
+            // }catch(err){
+            //     console.log(err);
+            // }
+        }
+        getOrderData();
+    }, [])
     return(
-        <div id="wrapper">
-            <div id="container">
-                <div id="left-col">
-                    <div id="left-col-cont">
-                        <h2>주문목록</h2>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/shirt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Blue Ocean Shirt</h3>
-                                <p className="amount">X 1</p>
-                                <p className="price">$60</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/green-shirt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Green Pine Shirt</h3>
-                                <p className="amount">X 1</p>
-                                <p className="price">$55</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/belt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Cow Skin Belt</h3>
-                                <p className="amount">X 10</p>
-                                <p className="price">$32</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/watch1.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Festina Quartz Watch</h3>
-                                <p className="amount">X 5</p>
-                                <p className="price">$299</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/shirt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Blue Ocean Shirt</h3>
-                                <p className="amount">X 1</p>
-                                <p className="price">$60</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/green-shirt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Green Pine Shirt</h3>
-                                <p className="amount">X 1</p>
-                                <p className="price">$55</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/belt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Cow Skin Belt</h3>
-                                <p className="amount">X 10</p>
-                                <p className="price">$32</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/watch1.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Festina Quartz Watch</h3>
-                                <p className="amount">X 5</p>
-                                <p className="price">$299</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/shirt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Blue Ocean Shirt</h3>
-                                <p className="amount">X 1</p>
-                                <p className="price">$60</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/green-shirt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Green Pine Shirt</h3>
-                                <p className="amount">X 1</p>
-                                <p className="price">$55</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/belt.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Cow Skin Belt</h3>
-                                <p className="amount">X 10</p>
-                                <p className="price">$32</p>
-                            </div>
-                        </div>
-                        <div className="item">
-                            <div className="img-col">
-                                <img src="http://emilcarlsson.se/assets/watch1.png" alt=""/>
-                            </div>
-                            <div className="meta-col">
-                                <h3>Festina Quartz Watch</h3>
-                                <p className="amount">X 5</p>
-                                <p className="price">$299</p>
-                            </div>
-                        </div>
-                        <div className="item totalPrice">
-                            <div className="totalPriceMeta">
-                                <h1 id="total">Total</h1>
-                                <h4 id="total-price">$ 446</h4>
-                            </div>
-                        </div>
+        <>
+            <Col lg={3} >
+                <div className="order-table">
+                    <div className="cart-item">
+                        <span>제품</span>
+                        {orderList !== null && orderList.map(list => (
+                            <Fragment key={list.cartIdx}>
+                                <p className="product-name">{list.title} X {list.quantity}</p>
+                                <br/>
+                            </Fragment>
+                        ))
+                        }
+                    </div>
+                    <div className="cart-item">
+                        <span>전체 수량</span>
+                        <p>{numberOfCartItems}</p>
+                    </div>
+                    <div className="cart-item">
+                        <span>전체가격</span>
+                        <p>{totalPrice.toLocaleString('ko-KR')}</p>
+                    </div>
+                    <div className="cart-item">
+                        <span>토큰 사용</span>
+                        <p>0.5 개</p>
+                    </div>
+                    <div className="cart-item">
+                        <span>배송비</span>
+                        <p>2,500원</p>
+                    </div>
+
+                    <div className="cart-total">
+                        <span>결제하실 금액</span>
+                        <p>$39</p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </Col>
+        </>
     );
 }
 

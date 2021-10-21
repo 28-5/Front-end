@@ -5,7 +5,8 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
     gridContainer:{
-        marginTop: 40
+        marginTop: 40,
+        marginBottom: 80
     },
     line_dec:{
         width: "100%",
