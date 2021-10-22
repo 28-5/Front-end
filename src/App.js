@@ -35,6 +35,7 @@ import "./App.css";
 import ModifyUserInfo from "./components/MyPage/ModifyUserInfo";
 import AuthRoute from "./components/AuthRoute";
 import PaymentResult from "./components/Shopping/Order/Payment/PaymentResult";
+import {getTokenPrice} from "./store/token-actions";
 
 let isInitial = true;
 
@@ -44,19 +45,30 @@ function App() {
     const cart                                  = useSelector(state => state.cart);
     const [userEmail, setUserEmail]             = useState(false);
     const [noticeList, qnaList]                 = BoardDataUse([]);
-
+    const tokenPrice                            = useSelector(state => state.token.tokenPrice);
+    console.log(tokenPrice);
     useEffect(() => {
         if(localStorage.getItem("jwt")){
             axios.get("/member", {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
                 .then(res => {
-                    dispatch(authActions.auth({userEmail: res.data.email}));
+                    dispatch(authActions.auth({
+                        idx: res.data.idx,
+                        email: res.data.email,
+                        name: res.data.name,
+                        password: res.data.password,
+                        phone: res.data.phone,
+                        address: res.data.address,
+                        tokenAmount: res.data.tokenAmount,
+                        walletAddress: res.data.walletAddress,
+                    }));
                 })
                 .catch(err => console.log(err));
         }
-    }, [dispatch]);
+    }, [isAuth]);
     useEffect(() => {
         dispatch(getCartData());
         dispatch(getProductdata());
+        dispatch(getTokenPrice());
     }, [dispatch]);
     useEffect(() => {
         if(isInitial){
@@ -77,7 +89,8 @@ function App() {
           <Switch>
               {/*
                 1. 세부 카테고리별 출력
-                2.
+                2. 토큰 가격 리덕스 연동
+                3. 카카오 결제 문제
               */}
                   {/*Shop Main Page*/}
                   <Route exact path="/">

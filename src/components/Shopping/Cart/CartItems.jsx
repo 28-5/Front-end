@@ -170,10 +170,11 @@ const useStyles = makeStyles((theme) => ({
 
 const CartItems = props => {
     const classes       = useStyles();
+
     return props.data.map(item =>
         <div className={classes.cart_Items} key={item.cartIdx}>
             <div className={classes.image_box}>
-                <img src={"/display?fileName="+item.imageDtoList.imageURL} className={classes.cartImg} alt="product"/>
+                <img src={item.imageDtoList === null? "" : "/display?fileName="+item.imageDtoList.imageURL} className={classes.cartImg} alt="product"/>
             </div>
             <div className={classes.about}>
                 <h1 className={classes.title}>{item.title}</h1>
@@ -190,6 +191,7 @@ const CartItems = props => {
                 <div className={classes.remove} onClick={props.removeItem.bind(null, item.productIdx)}><u>제거</u></div>
             </div>
         </div>
+
     )
 };
 

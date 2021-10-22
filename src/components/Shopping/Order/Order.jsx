@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -9,52 +9,28 @@ import OrderSummary from "./OrderSummary";
 import useInput from "../../hooks/use-input";
 import OrderList from "./OrderList";
 import {uiActions} from "../../../store/ui-slice";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/Col";
 import "./Order.css";
 import IamPortPay from "./Payment/IamPortPay";
-
-const useStyles = makeStyles((theme) => ({
-    orderMainDiv:{
-      height:"120vh",
-      [theme.breakpoints.down('md')]: {
-        height:"140vh",
-      },
-    },
-    orderContainer:{
-    },
-    root: {
-        width: '100%',
-    },
-    button: {
-        marginRight: theme.spacing(1),
-    },
-    instructions: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-    },
-
-
-
-}));
-
-
+import axios from "axios";
 
 function getSteps() {
     return ['구매정보 입력', '결제', '구매완료'];
 }
 
 const Order = () => {
-    const classes                          = useStyles();
     const dispatch                         = useDispatch();
-
-
-    const [activeStep, setActiveStep]      = React.useState(0);
+    const isAuth                           = useSelector(state => state.auth.isAuthenticated);
+    const [activeStep, setActiveStep]      = useState(0);
+    const [usedToken, setUsedToken]        = useState(0);
+    const [paymentSuccessData, setPaymentSuccessData] = useState();
     const steps                            = getSteps();
     let   isFormValid                      = false;
     const [isBtnClicked, setIsBtnClicked]  = useState(false);
+    const [orderList, setOrderList]        = useState(null);
     const { value: enteredBuyer, valueChangeHandler: buyerChangeHandler,
         reset: resetBuyerInput}            = useInput();
     const { value: enteredReceiver, valueChangeHandler: receiverChangeHandler,
@@ -88,26 +64,38 @@ const Order = () => {
                                     addressChangeHandler={addressChangeHandler} receiverAddressChangeHandler={receiverAddressChangeHandler}
                                     memoChangeHandler={memoChangeHandler} buyer={enteredBuyer} receiver={enteredReceiver}
                                     addr={enteredAddress} contact={enteredContact} receiveContact={enteredReceiverContact}
-                                    receiverAddr={enteredReceiverAddress} memo={enteredMemo}
-                                    isBtnClicked={isBtnClicked} sameInfoBtnHandler={sameInfoBtnHandler}/>;
+                                    receiverAddr={enteredReceiverAddress} memo={enteredMemo} setUsedToken={setUsedToken}
+                                    usedToken={usedToken} isBtnClicked={isBtnClicked} sameInfoBtnHandler={sameInfoBtnHandler}/>;
             case 1:
-                return <PaymentForm selectedMethod={selectedMethod} methodChangeHandler={methodChangeHandler}
-                                    wireName={wireName} wireNameChangeHandler={wireNameChangeHandler} resetMethod={resetMethod}/>;
+                return <PaymentForm selectedMethod={selectedMethod} methodChangeHandler={methodChangeHandler} usedToken={usedToken}
+                                    wireName={wireName} wireNameChangeHandler={wireNameChangeHandler} enteredMemo={enteredMemo}
+                                    buyer={enteredBuyer} addr={enteredAddress} contact={enteredContact} setActiveStep={setActiveStep}
+                                    orderList={orderList} setPaymentSuccessData={setPaymentSuccessData} resetMethod={resetMethod}/>;
             case 2:
-                return <OrderSummary buyer={enteredBuyer} receiver={enteredReceiver} contact={enteredContact}
-                                     address={enteredAddress} payment={selectedMethod} memo={enteredMemo} />;
+                return <OrderSummary review={paymentSuccessData} />;
             default:
                 throw new Error('Unknown step');
         }
     }
-    if(isBtnClicked){
-        if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''){
+    if(isAuth){
+        if(isBtnClicked){
             isFormValid = true;
+        }else{
+            if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''
+                && enteredReceiver !=='' && enteredReceiverContact !== '' && enteredReceiverAddress !== ''){
+                isFormValid = true;
+            }
         }
     }else{
-        if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''
-            && enteredReceiver !=='' && enteredReceiverContact !== '' && enteredReceiverAddress !== ''){
-            isFormValid = true;
+        if(isBtnClicked){
+            if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''){
+                isFormValid = true;
+            }
+        }else{
+            if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''
+                && enteredReceiver !=='' && enteredReceiverContact !== '' && enteredReceiverAddress !== ''){
+                isFormValid = true;
+            }
         }
     }
 
@@ -132,6 +120,30 @@ const Order = () => {
         setActiveStep(0);
     };
 
+    useEffect(() => {
+        const getOrderData = () => {
+            axios.get("/carts")
+                .then(res => setOrderList(res.data.cartDtos))
+                .catch(err => console.log(err));
+
+            // const getCartData = async () => {
+            //     const response = axios.get("/carts");
+            //
+            //     if (!response) {
+            //         throw new Error("카트 정보를 읽어올 수가 없습니다!");
+            //     }
+            //     const data = (await response).data.cartDtos;
+            //     return data;
+            // };
+            // try{
+            //     const orderData = await getCartData();
+            //     setOrderList(orderData);
+            // }catch(err){
+            //     console.log(err);
+            // }
+        }
+        getOrderData();
+    }, []);
 
     dispatch(uiActions.toggleOff());
     return (
@@ -161,13 +173,13 @@ const Order = () => {
                     <form action="#" className="checkout-form">
                         <Row className="row">
                             {getStepContent(activeStep)}
-                            <OrderList />
+                            <OrderList orderList={orderList} usedToken={usedToken}/>
                         </Row>
                     </form>
                     <Row>
                         <div className="payment-method">
                         <button type="button" onClick={handleNext}>
-                            {activeStep === 0 ? "결제선택" : activeStep === 1 ? "결제하기" : "구매완료"}
+                            {activeStep === 0 ? "결제선택" : activeStep === 1 ? "주문완료" : "구매완료"}
                         </button>
                             {activeStep > 0 && <button id='backward' onClick={handleBack}>이전</button>}
                         </div>

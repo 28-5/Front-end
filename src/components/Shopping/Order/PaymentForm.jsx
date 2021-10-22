@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import IamPortPay from "./Payment/IamPortPay";
 const PaymentForm = (props) => {
+    useEffect(() => {
+        window.scrollTo(0,200);
+    }, [])
     return(
         <>
             <Col lg={12}>
-                <h3>결제방법</h3>
+                <h3>결제</h3>
             </Col>
             <Col lg={9}>
                 <Row>
@@ -38,7 +41,10 @@ const PaymentForm = (props) => {
                         </Row>
                     </>}
 
-                    {props.selectedMethod === "카카오" && <IamPortPay/>}
+                    {props.selectedMethod === "카카오" && <IamPortPay orderList={props.orderList} buyer={props.buyer}
+                                                                    contact={props.contact} addr={props.addr} usedToken={props.usedToken}
+                                                                   enteredMemo={props.enteredMemo} setActiveStep={props.setActiveStep}
+                                                                   setPaymentSuccessData={props.setPaymentSuccessData}/>}
                 </Row>
             </Col>
         </>

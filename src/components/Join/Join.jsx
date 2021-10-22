@@ -121,7 +121,7 @@ const Join = ({history}) => {
             console.log("Join success! + res.data: " + res.data);
             history.push("/welcome");
         }).catch(err => {
-            console.log("Join Failed");
+            console.log(err);
             console.log(userEmail);
             console.log(userPass);
             console.log(userName);

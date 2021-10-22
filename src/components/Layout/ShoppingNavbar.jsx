@@ -19,7 +19,7 @@ const ShoppingNavbar = (props) => {
     const dispatch                                        = useDispatch();
     const numberOfCartItems                               = useSelector(state => state.cart.totalQuantity);
     const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
-    const userEmail                                       = useSelector(state => state.auth.userEmail);
+    const userEmail                                       = useSelector(state => state.auth.email);
     const showCart                                        = useSelector(state => state.ui.isCartVisible);
     const [anchorEl, setAnchorEl]                         = useState(null);
     const [isButtonOpened, setisButtonOpened]             = useState(null);
@@ -61,11 +61,15 @@ const ShoppingNavbar = (props) => {
                             <div className="header-right">
                                 <img src="/img/icons/search.png" alt="searchImg" className="search-trigger"/>
                                 <img src="/img/icons/man.png" alt="accountImg" onClick={handleClick}/>
+                                {isAuth ?
                                 <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
                                    <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">프로필</MenuItem>
                                    <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">개인정보수정</MenuItem>
-                                    {isAuth && <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>}
-                                </Menu>
+                                   <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>
+                                </Menu>:
+                                <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
+                                    <MenuItem onClick={handleMenuClose} component={Link} to="/member/login">로그인</MenuItem>
+                                </Menu>}
                                 <IconButton aria-label="show 4 new mails" color="inherit" onClick={showCartHandler}>
                                     <Badge badgeContent={numberOfCartItems} color="secondary">
                                         <ShoppingCartIcon />

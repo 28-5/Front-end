@@ -1,18 +1,21 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import React from "react";
+import React, {useEffect} from "react";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ListIcon from '@material-ui/icons/List';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import {Link, useLocation} from "react-router-dom";
 import {useHistory} from "react-router";
+import {useSelector} from "react-redux";
 const AccountDetail = (props) =>{
     const today                                 = new Date();
     const { pathname }                          = useLocation();
     const history                               = useHistory();
     const month                                 = today.getMonth() + 1;  // 월
     const date                                  = today.getDate()-3;  // 날짜
+    const userInfo                              = useSelector(state => state.auth);
+
     return (
         <>
             <Container>
@@ -29,8 +32,8 @@ const AccountDetail = (props) =>{
                                             alt="Admin"
                                             className="rounded-circle" width="150"/>
                                         <div className="mt-3">
-                                            <h4>{props.userInfo.name}</h4>
-                                            <p className="text-secondary mb-1">{props.userInfo.email}</p>
+                                            <h4>{userInfo.name}</h4>
+                                            <p className="text-secondary mb-1">{userInfo.email}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -44,7 +47,7 @@ const AccountDetail = (props) =>{
                                             <h6 className="mb-0">성함</h6>
                                         </Col>
                                         <Col sm={9} className="text-secondary">
-                                            {props.userInfo.name}
+                                            {userInfo.name}
                                         </Col>
                                     </Row>
                                     <hr/>
@@ -53,7 +56,7 @@ const AccountDetail = (props) =>{
                                             <h6 className="mb-0">Email</h6>
                                         </Col>
                                         <Col sm={9} className="text-secondary">
-                                            {props.userInfo.email}
+                                            {userInfo.email}
                                         </Col>
                                     </Row>
                                     <hr/>
@@ -62,7 +65,7 @@ const AccountDetail = (props) =>{
                                             <h6 className="mb-0">연락처</h6>
                                         </Col>
                                         <Col sm={9} className="text-secondary">
-                                            {props.userInfo.phone}
+                                            {userInfo.phone}
                                         </Col>
                                     </Row>
                                     <hr/>
@@ -71,7 +74,7 @@ const AccountDetail = (props) =>{
                                             <h6 className="mb-0">주소</h6>
                                         </Col>
                                         <Col sm={9} className="text-secondary">
-                                            {props.userInfo.address}
+                                            {userInfo.address}
                                         </Col>
                                     </Row>
                                     <hr/>
@@ -80,7 +83,7 @@ const AccountDetail = (props) =>{
                                             <Link to={{
                                                 pathname: `${pathname}/userinfo`,
                                                 state: {
-                                                    data: props.userInfo
+                                                    data: userInfo
                                                 }}}
                                                   className="btn btn-info">회원정보수정</Link>
                                         </Col>
@@ -127,21 +130,21 @@ const AccountDetail = (props) =>{
                                         </Col>
                                     </Row>
                                     <hr/>
+                                    <hr/>
+                                    <Row className="row">
+                                        <Col sm={3}>
+                                            <h6 className="mb-0">지갑 주소</h6>
+                                        </Col>
+                                        <Col sm={9} className="text-secondary">
+                                            {userInfo.walletAddress}
+                                        </Col>
+                                    </Row>
                                     <Row className="row">
                                         <Col sm={3}>
                                             <h6 className="mb-0">토큰 보유량</h6>
                                         </Col>
                                         <Col sm={9} className="text-secondary">
-                                            500
-                                        </Col>
-                                    </Row>
-                                    <hr/>
-                                    <Row className="row">
-                                        <Col sm={3}>
-                                            <h6 className="mb-0">전용 상담실</h6>
-                                        </Col>
-                                        <Col sm={9} className="text-secondary">
-                                            02-123-1234
+                                            {userInfo.tokenAmount}
                                         </Col>
                                     </Row>
                                     <hr/>

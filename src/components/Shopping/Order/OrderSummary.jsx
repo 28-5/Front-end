@@ -1,10 +1,12 @@
+import {useSelector} from "react-redux";
+
 const OrderSummary = (props) => {
     return(
       <>
             <h2>주문확인</h2>
           <ul>
               <li>
-                <h2>{props.buyer}</h2>
+                <h2>{props.review}</h2>
               </li>
               <li>
                 <h2>{props.receiver}</h2>

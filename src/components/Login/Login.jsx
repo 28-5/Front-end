@@ -89,11 +89,21 @@ const Login = props => {
         axios.post("/member/login", loginData)
             .then(res => {
                 const jwtToken    =   res.data;
+                let jwt = require("jsonwebtoken");
+                let decode = jwt.decode(jwtToken);
+                let roles = decode.role.split(",");
+                let isManager = false;
+                for(let i=0; i< roles.length; i++) {
+                    if(roles[i] == "ROLE_MANAGER"){
+                        isManager = true;
+                    }
+                }
+                console.info(isManager);
                 dispatch(authActions.login({
                     token: jwtToken,
-                    email: loginData.email,
+                    admin: isManager,
                 }));
-                props.history.push("/shop");
+                window.location.replace("/shop");
             }).catch(err => {
                 console.log("Login Failed");
         });
