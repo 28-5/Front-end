@@ -88,6 +88,7 @@ const Login = props => {
         };
         axios.post("/member/login", loginData)
             .then(res => {
+                localStorage.setItem("jwt", res.data);
                 const jwtToken    =   res.data;
                 let jwt = require("jsonwebtoken");
                 let decode = jwt.decode(jwtToken);
@@ -95,10 +96,10 @@ const Login = props => {
                 let isManager = false;
                 for(let i=0; i< roles.length; i++) {
                     if(roles[i] == "ROLE_MANAGER"){
+                        console.log(roles[i]);
                         isManager = true;
                     }
                 }
-                console.info(isManager);
                 dispatch(authActions.login({
                     token: jwtToken,
                     admin: isManager,

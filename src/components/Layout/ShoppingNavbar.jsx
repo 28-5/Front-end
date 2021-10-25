@@ -19,8 +19,10 @@ const ShoppingNavbar = (props) => {
     const dispatch                                        = useDispatch();
     const numberOfCartItems                               = useSelector(state => state.cart.totalQuantity);
     const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
+    const isManager                                       = useSelector(state => state.auth.admin);
     const userEmail                                       = useSelector(state => state.auth.email);
     const showCart                                        = useSelector(state => state.ui.isCartVisible);
+    const tokenPrice                                      = useSelector(state => state.token.tokenPrice);
     const [anchorEl, setAnchorEl]                         = useState(null);
     const [isButtonOpened, setisButtonOpened]             = useState(null);
     const showCartHandler = () => {
@@ -65,6 +67,7 @@ const ShoppingNavbar = (props) => {
                                 <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
                                    <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">프로필</MenuItem>
                                    <MenuItem onClick={handleMenuClose} component={Link} to="/mypage">개인정보수정</MenuItem>
+                                    {isManager&& <MenuItem onClick={handleMenuClose} component={Link} to="/admin">관리자</MenuItem>}
                                    <MenuItem onClick={handleMenuCloseLogout}>로그아웃</MenuItem>
                                 </Menu>:
                                 <Menu id="simple-menu" anchorEl={isButtonOpened} keepMounted open={Boolean(isButtonOpened)} onClick={handleClose}>
@@ -81,7 +84,7 @@ const ShoppingNavbar = (props) => {
                                 <Link to={"/member/login"} className={"in"}>로그인</Link>
                             </div>:
                             <div className="user-access">
-                                <a>{userEmail}</a>
+                                <Link to={"/mypage"}>{userEmail}</Link>
                             </div>}
                             <Navbar className={isAuth === false? "main-menu" : "main-menu auth"}>
                                 <ul>
@@ -106,13 +109,12 @@ const ShoppingNavbar = (props) => {
                                                 <li className="sub-category-menu"><Link to="#">양말</Link></li>
                                         </ul>
                                     </li>
-                                    <li><Link to={""}>주문조회</Link></li>
+                                    <li><Link to={"/mypage/order/list"}>주문조회</Link></li>
                                     <li><Link to={"/notices"}>공지사항</Link>
                                         <ul className="sub-menu submenuBoard">
                                             <li><Link to="/notices">공지사항</Link></li>
                                             <li><Link to="/qnas">Q&A</Link></li>
                                             <li><Link to="/service/request">물품 픽업 신청</Link></li>
-                                            <li><Link to="/service/seller/request">제품 등록</Link></li>
                                         </ul>
                                     </li>
                                     <li><Link to={"/introduction"}>회사소개</Link>
@@ -138,7 +140,7 @@ const ShoppingNavbar = (props) => {
                                             <li><a href="check-out.html">제품 카테고리3</a></li>
                                         </ul>
                                     </li>
-                                    <li><Link to={""}>주문조회</Link></li>
+                                    <li><Link to={"/mypage/order/list"}>주문조회</Link></li>
                                     <li><Link to={"/notices"}>공지사항</Link></li>
                                     <li><Link to={"/introduction"}>회사소개</Link></li>
                                 </ul>
@@ -165,7 +167,7 @@ const ShoppingNavbar = (props) => {
                             <Col md={4} className="text-left text-xl-right">
                                 <div className="header-item">
                                     <img src="/img/icons/sales.png" alt=""/>
-                                    <p>무상 A/S 서비스 1년 제공</p>
+                                    <p>리본 토큰 가격: {tokenPrice}원</p>
                                 </div>
                             </Col>
                         </Row>

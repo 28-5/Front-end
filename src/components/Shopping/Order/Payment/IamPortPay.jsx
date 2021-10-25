@@ -4,12 +4,13 @@ import { withRouter } from 'react-router-dom';
 import { withUserAgent } from 'react-useragent';
 import {useDispatch, useSelector} from "react-redux";
 import Button from "react-bootstrap/Button";
-import {productActions} from "../../../../store/product-slice";
 import axios from "axios";
+import {cartActions} from "../../../../store/cart-slice";
 function IamPortPay(props){
     const isAuth                = useSelector(state => state.auth.isAuthenticated);
     const userInfo              = useSelector(state => state.auth);
-    const totalPrice            = useSelector(state => state.cart.totalPrice);
+    const tokenPrice            = useSelector(state => state.token.tokenPrice);
+    const totalPrice            = useSelector(state => state.order.finalPrice);
     const dispatch              = useDispatch();
 
     function handleSubmit(e) {
@@ -46,7 +47,6 @@ function IamPortPay(props){
         }
     }
     function callback(res) {
-        console.log(res);
         if(res.success){
             let orderProductList = props.orderList.map( element =>{
                 let obj = {
@@ -64,14 +64,16 @@ function IamPortPay(props){
                 orderName: res.name,
                 deliveryMessage: props.enteredMemo,
                 recipientAddress: res.buyer_addr,
-                totalPrice: res.paid_amount,
+                totalPrice: totalPrice,
                 tokenAmount: props.usedToken,
                 orderProductList: orderProductList,
-                tokenPrice: 10,
+                tokenPrice: tokenPrice,
             });
-            console.log(props.orderList);
-            console.log(paymentSuccessData);
-            axios.post("/orders", paymentSuccessData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'}).then(res => console.log(res.data))
+            axios.post("/orders", paymentSuccessData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    props.setPaymentSuccessData(JSON.stringify(res.data));
+                    dispatch(cartActions.cleanCart());
+                })
                 .catch(err => console.log(err));
             props.setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }else{
@@ -81,7 +83,7 @@ function IamPortPay(props){
 
     return (
         <>
-            <Button variant="outline-secondary" ><img src={"/img/kakaopay.jpg"} onClick={handleSubmit}/></Button>
+            <Button variant="outline-secondary" ><img src={"/img/kakaopay.jpg"} alt={"kakao"} onClick={handleSubmit}/></Button>
         </>
     );
 }

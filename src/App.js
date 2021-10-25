@@ -36,6 +36,9 @@ import ModifyUserInfo from "./components/MyPage/ModifyUserInfo";
 import AuthRoute from "./components/AuthRoute";
 import PaymentResult from "./components/Shopping/Order/Payment/PaymentResult";
 import {getTokenPrice} from "./store/token-actions";
+import ServiceRequestSuccess from "./components/Service/ServiceRequestSuccess";
+import ProductControl from "./components/Admin/ProductControl";
+import UserOrderRecord from "./components/MyPage/UserOrderRecord";
 
 let isInitial = true;
 
@@ -45,12 +48,20 @@ function App() {
     const cart                                  = useSelector(state => state.cart);
     const [userEmail, setUserEmail]             = useState(false);
     const [noticeList, qnaList]                 = BoardDataUse([]);
-    const tokenPrice                            = useSelector(state => state.token.tokenPrice);
-    console.log(tokenPrice);
     useEffect(() => {
         if(localStorage.getItem("jwt")){
             axios.get("/member", {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
                 .then(res => {
+                    const jwtToken    =   localStorage.getItem("jwt");
+                    let jwt = require("jsonwebtoken");
+                    let decode = jwt.decode(jwtToken);
+                    let roles = decode.role.split(",");
+                    let isManager = false;
+                    for(let i=0; i< roles.length; i++) {
+                        if(roles[i] == "ROLE_MANAGER"){
+                            isManager = true;
+                        }
+                    }
                     dispatch(authActions.auth({
                         idx: res.data.idx,
                         email: res.data.email,
@@ -60,6 +71,7 @@ function App() {
                         address: res.data.address,
                         tokenAmount: res.data.tokenAmount,
                         walletAddress: res.data.walletAddress,
+                        manager: isManager,
                     }));
                 })
                 .catch(err => console.log(err));
@@ -88,9 +100,12 @@ function App() {
         <Layout>
           <Switch>
               {/*
+                0. 주문 완료 페이지
                 1. 세부 카테고리별 출력
-                2. 토큰 가격 리덕스 연동
-                3. 카카오 결제 문제
+                2. 어드민 게시물 삭제
+                3. 최근 주문 날짜 연동
+                4. 주문 현황
+                5. 그 외 짜잘한 게시판 구성
               */}
                   {/*Shop Main Page*/}
                   <Route exact path="/">
@@ -126,16 +141,19 @@ function App() {
                   <Route exact path="/service/request" render={props => <ServiceRequestForm {...props} />}/>
                   <Route exact path="/service/seller/request" render={props => <ProductRegistrationForm {...props} />}/>
                   <Route exact path="/service/success" component={RegistrationSuccess}/>
+                  <Route exact path="/service/req-success" component={ServiceRequestSuccess}/>
 
                   {/*Login & Join*/}
                   <Route exact path="/member/login" render={props => <Login setEmail={setUserEmail} {...props}/>} />
                   <Route exact path="/member/register" component={Join}/>
-                  <Route exact path="/welcome" component={JoinSuccess}/>
+
+                  {/*Admin*/}
                   <Route exact path="/admin" component={Dashboard}/>
 
                   {/*Mypage*/}
                   <AuthRoute exact authenticated={isAuth} path="/mypage" render={props => <MyPageMain/>}/>
                   <Route exact path="/mypage/:userinfo" component={ModifyUserInfo}/>
+                  <Route exact path="/mypage/order/list" component={UserOrderRecord}/>
 
                   {/*Page Not Found Page*/}
                   <Route component={PageNotFound} />

@@ -48,8 +48,7 @@ const Footer = () => {
                                 <h4>마이페이지</h4>
                                 <ul>
                                     <li><Link to={"/mypage"}>정보조회</Link></li>
-                                    <li><Link to={"/introduction"}>주문조회</Link></li>
-                                    <li><Link to={"/introduction"}>리본</Link></li>
+                                    <li><Link to={"/mypage/order/list"}>주문조회</Link></li>
                                 </ul>
                             </div>
                         </Col>
@@ -61,7 +60,7 @@ const Footer = () => {
                     <div className="social-links">
                         <Row className="row">
                             <Col sm={6} lg={12}>
-                                <Link to="/company" >메인</Link>
+                                <Link to="/shop" >메인</Link>
                                 <Link to="/shop" >이용약관</Link>
                                 <Link to="/shop" >개인정보처리방침</Link>
                                 <Link to="/shop" >Contact Us</Link>
@@ -75,9 +74,8 @@ const Footer = () => {
                                 <p>서울시 구로구 가산동 1 8층</p>
                     <p> Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0
                         Copyright &copy;
-                        All rights reserved | This template is made with <i className="icon-heart color-danger"
-                                                                            aria-hidden="true"></i> by <a
-                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                        All rights reserved | This template is made with by
+                        <a href="https://colorlib.com" target="#">Colorlib</a>
                     </p>
                 </Container>
             </div>

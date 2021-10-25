@@ -1,164 +1,230 @@
-import Container from "@material-ui/core/Container";
-import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import "./ServiceRequestForm.css";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import React, {useState} from "react";
 import useInput from "../hooks/use-input";
 import axios from "axios";
 import ImageUpload from "./ImageUpload";
-const useStyles = makeStyles({
-    mainContainer:{
-        paddingLeft:"260px",
-        paddingTop: "0px",
-        height:"100%",
-    },
-
-});
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import FormControl from "react-bootstrap/FormControl";
+import "./ProductRegistrationForm.css";
+import {useHistory} from "react-router-dom";
 
 
 const ServiceRequestForm = () => {
-    const classes                       = useStyles();
-    const {valueChangeHandler: sellerChangeHandler,
+    const history                       = useHistory();
+    const [imageInfo, setImageInfo]     = useState(null);
+    const [prevImg, setPrevImg]         = useState(null);
+    const {enteredSeller,
+        valueChangeHandler: sellerChangeHandler,
         reset: resetSellerInput}        = useInput();
-    const {valueChangeHandler: phoneChangeHandler,
-        reset: resetPhoneInput}         = useInput();
-    const {nameChangeHandler: productTypeNameChangeHandler,
+    const {value: enteredAddress,
+        valueChangeHandler: addressChangeHandler,
+        reset: resetAddress}        = useInput();
+    const {value: enteredCategory,
+        valueChangeHandler: productTypeNameChangeHandler,
         reset: resetProductTypeInput}   = useInput();
-    const { value: enteredPickup,
-        valueChangeHandler: pickupChangeHandler,
-        reset: resetPickup}             = useInput();
-    const {valueChangeHandler: dayChangeHandler,
-        reset: resetday}                = useInput();
-    const {valueChangeHandler: contentChangeHandler,
+    const { value: enteredBrand,
+        valueChangeHandler: brandChangeHandler,
+        reset: resetBrand}              = useInput();
+    const {value: enteredModel,
+        valueChangeHandler: modelChangeHandler,
+        reset: resetModel}         = useInput();
+    const {value: enteredRate,
+        nameChangeHandler: productRateChangeHandler,
+        reset: resetProductRate}   = useInput();
+    const { value: enteredAmount,
+        valueChangeHandler: amountChangeHandler,
+        reset: resetAmount}             = useInput();
+    const { value: enteredPrice,
+        valueChangeHandler: priceChangeHandler,
+        reset: resetPrice}              = useInput();
+    const {value: eneteredContent,
+        valueChangeHandler: contentChangeHandler,
         reset: resetContent}            = useInput();
 
     const formFetchHandler      =   event =>{
         event.preventDefault();
         // console.log("image: " + image);
-        axios.post("/", {
-            headers: { Authorization: `${localStorage.getItem("jwt")}`, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-            data: {
-                // title: enteredSeller,
-                // brand:,
-                // rank:,
-                // quantity:,
-                // price:,
-                // content: content,
-                // image:,
-            }
-        }).then(res => {
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
-            // props.history.push(path);
+        const requestData = {
+            brand: enteredBrand,
+            name: enteredModel,
+            state:enteredRate,
+            price: enteredPrice,
+            quentity:enteredAmount,
+            details: eneteredContent,
+            address: enteredAddress,
+            imageDtoList:[
+                {
+                    imgName: imageInfo[0].imgName,
+                    uuid: imageInfo[0].uuid,
+                    path: imageInfo[0].path,
+                }
+            ],
+        };
+        axios.post("/purchased-products?categoryIdx=" + parseInt(enteredCategory), requestData,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+            .then(res => {
             resetSellerInput();
-            resetPhoneInput();
-            resetPickup();
+            resetAddress();
             resetProductTypeInput();
+            resetBrand();
+            resetModel();
+            resetProductRate();
+            resetAmount();
+            resetPrice();
             resetContent();
+            setImageInfo(null);
+            console.log("성공");
+            alert("토큰 적립: " + res.data.expectedPointAmount);
+            history.push("/service/req-success");
 
         }).catch(err => {
-            console.log(err.response.request);
+            console.log(err.request);
+            console.log(err.response.data);
+            console.log(err.response.message);
         });
     };
 
     return(
       <>
-          <Container maxWidth="xl" className={classes.mainContainer}>
-              <form className="form-card">
-                  <fieldset className="form-fieldset">
-                      <legend className="form-legend">물품 픽업 신청</legend>
-                      <div className="form-element form-input">
-                          <input id="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9" className="form-element-field"
-                                 placeholder="성함을 입력해주세요" type="input" required onChange={sellerChangeHandler}/>
-                          <div className="form-element-bar"></div>
-                          <label className="form-element-label"
-                                 htmlFor="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9">성함</label>
-                      </div>
-                      <div className="form-element form-input">
-                          <input id="field-uyzeji-352rnc-4rv3g1-bvlh88-9dewuz" className="form-element-field"
-                                 placeholder=" " type="email" required onChange={phoneChangeHandler}/>
-                          <div className="form-element-bar"></div>
-                          <label className="form-element-label"
-                                 htmlFor="field-uyzeji-352rnc-4rv3g1-bvlh88-9dewuz">연락처</label>
-                          <small className="form-element-hint">연락 받으실 연락처</small>
-                      </div>
-                      <div className="form-checkbox form-checkbox-inline">
-                          <div className="form-checkbox-legend">어떤 물건들인가요?</div>
-                          <label className="form-checkbox-label" onClick={productTypeNameChangeHandler}>
-                              <input name="rap" className="form-checkbox-field" type="checkbox"/>
-                              <i className="form-checkbox-button"></i>
-                              <span>골프공</span>
-                          </label>
-                          <label className="form-checkbox-label">
-                              <input name="pop" className="form-checkbox-field" type="checkbox"/>
-                              <i className="form-checkbox-button"></i>
-                              <span>골프채</span>
-                          </label>
-                          <label className="form-checkbox-label">
-                              <input name="rock" className="form-checkbox-field" type="checkbox"/>
-                              <i className="form-checkbox-button"></i>
-                              <span>장갑</span>
-                          </label>
-                          <label className="form-checkbox-label">
-                              <input name="metal" className="form-checkbox-field" type="checkbox"/>
-                              <i className="form-checkbox-button"></i>
-                              <span>가방</span>
-                          </label>
-                          <label className="form-checkbox-label">
-                              <input name="r_b" className="form-checkbox-field" type="checkbox"/>
-                              <i className="form-checkbox-button"></i>
-                              <span>기타</span>
-                          </label>
-                      </div>
-                      <div className="form-element form-select">
-                          <InputLabel id="demo-controlled-open-select-label">원하시는 픽업 방법을 선택해주세요</InputLabel>
-                          <Select labelId="demo-simple-select-label" className="rate" value={enteredPickup} onChange={pickupChangeHandler} defaultValue="" >
-                              <MenuItem value="1">리본 픽업 서비스 (3,000)</MenuItem>
-                              <MenuItem value="2">택배(2,500)</MenuItem>
-                              <MenuItem value="3">지점 방문</MenuItem>
-                          </Select>
-                      </div>
-                      <div className="form-radio form-radio-block">
-                          <div className="form-radio-legend">리본 픽업 - 희망 날짜</div>
-                          <label className="form-radio-label">
-                              <input name="eat" className="form-radio-field" type="radio" value="월" onClick={dayChangeHandler}/>
-                              <i className="form-radio-button"></i>
-                              <span>월</span>
-                          </label>
-                          <label className="form-radio-label">
-                              <input name="eat" className="form-radio-field" type="radio" value="수" onClick={dayChangeHandler}/>
-                              <i className="form-radio-button"></i>
-                              <span>수</span>
-                          </label>
-                          <label className="form-radio-label">
-                              <input name="eat" className="form-radio-field" type="radio" value="금" onClick={dayChangeHandler}/>
-                              <i className="form-radio-button"></i>
-                              <span>금</span>
-                          </label>
-                          <label className="form-radio-label">
-                              <input name="eat" className="form-radio-field" type="radio" value="일" onClick={dayChangeHandler}/>
-                              <i className="form-radio-button"></i>
-                              <span>일</span>
-                          </label>
-                      </div>
-                      <div className="form-element form-textarea">
-                            <textarea id="field-3naeph-0f3yuw-x153ph-dzmahy-qhkmgm" className="form-element-field" onChange={contentChangeHandler}
-                                      placeholder=" "></textarea>
-                          <div className="form-element-bar"></div>
-                          <label className="form-element-label" htmlFor="field-3naeph-0f3yuw-x153ph-dzmahy-qhkmgm">
-                              전달사항
-                          </label>
-                          <ImageUpload/>
-
-                      </div>
-                  </fieldset>
-                  <div className="form-actions">
-                      <button className="form-btn" onClick={formFetchHandler}>전송</button>
-                      <button className="form-btn-cancel -nooutline" type="reset">취소</button>
-                  </div>
-              </form>
-          </Container>
+          <section className="cart-total-page spad">
+              <Container>
+                  <form action="#" className="checkout-form">
+                      <Row>
+                          <Col lg={12}>
+                              <h3>물품 픽업 신청</h3>
+                          </Col>
+                          <Col lg={9}>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">성함</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <input required type="text" onChange={sellerChangeHandler}/>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">픽업 주소</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <input required type="text" onChange={addressChangeHandler}/>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">모델</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <input required type="text" onChange={modelChangeHandler}/>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">카테고리*</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <select className="form-select cart-select country-usa" onChange={productTypeNameChangeHandler}
+                                              defaultValue="">
+                                          <option value=""></option>
+                                          <option value="1">골프클럽</option>
+                                          <option value="2">골프용품</option>
+                                          <option value="3">골프웨어</option>
+                                          <option value="4">드라이버</option>
+                                          <option value="5">우드</option>
+                                          <option value="6">아이언</option>
+                                          <option value="7">풀세트</option>
+                                          <option value="8">골프공</option>
+                                          <option value="9">골프가방</option>
+                                          <option value="10">골프장갑</option>
+                                          <option value="11">골프모자</option>
+                                          <option value="12">골프화</option>
+                                          <option value="13">아우터</option>
+                                          <option value="14">상의</option>
+                                          <option value="15">하의</option>
+                                          <option value="16">양말</option>
+                                      </select>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">브랜드*</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <select className="form-select cart-select country-usa" onChange={brandChangeHandler}
+                                              defaultValue="">
+                                          <option value=""></option>
+                                          <option value="타이틀리스트">타이틀리스트</option>
+                                          <option value="캘러웨이">캘러웨이</option>
+                                          <option value="테일러메이드">테일러메이드</option>
+                                          <option value="핑">핑</option>
+                                          <option value="미즈노">미즈노</option>
+                                          <option value="클리브랜드">클리브랜드</option>
+                                          <option value="혼마">혼마</option>
+                                          <option value="PXG">PXG</option>
+                                          <option value="코브라킹">코브라킹</option>
+                                          <option value="브리지스톤">브리지스톤</option>
+                                          <option value="볼빅">볼빅</option>
+                                          <option value="파이즈">파이즈</option>
+                                          <option value="나이키">나이키</option>
+                                      </select>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">상태</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <select className="form-select cart-select country-usa" onChange={productRateChangeHandler}
+                                              defaultValue="">
+                                          <option value=""></option>
+                                          <option value="A+">A+</option>
+                                          <option value="A">A</option>
+                                          <option value="B">B+</option>
+                                      </select>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">수량*</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <input required type="text" onChange={amountChangeHandler}/>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">가격*</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <input required type="text" onChange={priceChangeHandler}/>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                      <p className="in-name">내용*</p>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <FormControl as="textarea" aria-label="내용" placeholder="내용"  className="formArea"
+                                                   onChange={contentChangeHandler}/>
+                                  </Col>
+                              </Row>
+                              <Row>
+                                  <Col lg={2}>
+                                  </Col>
+                                  <Col lg={10}>
+                                      <ImageUpload setImgInfo={setImageInfo} setPrevImg={setPrevImg}/>
+                                      <img src={prevImg} className={prevImg && "prevImg"}/>
+                                      <div className="form-actions">
+                                          <button type="button" className="btn btn-danger">취소</button>
+                                          <button type="button" className="btn btn-primary" onClick={formFetchHandler}>전송</button>
+                                      </div>
+                                  </Col>
+                              </Row>
+                          </Col>
+                      </Row>
+                  </form>
+              </Container>
+          </section>
       </>
     );
 };

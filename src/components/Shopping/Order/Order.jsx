@@ -72,7 +72,8 @@ const Order = () => {
                                     buyer={enteredBuyer} addr={enteredAddress} contact={enteredContact} setActiveStep={setActiveStep}
                                     orderList={orderList} setPaymentSuccessData={setPaymentSuccessData} resetMethod={resetMethod}/>;
             case 2:
-                return <OrderSummary review={paymentSuccessData} />;
+                return <OrderSummary review={paymentSuccessData} setUsedToken={setUsedToken} method={selectedMethod}/>;
+            case 3: window.location.replace("/shop");
             default:
                 throw new Error('Unknown step');
         }
@@ -125,22 +126,6 @@ const Order = () => {
             axios.get("/carts")
                 .then(res => setOrderList(res.data.cartDtos))
                 .catch(err => console.log(err));
-
-            // const getCartData = async () => {
-            //     const response = axios.get("/carts");
-            //
-            //     if (!response) {
-            //         throw new Error("카트 정보를 읽어올 수가 없습니다!");
-            //     }
-            //     const data = (await response).data.cartDtos;
-            //     return data;
-            // };
-            // try{
-            //     const orderData = await getCartData();
-            //     setOrderList(orderData);
-            // }catch(err){
-            //     console.log(err);
-            // }
         }
         getOrderData();
     }, []);
@@ -173,7 +158,7 @@ const Order = () => {
                     <form action="#" className="checkout-form">
                         <Row className="row">
                             {getStepContent(activeStep)}
-                            <OrderList orderList={orderList} usedToken={usedToken}/>
+                            {activeStep !==2 && <OrderList orderList={orderList} usedToken={usedToken}/>}
                         </Row>
                     </form>
                     <Row>
@@ -184,23 +169,6 @@ const Order = () => {
                             {activeStep > 0 && <button id='backward' onClick={handleBack}>이전</button>}
                         </div>
                     </Row>
-                        {/*<Row className="row">*/}
-                        {/*    <Col lg={12}>*/}
-                        {/*        <div className="payment-method">*/}
-                        {/*            <h3>Payment</h3>*/}
-                        {/*            <ul>*/}
-                        {/*                <li>Paypal <img src="img/paypal.jpg" alt=""/></li>*/}
-                        {/*                <li>Credit / Debit card <img src="img/mastercard.jpg" alt=""/></li>*/}
-                        {/*                <li>*/}
-                        {/*                    <label htmlFor="two">Pay when you get the package</label>*/}
-                        {/*                    <input type="radio" id="two"/>*/}
-                        {/*                </li>*/}
-                        {/*            </ul>*/}
-                        {/*            {getStepContent(activeStep)}*/}
-                        {/*            {activeStep > 0 && <button id='backward' onClick={handleBack}>이전</button>}*/}
-                        {/*        </div>*/}
-                        {/*    </Col>*/}
-                        {/*</Row>*/}
                 </Container>
             </section>
         </>

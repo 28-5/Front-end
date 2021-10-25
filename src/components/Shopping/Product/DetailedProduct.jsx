@@ -105,9 +105,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-function stringNumberToNumber(num){
-    return parseInt(num.replace(/,/g , ''));
-}
 const DetailedProduct = (props) => {
     const classes                               = useStyles();
     const dispatch                              = useDispatch();
@@ -166,7 +163,7 @@ const DetailedProduct = (props) => {
                         </div>
                     </Grid>
                 </Grid>
-                <DetailedProductContent/>
+                <DetailedProductContent idx={data.idx}/>
             </Container>
         </section>
     );

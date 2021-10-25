@@ -244,3 +244,11 @@
 .btnGroup{
     padding-bottom: 100px;
 }
+
+#tokenInput{
+    margin-bottom: 0px;
+}
+
+#usedMessage{
+    color: #d9534f;
+}

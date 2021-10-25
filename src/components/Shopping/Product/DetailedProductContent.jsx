@@ -38,7 +38,7 @@ const DetailedProductContent = props => {
             <Typography variant="h5" className={classes.bodyTitle}>상품상세정보</Typography>
             <div className={classes.line_dec} />
             <div className={classes.contentInfoDiv}>
-                <Typography variant="h5" className={classes.bodyContentInfo}>상품번호 1000229194115</Typography>
+                <Typography variant="h5" className={classes.bodyContentInfo}>상품번호 {props.idx}</Typography>
                 <Typography variant="h5" className={classes.bodyContentInfo}>모델번호 1000229194115</Typography>
             </div>
             <Grid item sm={12} md={12}>

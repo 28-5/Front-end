@@ -174,7 +174,7 @@ const CartItems = props => {
     return props.data.map(item =>
         <div className={classes.cart_Items} key={item.cartIdx}>
             <div className={classes.image_box}>
-                <img src={item.imageDtoList === null? "" : "/display?fileName="+item.imageDtoList.imageURL} className={classes.cartImg} alt="product"/>
+                <img src={item.imageDtoList === undefined? "" : "/display?fileName="+item.imageDtoList.imageURL} className={classes.cartImg} alt="product"/>
             </div>
             <div className={classes.about}>
                 <h1 className={classes.title}>{item.title}</h1>

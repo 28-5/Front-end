@@ -104,7 +104,7 @@ const AccountDetail = (props) =>{
                                     </Row>
                                     <Row className="row">
                                         <Col sm={12}>
-                                            <h5 className="mb-0"><ListIcon/><Link to={"#"}> 구매내역</Link></h5>
+                                            <h5 className="mb-0"><ListIcon/><Link to={"/mypage/order/list"}> 구매내역</Link></h5>
                                             <hr/>
                                         </Col>
                                     </Row>
@@ -123,13 +123,12 @@ const AccountDetail = (props) =>{
                                 <Col className="card-body">
                                     <Row className="row">
                                         <Col sm={3}>
-                                            <h6 className="mb-0">마지막 구매 날짜</h6>
+                                            <h6 className="mb-0">최근 구매 날짜</h6>
                                         </Col>
                                         <Col sm={9} className="text-secondary">
                                             {month + "월 " + date + "일"}
                                         </Col>
                                     </Row>
-                                    <hr/>
                                     <hr/>
                                     <Row className="row">
                                         <Col sm={3}>
@@ -139,6 +138,7 @@ const AccountDetail = (props) =>{
                                             {userInfo.walletAddress}
                                         </Col>
                                     </Row>
+                                    <hr/>
                                     <Row className="row">
                                         <Col sm={3}>
                                             <h6 className="mb-0">토큰 보유량</h6>

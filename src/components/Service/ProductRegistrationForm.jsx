@@ -1,6 +1,5 @@
 import {useHistory} from "react-router-dom";
 import React, {useState} from "react";
-import "./ProductRegistrationForm.css";
 import axios from "axios";
 import useInput from "../hooks/use-input";
 import ImageUpload from "./ImageUpload";
@@ -8,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import FormControl from "react-bootstrap/FormControl";
+import "./ProductRegistrationForm.css";
 
 const ProductRegistrationForm = (props) =>{
     const history                       = useHistory();
@@ -35,7 +35,7 @@ const ProductRegistrationForm = (props) =>{
     const formFetchHandler      =   event =>{
         event.preventDefault();
         let productData = {
-            categoryIdx: enteredCategory,
+            categoryIdx: parseInt(enteredCategory),
             title: enteredTitle,
             brand:enteredBrand,
             quantity:enteredAmount,

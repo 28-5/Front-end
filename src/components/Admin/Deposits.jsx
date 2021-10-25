@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -14,22 +14,26 @@ const useStyles = makeStyles({
     },
 });
 
-export default function Deposits() {
+export default function Deposits(props) {
     const classes = useStyles();
+    const today    = new Date();
+    let totalPrice = 0;
+
+    if(props.orderData !== null) {
+        props.orderData.dtoList.map(price => {
+            totalPrice += price.totalPrice;
+        });
+    }
+
     return (
         <React.Fragment>
-            <Title>Recent Deposits</Title>
+            <Title>매출</Title>
             <Typography component="p" variant="h4">
-                $3,024.00
+                {totalPrice.toLocaleString('ko-KR')} 원
             </Typography>
             <Typography color="textSecondary" className={classes.depositContext}>
-                on 15 March, 2019
+                {today.getMonth()+1 + "월" + today.getDate() + "일 기준"}
             </Typography>
-            <div>
-                <Link color="primary" href="#" onClick={preventDefault}>
-                    View balance
-                </Link>
-            </div>
         </React.Fragment>
     );
 }

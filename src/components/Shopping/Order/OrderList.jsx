@@ -1,12 +1,27 @@
-import React, {useEffect, useState, Fragment} from "react";
+import React, { Fragment} from "react";
 import Col from "react-bootstrap/Col";
-import {useSelector} from "react-redux";
-import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {orderActions} from "../../../store/order-slice";
 
 const OrderList = (props) => {
+    const dispatch                         = useDispatch();
     const numberOfCartItems                = useSelector(state => state.cart.totalQuantity);
+    const tokenPrice                       = useSelector(state => state.token.tokenPrice);
     const totalPrice                       = useSelector(state => state.cart.totalPrice);
-
+    const userOrderTokenPrice              = (tokenPrice * props.usedToken);
+    let discountPrice;
+    if(props.usedToken > 0){
+        if(userOrderTokenPrice > totalPrice){
+            alert("토큰 사용이 구매 금액을 넘어설 수 없습니다.");
+            props.setUsedToken(0);
+        }else{
+            discountPrice                  = Number((totalPrice - userOrderTokenPrice).toFixed(2));
+            dispatch(orderActions.updateFinalPrice(discountPrice));
+        }
+    }else{
+        discountPrice                      = Number((totalPrice).toFixed(2));
+        dispatch(orderActions.updateFinalPrice(discountPrice));
+    }
 
     return(
         <>
@@ -31,17 +46,16 @@ const OrderList = (props) => {
                         <p>{totalPrice.toLocaleString('ko-KR')}</p>
                     </div>
                     <div className="cart-item">
-                        <span>토큰 사용</span>
-                        <p>{props.usedToken}</p>
+                        <span>할인금액 (토큰 개수)</span>
+                        <p>{(tokenPrice * props.usedToken).toLocaleString('ko-KR')}원 ({props.usedToken})</p>
                     </div>
                     <div className="cart-item">
                         <span>배송비</span>
-                        <p>2,500원</p>
+                        <p>무료</p>
                     </div>
-
                     <div className="cart-total">
                         <span>결제하실 금액</span>
-                        <p>$39</p>
+                        <p>{discountPrice.toLocaleString('ko-KR')} 원</p>
                     </div>
                 </div>
             </Col>

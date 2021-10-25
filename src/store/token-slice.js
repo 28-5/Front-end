@@ -3,12 +3,11 @@ import {createSlice} from "@reduxjs/toolkit";
 const tokenSlice = createSlice({
     name: "token",
     initialState: {
-        tokenPrice: null,
+        tokenPrice: 0,
     },
     reducers: {
         updateTokenPrice(state, action){
-            console.log(action.payload);
-            state.tokenPrice         = action.payload.price;
+            state.tokenPrice = action.payload;
         },
     },
 });

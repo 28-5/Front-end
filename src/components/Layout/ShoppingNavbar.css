@@ -3,7 +3,7 @@ p {
     color: #7b7b7b;
     font-weight: 400;
     line-height: 1.6;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'twayair', "Montserrat", sans-serif;
     margin: 0 0 15px 0;
 }
 
@@ -37,7 +37,7 @@ ol {
 
 .header-section {
     height: 104px;
-    padding-top: 38px;
+    padding-top: 20px;
     padding-bottom: 24px;
     padding-left: 45px;
     padding-right: 40px;
@@ -98,6 +98,7 @@ ol {
 }
 
 .inner-header .user-access a {
+    font-family: 'twayair';
     color: #1e1e1e;
     font-size: 14px;
     display: inline-block;
@@ -131,6 +132,7 @@ ol {
 }
 
 .inner-header .main-menu ul li {
+    font-family: 'twayair';
     display: inline-block;
     margin-left: 58px;
     position: relative;

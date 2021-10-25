@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {act} from "@testing-library/react";
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -18,6 +19,8 @@ const authSlice = createSlice({
         login(state, action) {
             state.isAuthenticated = true;
             localStorage.setItem("jwt", action.payload.token);
+            console.log("auth");
+            console.log(action.payload.admin);
             state.admin = action.payload.admin;
         },
         logout(state) {
@@ -44,6 +47,7 @@ const authSlice = createSlice({
             state.address = action.payload.address;
             state.tokenAmount = action.payload.tokenAmount;
             state.walletAddress = action.payload.walletAddress;
+            state.admin = action.payload.manager;
         },
     },
 });

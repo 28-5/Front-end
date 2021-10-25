@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Container from "@material-ui/core/Container";
 import {Link} from "react-router-dom";
 import LoaddingSpinner from "../UI/LoaddingSpinner";
+import Col from "react-bootstrap/Col";
 
 const columns = [
     { id: 'postNum', label: '번호', maxWidth: 30 },
@@ -62,6 +63,15 @@ const useStyles = makeStyles({
     boardLink:{
         textDecoration: "none",
         color:"black"
+    },
+    title:{
+        color: "#1e1e1e",
+        marginBottom: "25px",
+        paddingBottom: "14px",
+        paddingTop: "20px",
+        paddingLeft: "50px",
+        borderBottom: "2px solid #D0D7DB",
+
     }
 });
 
@@ -83,6 +93,9 @@ const BoardListForm = props => {
     return (
         <>
             <Container maxWidth="xl" className={classes.mainContainer}>
+                <Col lg={12}>
+                    <h3 className={classes.title}>{(props.path.slice(1, -1)).toUpperCase()}</h3>
+                </Col>
                 {boardData ===undefined? <LoaddingSpinner/>:
                 <Paper className={classes.root}>
                     <TableContainer className={classes.container}>

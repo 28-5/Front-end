@@ -1,4 +1,5 @@
 .cart-total-page {
+    margin-top: 50px;
     padding-top: 50px;
     padding-bottom: 100px;
 }
@@ -114,4 +115,8 @@
     height: 150px;
     width: 100px;
     display: block;
+}
+
+.form-actions{
+    text-align: right;
 }

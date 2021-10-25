@@ -1,15 +1,17 @@
-import React from 'react';
+import ReactDOM from 'react-dom';
 import Modal from '@material-ui/core/Modal';
 
 
 const CartModal = props => {
 
     return (
-        <div>
-            <Modal open={props.isOpen} onClose={props.onClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+        <>
+            {ReactDOM.createPortal(<Modal open={props.isOpen} onClose={props.onClose}
+                                          aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+
                         {props.children}
-            </Modal>
-        </div>
+            </Modal>, document.getElementById("overlay-root"))}
+        </>
     );
 }
 

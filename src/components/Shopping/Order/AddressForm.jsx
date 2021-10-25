@@ -6,12 +6,25 @@ const AddressForm = (props) => {
     const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
     const userInfo                                        = useSelector(state => state.auth);
     const [usedToken, setUsedToken]                       = useState(0);
+    const [isBtnClicked, setIsBtnClicked]                 = useState(false);
     const usedTokenHandler = (event) =>{
         setUsedToken(event.target.value);
     };
 
     const tokenUseBtnHandler = () =>{
-        props.setUsedToken(usedToken);
+        if(usedToken < 0.01){
+            alert("토큰 최소 사용금액은 0.01 입니다");
+            setUsedToken(0);
+            return
+        }
+        else{
+            props.setUsedToken(usedToken);
+            setIsBtnClicked(true);
+
+            setTimeout(() => {
+                setIsBtnClicked(false);
+            }, 4000);
+        }
     };
 
     return (
@@ -25,7 +38,7 @@ const AddressForm = (props) => {
                 <p className="in-name">주문자*</p>
             </Col>
             <Col lg={4}>
-                {isAuth ? <input type="text" required value={userInfo.name}/>:
+                {isAuth ? <input type="text" required readOnly value={userInfo.name}/>:
                     <input type="text" onChange={props.buyerChangeHandler}/>}
 
             </Col>
@@ -33,7 +46,7 @@ const AddressForm = (props) => {
                 <p className="in-name">연락처*</p>
             </Col>
             <Col lg={4}>
-                {isAuth ? <input type="text" required value={userInfo.phone}/>:
+                {isAuth ? <input type="text" required readOnly value={userInfo.phone}/>:
                 <input type="text" onChange={props.contactChangeHandler}/>}
             </Col>
         </Row>
@@ -42,7 +55,7 @@ const AddressForm = (props) => {
                 <p className="in-name">주소*</p>
             </Col>
             <Col lg={10}>
-                {isAuth ? <input type="text" required value={userInfo.address}/>:
+                {isAuth ? <input type="text" required readOnly value={userInfo.address}/>:
                 <input type="text" onChange={props.addressChangeHandler}/>}
             </Col>
         </Row>
@@ -64,14 +77,14 @@ const AddressForm = (props) => {
                 <p className="in-name">수령인*</p>
             </Col>
             <Col lg={4}>
-                {props.isBtnClicked===true ? isAuth && <input disabled type="text" value={userInfo.name}/>:
+                {props.isBtnClicked===true ? isAuth && <input disabled type="text" readOnly value={userInfo.name}/>:
                     <input type="text" value={props.receiver} onChange={props.receiverChangeHandler}/>}
             </Col>
             <Col lg={2}>
                 <p className="in-name">연락처*</p>
             </Col>
             <Col lg={4}>
-                {props.isBtnClicked===true ? isAuth && <input disabled type="text" value={userInfo.phone}/>:
+                {props.isBtnClicked===true ? isAuth && <input disabled type="text" readOnly value={userInfo.phone}/>:
                     <input type="text" value={props.receiveContact} onChange={props.receiverContactChangeHandler}/>}
             </Col>
         </Row>
@@ -80,7 +93,7 @@ const AddressForm = (props) => {
                 <p className="in-name">주소*</p>
             </Col>
             <Col lg={10}>
-                {props.isBtnClicked===true ? isAuth && <input disabled type="text" value={userInfo.address}/>:
+                {props.isBtnClicked===true ? isAuth && <input disabled type="text" readOnly value={userInfo.address}/>:
                     <input type="text" value={props.receiverAddr} onChange={props.receiverAddressChangeHandler}/>}
             </Col>
         </Row>
@@ -108,10 +121,11 @@ const AddressForm = (props) => {
                 <input type="text" value={userInfo.tokenAmount} readOnly/>
             </Col>
             <Col lg={2}>
-                <p className="in-name">토큰</p>
+                <p className="in-name">토큰<br/>(최소 0.01)</p>
             </Col>
             <Col lg={8}>
-                <input type="text" value={usedToken} onChange={usedTokenHandler}/>
+                <input type="text" value={usedToken} id={"tokenInput"} onChange={usedTokenHandler}/>
+                {isBtnClicked && <span className="in-name" id={"usedMessage"}>사용되었습니다</span>}
             </Col>
             <Col lg={2}>
                 <button type="button" className="btn btn-light" onClick={tokenUseBtnHandler}>사용</button>

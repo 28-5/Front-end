@@ -5,7 +5,6 @@ const useInput = validateValue => {
     const [checkboxItem, setCheckboxItem]           =   useState([]);
     const [isTouched, setIsTouched]                 =   useState(false);
     const [validation, setValidation]               =   useState(true);
-    const [checkedInputs, setCheckedInputs] = useState([]);
 
     const deleteCheckboxValue                       =   value =>{
         setCheckboxItem(prevValue => {
