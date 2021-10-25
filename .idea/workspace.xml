@@ -2,50 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="55627cf2-ea3c-4899-8bed-06cd63839ca7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/ListItems.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/ProductControl.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/ServiceRequestControl.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Admin/SideMenu.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/MyPage/UserOrderRecord.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestSuccess.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/store/order-slice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Admin/Dashboard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Dashboard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Admin/Deposits.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Deposits.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Admin/Orders.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/Orders.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Admin/listItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/LlistItems.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Board/ModificationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/ModificationForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Footer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MyPage/AccountDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyPage/AccountDetail.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Cart/CartItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Cart/CartItems.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Cart/CartModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Cart/CartModal.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/AddressForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/AddressForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/Order.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/Order.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/Order.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/Order.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/OrderList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/OrderList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/Payment/IamPortPay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/Payment/IamPortPay.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProductContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProductContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/hooks/use-input.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hooks/use-input.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/auth-slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/auth-slice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/token-actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/token-actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/token-slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/token-slice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +84,7 @@
       <workItem from="1634862469207" duration="26939000" />
       <workItem from="1634950599029" duration="18479000" />
       <workItem from="1635050964772" duration="2470000" />
-      <workItem from="1635124216677" duration="24270000" />
+      <workItem from="1635124216677" duration="24373000" />
     </task>
     <servers />
   </component>
