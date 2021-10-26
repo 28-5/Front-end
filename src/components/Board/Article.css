@@ -116,9 +116,12 @@ body{
 .content{
     margin-top:40px;
 }
-
 .listBtn{
     float: right;
+}
+.replyBtn{
+    float: right;
+    margin-right: 15px;
 }
 
 

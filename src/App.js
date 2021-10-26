@@ -39,6 +39,7 @@ import {getTokenPrice} from "./store/token-actions";
 import ServiceRequestSuccess from "./components/Service/ServiceRequestSuccess";
 import ProductControl from "./components/Admin/ProductControl";
 import UserOrderRecord from "./components/MyPage/UserOrderRecord";
+import UserRequestRecord from "./components/MyPage/UserRequestRecord";
 
 let isInitial = true;
 
@@ -130,10 +131,12 @@ function App() {
                   <Route exact path="/notices" render={props => <Notice noticeData={noticeList} {...props}/> }/>
                   <Route exact path="/notices/article/:postNum" render={props => <Article {...props}/> } />
                   <Route exact path="/notices/write" render={props => <WrtForm path="/notices" {...props} />}/>
+                  <Route exact path="/notices/answer" render={props => <WrtForm path="/notices" {...props} />}/>
                   <Route exact path="/notices/modify" render={props => <ModificationForm path="/notices" {...props} />}/>
                   <Route exact path="/qnas"  render={props => <QnA qnaData={qnaList} {...props}/> } />
                   <Route exact path="/qnas/article/:postNum" render={props => <Article {...props}/> } />
                   <Route exact path="/qnas/write" render={props => <WrtForm path="/qnas"  {...props} />} />
+                  <Route exact path="/qnas/answer" render={props => <WrtForm path="/qnas"  {...props} />} />
                   <Route exact path="/qnas/modify" render={props => <ModificationForm path="/qnas"  {...props} />} />
                   <Route exact path="/faq" component={FaQ}/>
 
@@ -146,6 +149,7 @@ function App() {
                   {/*Login & Join*/}
                   <Route exact path="/member/login" render={props => <Login setEmail={setUserEmail} {...props}/>} />
                   <Route exact path="/member/register" component={Join}/>
+                  <Route exact path="/member/success" component={JoinSuccess}/>
 
                   {/*Admin*/}
                   <Route exact path="/admin" component={Dashboard}/>
@@ -154,6 +158,7 @@ function App() {
                   <AuthRoute exact authenticated={isAuth} path="/mypage" render={props => <MyPageMain/>}/>
                   <Route exact path="/mypage/:userinfo" component={ModifyUserInfo}/>
                   <Route exact path="/mypage/order/list" component={UserOrderRecord}/>
+                  <Route exact path="/mypage/request/list" component={UserRequestRecord}/>
 
                   {/*Page Not Found Page*/}
                   <Route component={PageNotFound} />

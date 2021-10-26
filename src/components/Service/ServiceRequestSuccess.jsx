@@ -13,7 +13,6 @@ const ServiceRequestSuccess = () =>{
     return(
         <>
             <div className="card">
-
                 <div className="messageBox">
                     <i className="checkmark">✓</i>
                 </div>

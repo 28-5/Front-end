@@ -5,11 +5,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
 import "./WrtForm.css"
+import {useLocation} from "react-router-dom";
 
 const WrtForm = props => {
     const path                  =   props.path;
     const [title, setTitle]     =   useState(null);
     const [content, setContent] =   useState(null);
+    const location              = useLocation();
+    const { data }              = location.state;
     const titleChangeHandler    =   event =>{
         setTitle(event.target.value);
     };
@@ -18,20 +21,37 @@ const WrtForm = props => {
     };
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        // axios.post(path, json, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
-        axios.post(path, {title:title, content:content}, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-                'Content-Type': 'application/json; charset=UTF-8'
-            }
-        })
-            .then(res => {
-                window.location.replace(path);
-        }).catch(err => {
-            console.log(err.request);
-            console.log(err.response);
-            console.log(err.response.message);
-        });
+
+        if(location.pathname.includes("/answer")){
+            axios.post(path, {pidx: data.postNum, title:title, content:content}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+                .then(res => {
+                    window.location.replace(path);
+                }).catch(err => {
+                console.log(err.request);
+                console.log(err.response);
+                console.log(err.response.message);
+            });
+        }else{
+            axios.post(path, {title:title, content:content}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+                .then(res => {
+                    window.location.replace(path);
+            }).catch(err => {
+                console.log(err.request);
+                console.log(err.response);
+                console.log(err.response.message);
+            });
+        }
+
     };
     return (
         <div className="contact-section">

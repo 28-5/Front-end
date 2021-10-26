@@ -119,7 +119,7 @@ const Join = ({history}) => {
             address: userAddress,
         }).then(res => {
             console.log("Join success! + res.data: " + res.data);
-            history.push("/welcome");
+            history.push("/member/success");
         }).catch(err => {
             console.log(err);
             console.log(userEmail);

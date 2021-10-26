@@ -50,7 +50,7 @@ const ServiceRequestForm = () => {
             name: enteredModel,
             state:enteredRate,
             price: enteredPrice,
-            quentity:enteredAmount,
+            quantity:enteredAmount,
             details: eneteredContent,
             address: enteredAddress,
             imageDtoList:[
@@ -74,6 +74,7 @@ const ServiceRequestForm = () => {
             resetContent();
             setImageInfo(null);
             console.log("성공");
+            console.log(res.data);
             alert("토큰 적립: " + res.data.expectedPointAmount);
             history.push("/service/req-success");
 

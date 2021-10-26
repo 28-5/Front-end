@@ -91,7 +91,7 @@ const ServiceRequestControl = props => {
                                             return (
                                                 <TableCell key={column.id} align={column.align} className={classes.tableCell}>
                                                     {column.format ? column.format(value) : column.id.includes("image")?
-                                                        value.map(image => <img src={"/display?fileName="+image.imageURL}/>) :value}
+                                                        value.map(image => <img src={"/display?fileName="+image.imageURL} alt="productImg"/>) :value}
                                                 </TableCell>
                                             );
                                         })
