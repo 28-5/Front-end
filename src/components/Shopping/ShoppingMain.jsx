@@ -1,6 +1,6 @@
 import ShoppingCarousel from "./ShoppingCarousel";
 import ProductCardList from "./Product/ProductCardList";
-import React from "react";
+import React, {useEffect} from "react";
 import ShoppingAds from "./ShoppingAds";
 import {useSelector} from "react-redux";
 
@@ -15,7 +15,9 @@ const ShoppingMain = (props) => {
             });
         }
     }
-
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
     return(
         <>
             <ShoppingCarousel />

@@ -12,18 +12,24 @@ const AddressForm = (props) => {
     };
 
     const tokenUseBtnHandler = () =>{
-        if(usedToken < 0.01){
-            alert("토큰 최소 사용금액은 0.01 입니다");
+        if(userInfo.tokenAmount <= 0){
+            alert("사용할 수 있는 토큰이 없습니다");
             setUsedToken(0);
-            return
-        }
-        else{
-            props.setUsedToken(usedToken);
-            setIsBtnClicked(true);
+            return;
+        }else{
+            if(usedToken < 0.01){
+                alert("토큰 최소 사용금액은 0.01 입니다");
+                setUsedToken(0);
+                return;
+            }
+            else{
+                props.setUsedToken(usedToken);
+                setIsBtnClicked(true);
 
-            setTimeout(() => {
-                setIsBtnClicked(false);
-            }, 4000);
+                setTimeout(() => {
+                    setIsBtnClicked(false);
+                }, 4000);
+            }
         }
     };
 

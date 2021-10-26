@@ -95,7 +95,7 @@ const Login = props => {
                 let roles = decode.role.split(",");
                 let isManager = false;
                 for(let i=0; i< roles.length; i++) {
-                    if(roles[i] == "ROLE_MANAGER"){
+                    if(roles[i] === "ROLE_MANAGER"){
                         console.log(roles[i]);
                         isManager = true;
                     }

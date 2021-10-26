@@ -167,7 +167,7 @@ const ProductRegistrationForm = (props) =>{
                                     </Col>
                                     <Col lg={10}>
                                         <ImageUpload setImgInfo={setImageInfo} setPrevImg={setPrevImg}/>
-                                        <img src={prevImg} className={prevImg && "prevImg"}/>
+                                        <img src={prevImg} className={prevImg && "prevImg"} alt={"imagePreview"}/>
                                         <div className="form-actions">
                                             <button type="button" className="btn btn-danger">취소</button>
                                             <button type="button" className="btn btn-primary" onClick={formFetchHandler}>전송</button>

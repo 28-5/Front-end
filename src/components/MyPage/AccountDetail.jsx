@@ -1,17 +1,15 @@
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import React, {useEffect} from "react";
+import React from "react";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ListIcon from '@material-ui/icons/List';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import {Link, useLocation} from "react-router-dom";
-import {useHistory} from "react-router";
 import {useSelector} from "react-redux";
 const AccountDetail = (props) =>{
     const today                                 = new Date();
     const { pathname }                          = useLocation();
-    const history                               = useHistory();
     const month                                 = today.getMonth() + 1;  // 월
     const date                                  = today.getDate()-3;  // 날짜
     const userInfo                              = useSelector(state => state.auth);
@@ -98,13 +96,19 @@ const AccountDetail = (props) =>{
                                 <div className="card-body">
                                     <Row className="row">
                                         <Col sm={12}>
-                                            <h5 className="mb-0"><ShoppingCartIcon/><Link to={"#"}>  주문조회</Link></h5>
+                                            <h5 className="mb-0"><ShoppingCartIcon/>
+                                            <Link to={"/mypage/order/list"}>
+                                                구매내역
+                                            </Link></h5>
                                         <hr/>
                                         </Col>
                                     </Row>
                                     <Row className="row">
                                         <Col sm={12}>
-                                            <h5 className="mb-0"><ListIcon/><Link to={"/mypage/order/list"}> 구매내역</Link></h5>
+                                            <h5 className="mb-0"><ListIcon/>
+                                            <Link to={"#"}>
+                                                판매신청조회
+                                            </Link></h5>
                                             <hr/>
                                         </Col>
                                     </Row>

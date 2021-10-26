@@ -2,23 +2,12 @@ import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems} from './LlistItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
@@ -45,7 +34,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        height: "120vh"
+        height: "140vh"
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -111,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
     },
+    gridContainer:{
+        height: "150 vh",
+    },
     paper: {
         padding: theme.spacing(2),
         display: 'flex',
@@ -127,23 +119,15 @@ export default function Dashboard() {
     const [open, setOpen] = React.useState(true);
     const [orderData, setOrderData] = useState(null);
     const [requestData, setRequestData]          = useState(null);
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     useEffect(() => {
         axios.get("/orders/user")
             .then(res => {
-                console.log(res.data);
                 setOrderData(res.data);
             })
             .catch(err => console.log(err));
         axios.get("/purchased-products")
             .then(res => {
-                console.log(res.data);
                 setRequestData(res.data.dtoList);
             })
             .catch(err => console.log(err));
@@ -155,7 +139,7 @@ export default function Dashboard() {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={3} className={classes.gridContainer}>
                         {/* Chart */}
                         <Grid item xs={12} md={8} lg={9}>
                             <Paper className={fixedHeightPaper}>

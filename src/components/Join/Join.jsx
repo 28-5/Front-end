@@ -182,13 +182,13 @@ const Join = ({history}) => {
                                disabled={true}
                                className={classes.addressInput}/>
                         <Button color="secondary" variant="outlined" className={classes.addressBtn} onClick={modalOpenHandler}>주소찾기</Button>
-                        {IsModalOpen && <AddressModal modalOpen={IsModalOpen} closeModal={modalCloseHandler} getAddress={signupAddressHandler}/>}
                     </Grid>
                     <Grid item xs={12}>
                         <Button type="submit" className={classes.joinBtn} >회원가입</Button>
                     </Grid>
                 </form>
             </Grid>
+            {IsModalOpen && <AddressModal modalOpen={IsModalOpen} closeModal={modalCloseHandler} getAddress={signupAddressHandler}/>}
         </section>
     );
 };

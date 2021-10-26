@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -14,7 +13,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from "react-bootstrap/Col";
 import "./Order.css";
-import IamPortPay from "./Payment/IamPortPay";
 import axios from "axios";
 
 function getSteps() {
@@ -72,8 +70,13 @@ const Order = () => {
                                     buyer={enteredBuyer} addr={enteredAddress} contact={enteredContact} setActiveStep={setActiveStep}
                                     orderList={orderList} setPaymentSuccessData={setPaymentSuccessData} resetMethod={resetMethod}/>;
             case 2:
-                return <OrderSummary review={paymentSuccessData} setUsedToken={setUsedToken} method={selectedMethod}/>;
+                return <OrderSummary review={paymentSuccessData} setUsedToken={setUsedToken} selectedMethod={selectedMethod}
+                                     resetBuyerInput={resetBuyerInput} resetreceiverInput={resetreceiverInput}
+                                     resetContactInput={resetContactInput} resetReceiverContactInput={resetReceiverContactInput}
+                                     resetAddressInput={resetAddressInput} resetReceiverAddressInput={resetReceiverAddressInput}
+                                     resetMemoInput={resetMemoInput} resetWireName={resetWireName}/>;
             case 3: window.location.replace("/shop");
+                    break;
             default:
                 throw new Error('Unknown step');
         }
@@ -116,11 +119,6 @@ const Order = () => {
             setActiveStep((prevActiveStep) => prevActiveStep - 1)
         }
     };
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
-
     useEffect(() => {
         const getOrderData = () => {
             axios.get("/carts")

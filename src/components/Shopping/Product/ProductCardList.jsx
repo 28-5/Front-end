@@ -26,6 +26,7 @@ const ProductCardList = (props) => {
                 break;
         case 3: productData = props.categorizedData[2];
                 break;
+        default: productData = props.data;
     }
 return (
         <>

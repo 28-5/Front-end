@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
@@ -15,7 +15,6 @@ import Notice from "./components/Board/Notice";
 import QnA from "./components/Board/QnA";
 import FaQ from "./components/Board/FaQ";
 import WrtForm from "./components/Board/WrtForm";
-import JoinSuccess from "./components/Join/JoinSuccess";
 import PageNotFound from "./components/PageNotFound";
 import {BoardDataUse} from "./components/Board/BoardDataUse";
 import Article from "./components/Board/Article";
@@ -31,14 +30,13 @@ import {authActions} from "./store/auth-slice";
 import axios from "axios";
 import ShoppingAllProducts from "./components/Shopping/ShoppingAllProducts";
 import MyPageMain from "./components/MyPage/MyPageMain";
-import "./App.css";
 import ModifyUserInfo from "./components/MyPage/ModifyUserInfo";
 import AuthRoute from "./components/AuthRoute";
 import PaymentResult from "./components/Shopping/Order/Payment/PaymentResult";
 import {getTokenPrice} from "./store/token-actions";
 import ServiceRequestSuccess from "./components/Service/ServiceRequestSuccess";
-import ProductControl from "./components/Admin/ProductControl";
 import UserOrderRecord from "./components/MyPage/UserOrderRecord";
+import "./App.css";
 
 let isInitial = true;
 
@@ -46,7 +44,6 @@ function App() {
     const dispatch                              = useDispatch();
     const isAuth                                = useSelector(state => state.auth.isAuthenticated);
     const cart                                  = useSelector(state => state.cart);
-    const [userEmail, setUserEmail]             = useState(false);
     const [noticeList, qnaList]                 = BoardDataUse([]);
     useEffect(() => {
         if(localStorage.getItem("jwt")){
@@ -58,7 +55,7 @@ function App() {
                     let roles = decode.role.split(",");
                     let isManager = false;
                     for(let i=0; i< roles.length; i++) {
-                        if(roles[i] == "ROLE_MANAGER"){
+                        if(roles[i] === "ROLE_MANAGER"){
                             isManager = true;
                         }
                     }
@@ -76,7 +73,7 @@ function App() {
                 })
                 .catch(err => console.log(err));
         }
-    }, [isAuth]);
+    }, [dispatch]);
     useEffect(() => {
         dispatch(getCartData());
         dispatch(getProductdata());
@@ -117,6 +114,7 @@ function App() {
                       props => <DetailedProduct {...props}/> } />
                   <Route exact path="/shop/order" render={props => <Order {...props}/>}/>
                   <Route exact path="/payment/result" component={PaymentResult} />
+
                   {/*Company*/}
                   <Route exact path="/company" render={props =><Main {...props} /> }/>
 
@@ -144,7 +142,7 @@ function App() {
                   <Route exact path="/service/req-success" component={ServiceRequestSuccess}/>
 
                   {/*Login & Join*/}
-                  <Route exact path="/member/login" render={props => <Login setEmail={setUserEmail} {...props}/>} />
+                  <Route exact path="/member/login" render={props => <Login {...props}/>} />
                   <Route exact path="/member/register" component={Join}/>
 
                   {/*Admin*/}

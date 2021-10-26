@@ -14,7 +14,7 @@ const ServiceRequestForm = () => {
     const history                       = useHistory();
     const [imageInfo, setImageInfo]     = useState(null);
     const [prevImg, setPrevImg]         = useState(null);
-    const {enteredSeller,
+    const {
         valueChangeHandler: sellerChangeHandler,
         reset: resetSellerInput}        = useInput();
     const {value: enteredAddress,
@@ -41,10 +41,22 @@ const ServiceRequestForm = () => {
     const {value: eneteredContent,
         valueChangeHandler: contentChangeHandler,
         reset: resetContent}            = useInput();
-
+    const cancelHandler                 = () =>{
+        resetSellerInput();
+        resetAddress();
+        resetProductTypeInput();
+        resetBrand();
+        resetModel();
+        resetProductRate();
+        resetAmount();
+        resetPrice();
+        resetContent();
+        setImageInfo(null);
+        setPrevImg(null);
+        history.push("/shop");
+    }
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        // console.log("image: " + image);
         const requestData = {
             brand: enteredBrand,
             name: enteredModel,
@@ -73,8 +85,10 @@ const ServiceRequestForm = () => {
             resetPrice();
             resetContent();
             setImageInfo(null);
+            setPrevImg(null);
             console.log("성공");
-            alert("토큰 적립: " + res.data.expectedPointAmount);
+            console.log(res.data);
+            alert("토큰 예상 적립: " + res.data.expectedPointAmount);
             history.push("/service/req-success");
 
         }).catch(err => {
@@ -213,9 +227,9 @@ const ServiceRequestForm = () => {
                                   </Col>
                                   <Col lg={10}>
                                       <ImageUpload setImgInfo={setImageInfo} setPrevImg={setPrevImg}/>
-                                      <img src={prevImg} className={prevImg && "prevImg"}/>
+                                      {prevImg && <img src={prevImg} className={"prevImg"} alt={"imagePreview"}/>}
                                       <div className="form-actions">
-                                          <button type="button" className="btn btn-danger">취소</button>
+                                          <button type="button" className="btn btn-danger" onClick={cancelHandler}>취소</button>
                                           <button type="button" className="btn btn-primary" onClick={formFetchHandler}>전송</button>
                                       </div>
                                   </Col>

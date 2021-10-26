@@ -11,11 +11,6 @@ import TableRow from '@material-ui/core/TableRow';
 import axios from "axios";
 import LoaddingSpinner from "../UI/LoaddingSpinner";
 
-
-function preventDefault(event) {
-    event.preventDefault();
-}
-
 const useStyles = makeStyles((theme) => ({
     seeMore: {
         marginTop: theme.spacing(3),

@@ -102,7 +102,7 @@ const SideMenu = () => {
     };
 
     return (
-        <Fragment className={classes.root}>
+        <Fragment >
             <CssBaseline />
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}/>
         <Drawer
