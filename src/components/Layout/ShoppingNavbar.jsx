@@ -91,22 +91,22 @@ const ShoppingNavbar = (props) => {
                                     <li><Link to={"/shop/allproducts"} >전체상품</Link></li>
                                     <li><Link to={"/shop"}>카테고리</Link>
                                         <ul className="sub-menu">
-                                            <li><a href="product-page.html">골프클럽</a></li>
-                                                <li className="sub-category-menu"><Link to="#">드라이버</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">우드</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">아이언</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">풀세트</Link></li>
-                                            <li><a href="shopping-cart.html">골프용품</a></li>
-                                                <li className="sub-category-menu"><Link to="#">골프공</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">골프가방</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">골프장갑</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">골프모자</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">골프화</Link></li>
-                                            <li><a href="check-out.html">골프웨어</a></li>
-                                                <li className="sub-category-menu"><Link to="#">아우터</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">상의</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">하의</Link></li>
-                                                <li className="sub-category-menu"><Link to="#">양말</Link></li>
+                                            <li><Link to="/shop/category/0">골프클럽</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/3">드라이버</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/4">우드</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/5">아이언</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/6">풀세트</Link></li>
+                                            <li><Link to="/shop/category/1">골프용품</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/7">골프공</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/8">골프가방</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/9">골프장갑</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/10">골프모자</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/11">골프화</Link></li>
+                                            <li><Link to="/shop/category/2">골프웨어</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/12">아우터</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/13">상의</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/14">하의</Link></li>
+                                                <li className="sub-category-menu"><Link to="/shop/category/15">양말</Link></li>
                                         </ul>
                                     </li>
                                     <li><Link to={"/mypage/order/list"}>주문조회</Link></li>

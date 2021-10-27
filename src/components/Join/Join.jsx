@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import AddressModal from "./AddressModal";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -37,13 +37,23 @@ const useStyles = makeStyles((theme) => ({
         height: "50px",
         backgroundColor:"#5c842c",
     },
+    passInput:{
+        width: "400px",
+        height: "50px",
+        fontSize: "15px",
+    },
     joinInput:{
         width: "400px",
         height: "50px",
+        fontFamily: "twayair",
+        fontSize: "15px",
     },
     addressInput:{
-        width: "300px",
+        width: "310px",
         height: "50px",
+        fontFamily: "twayair",
+        fontSize: "15px",
+        marginRight: "3px"
     },
     inputGrid:{
         textAlign:"center",
@@ -53,18 +63,10 @@ const useStyles = makeStyles((theme) => ({
     inputGridPadding:{
         paddingTop:"15px",
     },
-
-    findTxt:{
-        fontFamily: "twayair",
-        color: "#b4bbd0",
-        padding: "0 40px",
-    },
-    findTxtId:{
-        borderRight: "solid"
-
-    },
     addressBtn: {
-        marginBottom:"12px"
+        marginBottom:"12px",
+        fontFamily: "twayair",
+        fontSize: "15px",
     }
 }));
 
@@ -111,27 +113,28 @@ const Join = ({history}) => {
 
     const fetchJoinInfo = (event) =>{
         event.preventDefault();
-        axios.post("/member/", {
-            email : userEmail,
-            password: userPass,
-            name: userName,
-            phone: userPhoneNum,
-            address: userAddress,
-        }).then(res => {
-            console.log("Join success! + res.data: " + res.data);
-            history.push("/welcome");
-        }).catch(err => {
-            console.log(err);
-            console.log(userEmail);
-            console.log(userPass);
-            console.log(userName);
-            console.log(userPhoneNum);
-            console.log(userAddress);
-           alert("실패!")
-        });
-    }
+        if(userEmail === null || userPass === null || userName === null || userPhoneNum === null || userAddress === null){
+            alert("제대로 입력되지 않은 부분이 있습니다!");
+            return;
+        }else{
+            axios.post("/member/", {
+                email : userEmail,
+                password: userPass,
+                name: userName,
+                phone: userPhoneNum,
+                address: userAddress,
+            }).then(res => {
+                console.log("Join success! + res.data: " + res.data);
+                history.push("/member/success");
+            }).catch(err => {
+               alert("가입에 실패하였습니다. 다시 시도 해주세요");
+            });
+        }
+    };
 
-
+    useEffect(() => {
+        window.scrollTo(0,100);
+    }, []);
     return (
         <section className={classes.section}>
             <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
@@ -151,14 +154,14 @@ const Join = ({history}) => {
                                startAdornment={( <InputAdornment position="start">
                                    <LockIcon />
                                </InputAdornment>)}
-                               className={classes.joinInput}/>
+                               className={classes.passInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
                         <Input type="password" name="userPassCheck" placeholder="비밀번호 확인"
                                startAdornment={( <InputAdornment position="start">
                                    <LockIcon />
                                </InputAdornment>)}
-                               className={classes.joinInput}/>
+                               className={classes.passInput}/>
                     </Grid>
                     <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
                         <Input type="text" name="userName" placeholder="이름" onChange={signupNameHandler}

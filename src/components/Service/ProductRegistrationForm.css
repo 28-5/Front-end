@@ -120,3 +120,7 @@
 .form-actions{
     text-align: right;
 }
+.form-actions button{
+    font-family: twayair;
+    margin-right: 3px;
+}

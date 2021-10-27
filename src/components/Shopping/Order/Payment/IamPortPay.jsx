@@ -47,6 +47,7 @@ function IamPortPay(props){
         }
     }
     function callback(res) {
+        console.log(totalPrice);
         if(res.success){
             let orderProductList = props.orderList.map( element =>{
                 let obj = {

@@ -10,14 +10,9 @@ const OrderList = (props) => {
     const totalPrice                       = useSelector(state => state.cart.totalPrice);
     const userOrderTokenPrice              = (tokenPrice * props.usedToken);
     let discountPrice;
-    if(props.usedToken > 0){
-        if(userOrderTokenPrice > totalPrice){
-            alert("토큰 사용이 구매 금액을 넘어설 수 없습니다.");
-            props.setUsedToken(0);
-        }else{
-            discountPrice                  = Number((totalPrice - userOrderTokenPrice).toFixed(2));
-            dispatch(orderActions.updateFinalPrice(discountPrice));
-        }
+    if(props.usedToken >= 0){
+        discountPrice                  = Number((totalPrice - userOrderTokenPrice).toFixed(2));
+        dispatch(orderActions.updateFinalPrice(discountPrice));
     }else{
         discountPrice                      = Number((totalPrice).toFixed(2));
         dispatch(orderActions.updateFinalPrice(discountPrice));

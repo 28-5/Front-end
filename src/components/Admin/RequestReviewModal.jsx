@@ -8,17 +8,16 @@ import axios from "axios";
 import useInput from "../hooks/use-input";
 
 const RequestRevieweModal = props => {
-    console.log("show me idx " + props.data.idx);
     const { value: enteredPrice,
         valueChangeHandler: priceChangeHandler,
         reset: resetPrice}              = useInput();
-    const negotiationBtn                = (event, idx) =>{
+    const negotiationBtn                = (event) =>{
       event.preventDefault();
         if(window.confirm("제안하시겠습니까?")){
-            axios.put("/purchased-products/"+idx+"/step", {cost: enteredPrice},
+            axios.put("/purchased-products/"+props.requestNum+"/step", {cost: enteredPrice},
                 {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
                 .then(res => {
-                    alert(props.enteredPrice + " 에 제안하였습니다.");
+                    alert(enteredPrice + " 에 제안하였습니다.");
                     resetPrice();
                     window.location.replace("/admin");
                 })
@@ -41,13 +40,13 @@ const RequestRevieweModal = props => {
                         <p className="in-name">신청번호</p>
                     </Col>
                     <Col lg={9}>
-                        <input required type="text" readOnly value={props.data.idx}/>
+                        <input required type="text" readOnly value={props.requestNum}/>
                     </Col>
                     <Col lg={3}>
                         <p className="in-name">가격</p>
                     </Col>
                     <Col lg={9}>
-                        <input required type="text" placeholder={props.data.price} value={enteredPrice} onChange={priceChangeHandler}/>
+                        <input required type="text" placeholder={props.requestPrice.toLocaleString('ko-KR') +" 원"} value={enteredPrice} onChange={priceChangeHandler}/>
                     </Col>
                 </Row>
             </Modal.Body>

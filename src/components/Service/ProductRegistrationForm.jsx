@@ -31,41 +31,61 @@ const ProductRegistrationForm = (props) =>{
     const { value: enteredContent,
         valueChangeHandler: contentChangeHandler,
         reset: resetContent}            = useInput();
-
+    const cancelHandler                 = () =>{
+        resetProductTypeInput();
+        resetBrand();
+        resetAmount();
+        resetPrice();
+        resetContent();
+        setImageInfo(null);
+        setPrevImg(null);
+        history.push("/admin");
+    }
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        let productData = {
-            categoryIdx: parseInt(enteredCategory),
-            title: enteredTitle,
-            brand:enteredBrand,
-            quantity:enteredAmount,
-            price:enteredPrice,
-            content: enteredContent,
-            imageDtoList:[
-                {
-                    imgName: imageInfo[0].imgName,
-                    uuid: imageInfo[0].uuid,
-                    path: imageInfo[0].path,
-                }
-            ],
-        };
-        axios.post(`/categories/${enteredContent}/products`, productData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
-            .then(res => {
-            resetProductTypeInput();
-            resetBrand();
-            resetAmount();
-            resetPrice();
-            resetTitle();
-            resetContent();
-            setImageInfo(null);
-            console.log("성공");
-            history.push("/service/success");
+        if(imageInfo === null){
+            alert("사진을 첨부해주세요");
+            return;
+        }else{
+            if(enteredCategory === '' || enteredBrand === '' || enteredAmount === '' || enteredPrice === '' ||
+                enteredTitle === '' || enteredContent === ''){
+                alert("빠진 내용이 있습니다.");
+                return;
+            }else{
+                let productData = {
+                    categoryIdx: parseInt(enteredCategory),
+                    title: enteredTitle,
+                    brand:enteredBrand,
+                    quantity:enteredAmount,
+                    price:enteredPrice,
+                    content: enteredContent,
+                    imageDtoList:[
+                        {
+                            imgName: imageInfo[0].imgName,
+                            uuid: imageInfo[0].uuid,
+                            path: imageInfo[0].path,
+                        }
+                    ],
+                };
+                axios.post(`/categories/${enteredContent}/products`, productData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                    .then(res => {
+                    resetProductTypeInput();
+                    resetBrand();
+                    resetAmount();
+                    resetPrice();
+                    resetTitle();
+                    resetContent();
+                    setImageInfo(null);
+                    console.log("성공");
+                    history.push("/service/success");
 
-        }).catch(err => {
-            console.log(err.request);
-            console.log(err.response.data);
-            console.log(err.response.message);
-        });
+                }).catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+            }
+        }
     };
 
     return(
@@ -167,9 +187,9 @@ const ProductRegistrationForm = (props) =>{
                                     </Col>
                                     <Col lg={10}>
                                         <ImageUpload setImgInfo={setImageInfo} setPrevImg={setPrevImg}/>
-                                        <img src={prevImg} className={prevImg && "prevImg"} alt={"imagePreview"}/>
+                                        {prevImg && <img src={prevImg} className={prevImg && "prevImg"} alt={"imagePreview"}/>}
                                         <div className="form-actions">
-                                            <button type="button" className="btn btn-danger">취소</button>
+                                            <button type="button" className="btn btn-danger" onClick={cancelHandler}>취소</button>
                                             <button type="button" className="btn btn-primary" onClick={formFetchHandler}>전송</button>
                                         </div>
                                     </Col>

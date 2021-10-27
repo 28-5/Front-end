@@ -19,10 +19,8 @@ const OrderSummary = (props) => {
             <h3>구매확인</h3>
             <Container>
                 <Row>
-                    <Col lg={4}>
-                    </Col>
-                    <Col lg={8}>
-                        <h2>구매해주셔서 감사합니다!</h2>
+                    <Col lg={12}>
+                        <h2 className="message">구매해주셔서 감사합니다!</h2>
                     </Col>
                 </Row>
 

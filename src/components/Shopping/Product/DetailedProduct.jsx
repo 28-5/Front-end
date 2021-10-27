@@ -94,12 +94,14 @@ const useStyles = makeStyles((theme) => ({
     },
     cartBtn:{
         width: "50%",
+        fontFamily: "twayair",
         [theme.breakpoints.down('sm')]: {
             width: "100%",
         },
     },
     buyBtn:{
         width: "50%",
+        fontFamily: "twayair",
         [theme.breakpoints.down('sm')]: {
             width: "100%",
         },
@@ -120,11 +122,12 @@ const DetailedProduct = (props) => {
             title: data.title,
             price:data.price,
             quantity: selectedAmount,
+            img: data.imageDtoList[0].imageURL,
         }));
     };
     useEffect(() => {
-        window.scrollTo(0,200);
-    }, [])
+        window.scrollTo(0,100);
+    }, []);
     return(
         <section className={classes.shoppingMainSection}>
             <Container maxWidth="lg">

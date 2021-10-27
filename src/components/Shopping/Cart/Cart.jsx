@@ -169,10 +169,14 @@ const Cart = props => {
         dispatch(cartActions.removeItem(id));
     };
     const cartItemAllRemoveHandler = id =>{
-        const findIndex = cartItemData.findIndex(item => item.id === id);
-        const foundItemLength = cartItemData[findIndex].quantity;
-        for(var a = 0; a < foundItemLength ; a++){
-            cartItemRemoveHandler(id);
+        const findIndex = cartItemData.findIndex(item => {
+            return item.productIdx === id;
+        });
+        if(findIndex !== -1){
+            const foundItemLength = cartItemData[findIndex].quantity;
+            for(let a = 0; a < foundItemLength ; a++){
+                cartItemRemoveHandler(id);
+            }
         }
     };
     const cartCleaner = () =>{

@@ -1,7 +1,6 @@
 import axios from "axios";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import clsx from "clsx";
 import EmailIcon from '@material-ui/icons/Email';
@@ -9,7 +8,6 @@ import LockIcon from '@material-ui/icons/Lock';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import {useState} from "react";
-import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {authActions} from "../../store/auth-slice";
 
@@ -28,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
     loginBtn:{
         fontFamily: "twayair",
-        fontSize: "30px",
+        fontSize: "25px",
         paddingRight:0,
         marginTop:"10px",
         width: "400px",
@@ -37,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
     joinBtn:{
         fontFamily: "twayair",
-        fontSize: "30px",
+        fontSize: "25px",
         paddingRight:0,
         marginTop:"10px",
         width: "400px",
@@ -47,6 +45,13 @@ const useStyles = makeStyles((theme) => ({
     loginInput:{
         width: "400px",
         height: "50px",
+        fontFamily: "twayair",
+        fontSize: "15px",
+    },
+    passInput:{
+        width: "400px",
+        height: "50px",
+        fontSize: "15px",
     },
     inputGrid:{
         textAlign:"center",
@@ -126,11 +131,9 @@ const Login = props => {
                            startAdornment={( <InputAdornment position="start">
                                <LockIcon className={classes.icon}/>
                            </InputAdornment>)}
-                           className={classes.loginInput}/>
+                           className={classes.passInput}/>
                 </Grid>
                 <Grid item xs={12} className={classes.inputGrid}>
-                    <Typography  display="inline" align="left" className={clsx(classes.findTxt, classes.findTxtId)} component={Link} to="/">아이디 찾기</Typography>
-                    <Typography  display="inline" align="left" className={classes.findTxt} component={Link} to="/">비밀번호 찾기</Typography>
                 </Grid>
                 <Grid item xs={12}>
                     <Button type="submit" className={classes.loginBtn} onClick={loginHandler}>로그인</Button>

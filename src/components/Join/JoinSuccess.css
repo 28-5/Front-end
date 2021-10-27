@@ -1,0 +1,50 @@
+body {
+    text-align: center;
+    padding: 40px 0;
+    background: #EBF0F5;
+}
+.card {
+    background: white;
+    padding: 60px;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px #C8D0D8;
+    display: inline-block;
+    margin: 60px auto;
+}
+.card h1 {
+    color: #88B04B;
+    font-family: "twayair";
+    font-weight: 900;
+    font-size: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.card p {
+    text-align: center;
+    color: #404F5E;
+    font-family: "twayair";
+    font-size:20px;
+    margin: 0;
+}
+.card i {
+    color: #9ABC66;
+    font-size: 100px;
+    line-height: 200px;
+    margin-left:-15px;
+}
+
+
+.messageBox {
+    border-radius: 200px;
+    height: 200px;
+    width: 200px;
+    background: #F8FAF5;
+    margin: 0 auto;
+}
+.checkmark{
+    padding-left: 60px;
+}
+.btn span{
+    font-family: "twayair";
+
+}

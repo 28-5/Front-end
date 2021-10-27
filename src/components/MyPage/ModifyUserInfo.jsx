@@ -25,41 +25,49 @@ const ModifyUserInfo = props =>{
         reset: resetConfirmPass}    = useInput();
     const infoChangeHandler         = (event)=>{
         event.preventDefault();
-        const changedInfo = {
-            idx : data.idx,
-            email: data.email,
-            address: data.address,
-            phone: enteredPhoneNum,
-            password: enteredPass,
-            name: data.name,
-        };
-        axios.put("/member", changedInfo,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
-            .then(res => {
-                resetPhoneNum();
-                resetAddr();
-                resetPass();
-                resetConfirmPass();
-                window.location.replace("/mypage");
-            }).catch(err => {
-            console.log(err.request);
-            console.log(err.response);
-            console.log(err.response.message);
-        });
+        if(enteredPass === '' || enteredConfirmedPass === ''){
+            alert("비밀번호를 입력해주세요");
+            return;
+        }else{
+            const changedInfo = {
+                idx : data.idx,
+                email: data.email,
+                address: data.address,
+                phone: enteredPhoneNum,
+                password: enteredPass,
+                name: data.name,
+            };
+            axios.put("/member", changedInfo,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    resetPhoneNum();
+                    resetAddr();
+                    resetPass();
+                    resetConfirmPass();
+                    alert("변경되었습니다. 재로그인 부탁드립니다.");
+                    window.location.replace("/mypage");
+                }).catch(err => {
+                console.log(err.request);
+                console.log(err.response);
+                console.log(err.response.message);
+            });
+        }
     };
 
     const accountDeleteHandler = () => {
-        axios.delete("/member", {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
-            .then(res => {
-                resetPhoneNum();
-                resetAddr();
-                resetPass();
-                resetConfirmPass();
-                window.location.replace("/mypage");
-            }).catch(err => {
-            console.log(err.request);
-            console.log(err.response);
-            console.log(err.response.message);
-        });
+        if(window.confirm("정말로 탈퇴하시겠습니까?")){
+            axios.delete("/member", {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    resetPhoneNum();
+                    resetAddr();
+                    resetPass();
+                    resetConfirmPass();
+                    window.location.replace("/mypage");
+                }).catch(err => {
+                console.log(err.request);
+                console.log(err.response);
+                console.log(err.response.message);
+            });
+        }
     };
     return(
         <>

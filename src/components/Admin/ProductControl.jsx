@@ -73,7 +73,7 @@ const ProductControl = props => {
         axios.delete("/products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
             .then(res => {
                 alert("삭제하였습니다.");
-                window.location.replace("/admin/product");
+                window.location.replace("/admin");
             })
             .catch(err => {
                 console.log(err.request);

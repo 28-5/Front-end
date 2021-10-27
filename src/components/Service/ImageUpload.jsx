@@ -13,8 +13,15 @@ const useStyles = makeStyles({
         float:"right"
     },
     input:{
-        float: "left"
+        float: "left",
+        fontFamily: "twayair",
+        fontSize: "20px",
     },
+    btnText:{
+        fontFamily: "twayair",
+        fontSize: "15px",
+        color: "#fff"
+    }
 });
 
 const ImageUpload = props => {
@@ -33,6 +40,7 @@ const ImageUpload = props => {
     const imageUploadHandler            =   async (event) =>{
         event.preventDefault();
         setLoadding(true);
+        alert("업로드 되었습니다")
         const formData    = new FormData();
 
         formData.append("uploadFiles", imgName);
@@ -54,7 +62,7 @@ const ImageUpload = props => {
             <input accept="image/*" ref={imgInput} className={classes.input} id="contained-button-file" type="file" onChange={imageFileHandler}/>
             {imgName && <label htmlFor="contained-button-file" className={classes.imgBtn}>
                 <Button variant="contained" color="primary" component="span" className={classes.uploadBtn} onClick={imageUploadHandler}>
-                    사진첨부
+                    <span className={classes.btnText}>사진첨부</span>
                 </Button>
             </label>}
         </>

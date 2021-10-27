@@ -8,7 +8,7 @@ const ShoppingMain = (props) => {
     const allItems        =   [];
     const allItemsRedeux  =   useSelector(state => state.product.items);
 
-    if(allItemsRedeux.length > 1){
+    if(allItemsRedeux.length > 0){
         for (let a = 0 ; a < 3 ; a++){
             allItemsRedeux[a].forEach(item => {
                 allItems.push(item);

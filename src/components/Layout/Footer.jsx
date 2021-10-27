@@ -27,9 +27,9 @@ const Footer = () => {
                             <div className="single-footer-widget">
                                 <h4>쇼핑</h4>
                                 <ul>
-                                    <li><Link to={"/introduction"}>골프클럽</Link></li>
-                                    <li><Link to={"/introduction"}>용품</Link></li>
-                                    <li><Link to={"/introduction"}>웨어</Link></li>
+                                    <li><Link to={"/shop/category/0"}>골프클럽</Link></li>
+                                    <li><Link to={"/shop/category/1"}>용품</Link></li>
+                                    <li><Link to={"/shop/category/2"}>웨어</Link></li>
                                 </ul>
                             </div>
                         </Col>

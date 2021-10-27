@@ -11,18 +11,19 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import axios from "axios";
 import RequestRevieweModal from "./RequestReviewModal";
-import useInput from "../hooks/use-input";
 const columns = [
     { id: 'idx', label: 'IDX', minWidth: 80,  align: 'center' },
     { id: 'regDate', label: '신청일', minWidth: 100,  align: 'center', format: (value) => value.slice(0, 10)},
     { id: 'catagory', label: '카테고리', minWidth: 100,  align: 'center' },
     { id: 'brand', label: '브랜드', minWidth: 150, align: 'center' },
-    { id: 'quentity', label: '수량', minWidth: 80, align: 'center' },
-    { id: 'price', label: '희망가격', minWidth: 120, align: 'center', format: (value) => value.toLocaleString('ko-KR') +" 원"},
+    { id: 'quantity', label: '수량', minWidth: 80, align: 'center' },
+    { id: 'price', label: '희망금액', minWidth: 120, align: 'center', format: (value) => value.toLocaleString('ko-KR') +" 원"},
+    { id: 'proposalPrice', label: '협상금액', minWidth: 120, align: 'center', format: (value) => value === 0? '.': value.toLocaleString('ko-KR') +" 원"},
+    { id: 'acceptedPrice', label: '합의금액', minWidth: 120, align: 'center', format: (value) => value === null? '.': value.toLocaleString('ko-KR') +" 원"},
+    { id: 'acceptedTokenAmount', label: '토큰보상', minWidth: 120, align: 'center', format: (value) => value === null ? '.' : value},
     { id: 'name', label: '제목', minWidth: 150,  align: 'center' },
     { id: 'details', label: '내용', minWidth: 150,  align: 'center' },
     { id: 'address', label: '주소', minWidth: 150,  align: 'center' },
-    { id: 'expectedPointAmount', label: '토큰', minWidth: 120, align: 'center' },
     { id: 'imageDtoList', label: '이미지', minWidth: 120, align: 'center' },
     { id: 'step', label: '상태', minWidth: 120, align: 'center' },
 ];
@@ -60,10 +61,11 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
-// 제안 버튼 눌러서 나오는 모달창은 현재 map 을 통해 만들어지는데 마지막 값만 입력되어있음. 왜냐하면 반복문을 통해서 생성하고 덮어씌워지기 때문.
 
 const ServiceRequestControl = props => {
     const classes                                = useStyles();
+    const [requestNum, setRequestNum]            = useState();
+    const [requestPrice, setRequestPrice]        = useState();
     const [page, setPage]                        = useState(0);
     const [rowsPerPage, setRowsPerPage]          = useState(10);
     const [show, setShow]                        = useState(false);
@@ -75,8 +77,10 @@ const ServiceRequestControl = props => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    const negoBtnHandler = () => {
+    const negoBtnHandler = (id, price) => {
         setShow(true);
+        setRequestNum(id);
+        setRequestPrice(price);
     };
     const approvalBtn      = (idx, price) => {
         if(window.confirm("승인하시겠습니까?")){
@@ -148,16 +152,19 @@ const ServiceRequestControl = props => {
                                             );
                                         })
                                         }
-                                                {show === true && <RequestRevieweModal show={show} onHide={handleClose} handleClose={handleClose}
-                                                                   data={row}/>}
                                         {row.step === "FINISH" || row.step ==="CANCELED" ? null :
                                         <>
+                                            {row.step === "RESERVATION"  &&
                                             <TableCell className={classes.tableBtnCell}>
-                                                <Button variant="secondary" className={classes.requestBtn}  onClick={() => {negoBtnHandler(row.idx)}}>제안</Button>
-                                            </TableCell>
+                                                <Button variant="secondary" className={classes.requestBtn}  onClick={() => {negoBtnHandler(row.idx, row.price)}}>제안</Button>
+                                                {show === true && <RequestRevieweModal show={show} onHide={handleClose} handleClose={handleClose}
+                                                                   requestNum={requestNum} requestPrice={requestPrice}/>}
+                                            </TableCell>}
+
+                                            {row.step !== "PROPOSAL"  &&
                                             <TableCell className={classes.tableBtnCell}>
                                                 <Button variant="primary" className={classes.requestBtn}  onClick={() => {approvalBtn(row.idx, row.price)}}>승인</Button>
-                                            </TableCell>
+                                            </TableCell>}
                                             <TableCell className={classes.tableBtnCell}>
                                                 <Button variant="danger" className={classes.requestBtn} onClick={() => {deleteBtnHandler(row.idx)}}>거절</Button>
                                             </TableCell>
