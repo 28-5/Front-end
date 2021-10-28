@@ -1,3 +1,4 @@
+import React from "react";
 import classes from "./Notification.module.css";
 import {useDispatch} from "react-redux";
 import {uiActions} from "../../store/ui-slice";

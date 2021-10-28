@@ -1,3 +1,4 @@
+import React from "react";
 import ReactDOM from 'react-dom';
 import Modal from '@material-ui/core/Modal';
 
