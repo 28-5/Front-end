@@ -104,6 +104,20 @@ const ServiceRequestControl = props => {
                 });
         }
     };
+    const approvalOneBtn      = (idx, price) => {
+        if(window.confirm("승인하시겠습니까?")){
+            axios.put("/purchased-products/"+idx+"/step", {cost: price},{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    alert("승인하였습니다.");
+                    window.location.replace("/admin");
+                })
+                .catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+        }
+    };
     const deleteBtnHandler = idx => {
         if(window.confirm("진행하시겠습니까")){
             axios.delete("/purchased-products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
@@ -155,16 +169,23 @@ const ServiceRequestControl = props => {
                                         {row.step === "FINISH" || row.step ==="CANCELED" ? null :
                                         <>
                                             {row.step === "RESERVATION"  &&
+                                            <>
                                             <TableCell className={classes.tableBtnCell}>
                                                 <Button variant="secondary" className={classes.requestBtn}  onClick={() => {negoBtnHandler(row.idx, row.price)}}>제안</Button>
                                                 {show === true && <RequestRevieweModal show={show} onHide={handleClose} handleClose={handleClose}
                                                                    requestNum={requestNum} requestPrice={requestPrice}/>}
-                                            </TableCell>}
-
-                                            {row.step !== "PROPOSAL"  &&
+                                            </TableCell>
                                             <TableCell className={classes.tableBtnCell}>
                                                 <Button variant="primary" className={classes.requestBtn}  onClick={() => {approvalBtn(row.idx, row.price)}}>승인</Button>
-                                            </TableCell>}
+                                            </TableCell>
+                                            </>
+                                            }
+
+                                            {row.step === "ACCEPTANCE" &&
+                                                <TableCell className={classes.tableBtnCell}>
+                                                    <Button variant="primary" className={classes.requestBtn}  onClick={() => {approvalOneBtn(row.idx, row.price)}}>승인</Button>
+                                                </TableCell>
+                                            }
                                             <TableCell className={classes.tableBtnCell}>
                                                 <Button variant="danger" className={classes.requestBtn} onClick={() => {deleteBtnHandler(row.idx)}}>거절</Button>
                                             </TableCell>

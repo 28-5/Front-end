@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ead82771-55bf-476e-9836-cebfcd915d60" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Join/JoinSuccess.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/JoinSuccess.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Join/JoinSuccess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/JoinSuccess.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Admin/ServiceRequestControl.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/ServiceRequestControl.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

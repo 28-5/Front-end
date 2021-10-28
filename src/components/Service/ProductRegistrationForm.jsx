@@ -67,7 +67,7 @@ const ProductRegistrationForm = (props) =>{
                         }
                     ],
                 };
-                axios.post(`/categories/${enteredContent}/products`, productData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                axios.post(`/categories/${enteredCategory}/products`, productData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
                     .then(res => {
                     resetProductTypeInput();
                     resetBrand();
