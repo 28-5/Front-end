@@ -14,10 +14,10 @@ const useInput = validateValue => {
         });
     };
 
-    const valueChangeHandler                =   event =>{
+    const valueChangeHandler                        =   event =>{
         setEnteredValue(event.target.value);
     };
-    const nameChangeHandler                =    event =>{
+    const nameChangeHandler                         =    event =>{
         const selectedItem  =   event.target.name;
         if(event.target.checked){
             setCheckboxItem(prevVal => {
@@ -31,7 +31,7 @@ const useInput = validateValue => {
         }
     };
 
-    const reset                             =   () =>{
+    const reset                                     =   () =>{
         setEnteredValue('');
         setValidation(true);
         setIsTouched(false);

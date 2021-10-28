@@ -47,6 +47,7 @@ function IamPortPay(props){
         }
     }
     function callback(res) {
+        console.log(totalPrice);
         if(res.success){
             let orderProductList = props.orderList.map( element =>{
                 let obj = {
@@ -69,7 +70,12 @@ function IamPortPay(props){
                 orderProductList: orderProductList,
                 tokenPrice: tokenPrice,
             });
-            axios.post("/orders", paymentSuccessData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+            axios.post("/orders", paymentSuccessData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
                 .then(res => {
                     props.setPaymentSuccessData(JSON.stringify(res.data));
                     dispatch(cartActions.cleanCart());

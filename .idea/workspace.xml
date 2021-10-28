@@ -4,17 +4,46 @@
     <list default="true" id="55627cf2-ea3c-4899-8bed-06cd63839ca7" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/src/components/Join/JoinSuccess.css" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/MyPage/UserRequestRecord.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Shopping/Product/ProductCardListPerCategory.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingProductsPerCategory.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Admin/ProductControl.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/ProductControl.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Admin/RequestReviewModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/RequestReviewModal.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Admin/ServiceRequestControl.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Admin/ServiceRequestControl.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Board/Article.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/Article.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Board/Article.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/Article.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/BoardListForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Board/WrtForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Join/Join.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/Join.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Join/JoinSuccess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Join/JoinSuccess.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/Footer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/Navbar.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Layout/ShoppingNavbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/MyPage/AccountDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyPage/AccountDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MyPage/ModifyUserInfo.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyPage/ModifyUserInfo.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MyPage/MyPageMain.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyPage/MyPageMain.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/MyPage/UserOrderRecord.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MyPage/UserOrderRecord.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ImageUpload.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ProductRegistrationForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestForm.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Service/ServiceRequestSuccess.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Service/ServiceRequestSuccess.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Cart/Cart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Cart/Cart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Cart/CartItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Cart/CartItems.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/AddressForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/AddressForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/OrderList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/OrderList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/OrderSummary.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Order/Payment/IamPortPay.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Order/Payment/IamPortPay.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/Breadcrumb.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/Breadcrumb.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProduct.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProductContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/Product/DetailedProductContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/ShoppingAllProducts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingAllProducts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Shopping/ShoppingMain.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shopping/ShoppingMain.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/hooks/use-input.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/hooks/use-input.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/cart-slice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/cart-slice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +75,7 @@
     <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/MyPage" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Shopping/Product" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -55,19 +84,19 @@
     <property name="ts.external.directory.path" value="C:\Users\admin\AppData\Local\JetBrains\IntelliJ IDEA 2020.1.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Shopping\Product" />
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Shopping" />
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Admin" />
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Service" />
+      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Shopping\Order" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Shopping\Order\Payment" />
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\public\img" />
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Layout" />
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\public\img\board" />
       <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\boardImage" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\MyPage" />
-      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Join" />
-      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Admin" />
-      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Service" />
-      <recent name="C:\Users\admin\Desktop\Yoon\Projects\Reborn\front\src\components\Shopping\Order" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -98,8 +127,8 @@
       <workItem from="1634862469207" duration="26939000" />
       <workItem from="1634950599029" duration="18479000" />
       <workItem from="1635050964772" duration="2470000" />
-      <workItem from="1635124216677" duration="24452000" />
-      <workItem from="1635208858679" duration="7570000" />
+      <workItem from="1635124216677" duration="24373000" />
+      <workItem from="1635297433013" duration="27961000" />
     </task>
     <servers />
   </component>
@@ -115,10 +144,10 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1296" y="206" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634726595311" />
-    <state x="550" y="171" key="FileChooserDialogImpl" timestamp="1634862980498">
+    <state x="550" y="171" key="FileChooserDialogImpl" timestamp="1635231491802">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="550" y="171" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1634862980498" />
+    <state x="550" y="171" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1635231491802" />
     <state x="-1233" y="216" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634779522735" />
     <state x="550" y="171" key="FileChooserDialogImpl/0.0.1536.824/-1920.0.1920.1040@0.0.1536.824" timestamp="1634200617466" />
     <state x="550" y="171" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1634398503033" />
@@ -132,10 +161,11 @@
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
     <state x="-1372" y="42" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1634024133440" />
-    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1635146331022">
+    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1635315090496">
       <screen x="-1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1635146331022" />
+    <state x="582" y="327" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/-1920.0.1536.824@0.0.1536.824" timestamp="1635232657552" />
+    <state x="-1192" y="413" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/-1920.0.1920.1040@-1920.0.1920.1040" timestamp="1635315090496" />
     <state x="426" y="188" key="run.anything.popup" timestamp="1634882218233">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

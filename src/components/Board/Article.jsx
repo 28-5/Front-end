@@ -20,7 +20,7 @@ const Article = props => {
                     break;
         default: modifyPath    = props.match.url.slice(0,5);
                  deletePath    = props.match.url.slice(0,6) + props.match.url.slice(14);
-                 break;
+                    break;
     }
     const deleteHandler = () => {
         axios.delete(deletePath,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
@@ -42,7 +42,6 @@ const Article = props => {
             .then(res => setAnswer(res.data.answer))
             .catch(err => console.log(err));
     }, []);
-    console.log(answer);
     return(
         <>
             <Container className="content">
@@ -52,7 +51,7 @@ const Article = props => {
                             <div className="card-header">{data.postTitle}<span>{data.postDate.toString().slice(0,10)}</span></div>
                             <div className="card-body height3">
                                 <ul className="chat-list">
-                                    {props.match.url.slice(0,3) !== "/no" === true ?
+                                    {props.match.url.slice(0,3) !== "/no" ?
                                     <li className="in">
                                         <div className="chat-img">
                                             <img alt="Avtar" src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"/>
@@ -63,9 +62,9 @@ const Article = props => {
                                                 <p>{data.postContent}</p>
                                             </div>
                                         </div>
-                                    </li> : <li className="out">
+                                    </li>:<li className="out">
                                             <div className="chat-img">
-                                                <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar3.png"/>
+                                                <img alt="Avtar" src="https://cdn.pixabay.com/photo/2021/03/11/07/37/man-6086415_960_720.png"/>
                                             </div>
                                             <div className="chat-body">
                                                 <div className="chat-message">
@@ -77,7 +76,7 @@ const Article = props => {
                                     {props.match.url.slice(0,3) !== "/no" && answer.length > 0  &&
                                     <li className="out">
                                         <div className="chat-img">
-                                            <img alt="Avtar" src="https://bootdey.com/img/Content/avatar/avatar3.png"/>
+                                            <img alt="Avtar" src="https://cdn.pixabay.com/photo/2021/03/11/07/37/man-6086415_960_720.png"/>
                                         </div>
                                         <div className="chat-body">
                                             <div className="chat-message">
@@ -87,17 +86,16 @@ const Article = props => {
                                             </div>
                                         </div>
                                     </li>
-                                     }
-
+                                    }
                                 </ul>
                             </div>
                         </div>
                         <Button variant="outlined" color="primary" component={Link} to={{
                             pathname: modifyPath + "/modify",
-                            state: {data: data}}} >
+                            state: {data: data}}}>
                             수정
                         </Button>
-                        <Button variant="outlined" color="secondary" onClick={deleteHandler}>
+                        <Button variant="outlined" color="secondary" onClick={deleteHandler} >
                             삭제
                         </Button>
                         <Button variant="outlined" color="primary" onClick={listBtnHandler} className="listBtn">
@@ -107,7 +105,7 @@ const Article = props => {
                         <Button variant="outlined" color="primary" component={Link} to={{
                             pathname: modifyPath + "/answer",
                             state: {data: data}}}  className="replyBtn">
-                            답글
+                            답변
                         </Button>}
                     </Col>
                     <Col lg={2} className="offset-lg-1">

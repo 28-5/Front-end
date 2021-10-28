@@ -3,7 +3,6 @@ import DaumPostcode from 'react-daum-postcode';
 
 const Address = props => {
     const [daumAddress, setDaumAddress] = useState();
-    const [isOpen, setIsOpen] = useState(true);
 
     const handleComplete = props => {
         let fullAddress = props.address;
@@ -22,7 +21,7 @@ const Address = props => {
     }
     props.getAddress(daumAddress);
     return (
-        <DaumPostcode onComplete={handleComplete} closeModal={isOpen} autoClose="true" animation="true"/>
+        <DaumPostcode onComplete={handleComplete}  autoClose={true} animation={true}/>
     )
 };
 

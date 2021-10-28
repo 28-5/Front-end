@@ -5,10 +5,10 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 const useStyles = makeStyles((theme) => ({
     breadLink:{
-        color:"grey"
+        color:"grey",
+        fontFamily:"twayair",
     }
 }));
-
 
 const Breadcrumb = props => {
     const classes = useStyles();
@@ -19,7 +19,7 @@ const Breadcrumb = props => {
                 쇼핑
             </Link>
             <Link to="/shop" className={classes.breadLink}>
-                Core
+                product
             </Link>
             <Link to="/shop" className={classes.breadLink}>
                 {props.showPath}

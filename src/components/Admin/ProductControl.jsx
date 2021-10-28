@@ -22,6 +22,26 @@ const useStyles = makeStyles((theme) => ({
     containerDiv:{
         paddingTop: "50px"
     },
+    tableRow:{
+        height: "10px",
+        padding: 0,
+        fontWeight: "bold",
+    },
+    tableCell:{
+        height: "20px",
+        padding: 0
+    },
+    tableBtnCell:{
+        padding: 0,
+        width: "30px"
+    },
+    requestBtn:{
+        fontSize: "10px",
+        width: "40px",
+        height: "25px",
+        padding: 0,
+        marginRight: "5px"
+    },
 }));
 
 
@@ -53,7 +73,7 @@ const ProductControl = props => {
         axios.delete("/products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
             .then(res => {
                 alert("삭제하였습니다.");
-                window.location.replace("/admin/product");
+                window.location.replace("/admin");
             })
             .catch(err => {
                 console.log(err.request);
@@ -74,31 +94,33 @@ const ProductControl = props => {
                                         key={column.id}
                                         align={column.align}
                                         style={{ minWidth: column.minWidth }}
-                                    >
+                                        className={classes.tableRow}>
                                         {column.label}
                                     </TableCell>
                                 ))}
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.length >0 ===true ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                            {rows.length >0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={Math.random()}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={Math.random()} className={classes.tableCell}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell key={column.id} align={column.align}>
+                                                <TableCell key={column.id} align={column.align} className={classes.tableCell}>
                                                     {value}
                                                 </TableCell>
                                             );
                                         })
                                         }
-                                        <TableCell>
-                                            <Button variant="danger" onClick={() => {deleteBtnHandler(row.IDX)}}>삭제</Button>
+                                        <TableCell className={classes.tableBtnCell}>
+                                            <Button variant="danger" onClick={() => {deleteBtnHandler(row.IDX)}} className={classes.requestBtn}>
+                                                삭제
+                                            </Button>
                                         </TableCell>
                                     </TableRow>
                                 );
-                            }) : <h1> Loading... </h1> }
+                            }) : <TableRow><td> Loading... </td></TableRow>}
                         </TableBody>
                     </Table>
                 </TableContainer>

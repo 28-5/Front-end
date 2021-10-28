@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {act} from "@testing-library/react";
 const authSlice = createSlice({
     name: "auth",
     initialState: {

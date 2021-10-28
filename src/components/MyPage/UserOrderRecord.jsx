@@ -10,11 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import axios from "axios";
 import LoaddingSpinner from "../UI/LoaddingSpinner";
-
-
-function preventDefault(event) {
-    event.preventDefault();
-}
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     seeMore: {
@@ -41,10 +37,10 @@ export default function UserOrderRecord(props) {
     const classes = useStyles();
     const history = useHistory();
     const [orderData, setOrderData] = useState(null);
+    const tokenPrice                                      = useSelector(state => state.token.tokenPrice);
     const backwardBtnHandler = () => {
         history.goBack(-1);
     };
-
     useEffect(() => {
         window.scrollTo(0,100);
         axios.get("/orders/user")
@@ -53,7 +49,6 @@ export default function UserOrderRecord(props) {
             })
             .catch(err => console.log(err));
     }, [])
-
     return (
         <React.Fragment >
             <Container className={classes.orderListDiv}>
@@ -66,7 +61,8 @@ export default function UserOrderRecord(props) {
                         <TableCell className={classes.tableCell}>구매자</TableCell>
                         <TableCell className={classes.tableCell}>배송정보</TableCell>
                         <TableCell className={classes.tableCell}>결제금액</TableCell>
-                        <TableCell className={classes.tableCell}>토큰지급</TableCell>
+                        <TableCell className={classes.tableCell}>토큰사용</TableCell>
+                        <TableCell className={classes.tableCell}>토큰보상</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -78,7 +74,7 @@ export default function UserOrderRecord(props) {
                             <TableCell className={classes.tableCell}>{row.recipientAddress}</TableCell>
                             <TableCell className={classes.tableCell}>{row.totalPrice.toLocaleString('ko-KR')} 원</TableCell>
                             <TableCell className={classes.tableCell}>{row.tokenAmount}</TableCell>
-                            {/*<TableCell align="right">{row.amount}</TableCell>*/}
+                            <TableCell className={classes.tableCell}>{Math.floor(Number((row.totalPrice * 0.03)/tokenPrice))}</TableCell>
                         </TableRow>
                     )) : <LoaddingSpinner/>}
                 </TableBody>

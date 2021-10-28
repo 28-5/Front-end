@@ -7,6 +7,7 @@ const ShoppingAllProducts = () => {
     const allItems        =   [];
     const allItemsRedeux  =   useSelector(state => state.product.items);
 
+
     if(allItemsRedeux.length > 1){
         for (let a = 0 ; a < 3 ; a++){
             allItemsRedeux[a].forEach(item => {

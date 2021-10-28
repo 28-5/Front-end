@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
@@ -15,7 +15,6 @@ import Notice from "./components/Board/Notice";
 import QnA from "./components/Board/QnA";
 import FaQ from "./components/Board/FaQ";
 import WrtForm from "./components/Board/WrtForm";
-import JoinSuccess from "./components/Join/JoinSuccess";
 import PageNotFound from "./components/PageNotFound";
 import {BoardDataUse} from "./components/Board/BoardDataUse";
 import Article from "./components/Board/Article";
@@ -31,15 +30,16 @@ import {authActions} from "./store/auth-slice";
 import axios from "axios";
 import ShoppingAllProducts from "./components/Shopping/ShoppingAllProducts";
 import MyPageMain from "./components/MyPage/MyPageMain";
-import "./App.css";
 import ModifyUserInfo from "./components/MyPage/ModifyUserInfo";
 import AuthRoute from "./components/AuthRoute";
 import PaymentResult from "./components/Shopping/Order/Payment/PaymentResult";
 import {getTokenPrice} from "./store/token-actions";
 import ServiceRequestSuccess from "./components/Service/ServiceRequestSuccess";
-import ProductControl from "./components/Admin/ProductControl";
 import UserOrderRecord from "./components/MyPage/UserOrderRecord";
+import JoinSuccess from "./components/Join/JoinSuccess";
 import UserRequestRecord from "./components/MyPage/UserRequestRecord";
+import ShoppingProductsPerCategory from "./components/Shopping/ShoppingProductsPerCategory";
+import "./App.css";
 
 let isInitial = true;
 
@@ -47,8 +47,8 @@ function App() {
     const dispatch                              = useDispatch();
     const isAuth                                = useSelector(state => state.auth.isAuthenticated);
     const cart                                  = useSelector(state => state.cart);
-    const [userEmail, setUserEmail]             = useState(false);
     const [noticeList, qnaList]                 = BoardDataUse([]);
+
     useEffect(() => {
         if(localStorage.getItem("jwt")){
             axios.get("/member", {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
@@ -59,7 +59,7 @@ function App() {
                     let roles = decode.role.split(",");
                     let isManager = false;
                     for(let i=0; i< roles.length; i++) {
-                        if(roles[i] == "ROLE_MANAGER"){
+                        if(roles[i] === "ROLE_MANAGER"){
                             isManager = true;
                         }
                     }
@@ -77,7 +77,7 @@ function App() {
                 })
                 .catch(err => console.log(err));
         }
-    }, [isAuth]);
+    }, [dispatch]);
     useEffect(() => {
         dispatch(getCartData());
         dispatch(getProductdata());
@@ -100,24 +100,17 @@ function App() {
     <Router>
         <Layout>
           <Switch>
-              {/*
-                0. 주문 완료 페이지
-                1. 세부 카테고리별 출력
-                2. 어드민 게시물 삭제 + 회원관리
-                3. 최근 주문 날짜 연동
-                4. 주문 현황
-                5. 그 외 짜잘한 게시판 구성
-              */}
                   {/*Shop Main Page*/}
                   <Route exact path="/">
                       <Redirect to="/shop"/>
                   </Route>
                   <Route exact path="/shop" render={props => <ShoppingMain {...props}/>}/>
                   <Route exact path="/shop/allproducts" component={ShoppingAllProducts}/>
-                  <Route exact path={"/shop/product/:productNum"} render={
-                      props => <DetailedProduct {...props}/> } />
+                  <Route exact path="/shop/category/:categoryNum" component={ShoppingProductsPerCategory}/>
+                  <Route exact path={"/shop/product/:productNum"} render={props => <DetailedProduct {...props}/> } />
                   <Route exact path="/shop/order" render={props => <Order {...props}/>}/>
                   <Route exact path="/payment/result" component={PaymentResult} />
+
                   {/*Company*/}
                   <Route exact path="/company" render={props =><Main {...props} /> }/>
 
@@ -127,27 +120,27 @@ function App() {
                   <Route exact path="/introduction/business" component={Business}/>
                   <Route exact path="/introduction/manual" component={Manual}/>
 
-                  {/*board*/}
+                  {/*Q&A, Notice*/}
                   <Route exact path="/notices" render={props => <Notice noticeData={noticeList} {...props}/> }/>
                   <Route exact path="/notices/article/:postNum" render={props => <Article {...props}/> } />
                   <Route exact path="/notices/write" render={props => <WrtForm path="/notices" {...props} />}/>
-                  <Route exact path="/notices/answer" render={props => <WrtForm path="/notices" {...props} />}/>
                   <Route exact path="/notices/modify" render={props => <ModificationForm path="/notices" {...props} />}/>
+                  <Route exact path="/notices/answer" render={props => <WrtForm path="/notices" {...props} />}/>
                   <Route exact path="/qnas"  render={props => <QnA qnaData={qnaList} {...props}/> } />
                   <Route exact path="/qnas/article/:postNum" render={props => <Article {...props}/> } />
                   <Route exact path="/qnas/write" render={props => <WrtForm path="/qnas"  {...props} />} />
-                  <Route exact path="/qnas/answer" render={props => <WrtForm path="/qnas"  {...props} />} />
                   <Route exact path="/qnas/modify" render={props => <ModificationForm path="/qnas"  {...props} />} />
+                  <Route exact path="/qnas/answer" render={props => <WrtForm path="/qnas"  {...props} />} />
                   <Route exact path="/faq" component={FaQ}/>
 
-                  {/*service*/}
+                  {/*Service*/}
                   <Route exact path="/service/request" render={props => <ServiceRequestForm {...props} />}/>
                   <Route exact path="/service/seller/request" render={props => <ProductRegistrationForm {...props} />}/>
                   <Route exact path="/service/success" component={RegistrationSuccess}/>
                   <Route exact path="/service/req-success" component={ServiceRequestSuccess}/>
 
                   {/*Login & Join*/}
-                  <Route exact path="/member/login" render={props => <Login setEmail={setUserEmail} {...props}/>} />
+                  <Route exact path="/member/login" render={props => <Login {...props}/>} />
                   <Route exact path="/member/register" component={Join}/>
                   <Route exact path="/member/success" component={JoinSuccess}/>
 

@@ -42,6 +42,7 @@ export const BoardDataUse = () =>{
             setQnaListData(qnaList);
         }catch (error) {
             setError(error.message);
+            console.log(error);
         }
     }, []);
 

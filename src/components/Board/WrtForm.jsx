@@ -1,18 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import FormControl from "react-bootstrap/FormControl";
-import "./WrtForm.css"
 import {useLocation} from "react-router-dom";
+import "./WrtForm.css"
 
 const WrtForm = props => {
     const path                  =   props.path;
     const [title, setTitle]     =   useState(null);
     const [content, setContent] =   useState(null);
-    const location              = useLocation();
-    const { data }              = location.state;
+    const location              =   useLocation();
+    let   data ;
+    if(location.state !== undefined){
+        data =   location.state.data;
+    }
     const titleChangeHandler    =   event =>{
         setTitle(event.target.value);
     };
@@ -21,8 +24,9 @@ const WrtForm = props => {
     };
     const formFetchHandler      =   event =>{
         event.preventDefault();
-
         if(location.pathname.includes("/answer")){
+            console.log(path);
+            console.log(data.postNum);
             axios.post(path, {pidx: data.postNum, title:title, content:content}, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -45,14 +49,16 @@ const WrtForm = props => {
             })
                 .then(res => {
                     window.location.replace(path);
-            }).catch(err => {
+                }).catch(err => {
                 console.log(err.request);
                 console.log(err.response);
                 console.log(err.response.message);
             });
         }
-
     };
+    useEffect(() => {
+        window.scrollTo(0,100);
+    }, [])
     return (
         <div className="contact-section">
             <Container className="container">

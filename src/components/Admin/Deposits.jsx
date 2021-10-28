@@ -1,12 +1,7 @@
-import React, {useState} from 'react';
-import Link from '@material-ui/core/Link';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
-
-function preventDefault(event) {
-    event.preventDefault();
-}
 
 const useStyles = makeStyles({
     depositContext: {
@@ -21,7 +16,7 @@ export default function Deposits(props) {
 
     if(props.orderData !== null) {
         props.orderData.dtoList.map(price => {
-            totalPrice += price.totalPrice;
+            return totalPrice += price.totalPrice;
         });
     }
 

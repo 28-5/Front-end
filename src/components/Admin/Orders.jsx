@@ -25,7 +25,7 @@ export default function Orders(props) {
 
     return (
         <React.Fragment>
-            <Title>Recent Orders</Title>
+            <Title>최근 주문</Title>
             <Table size="small">
                 <TableHead>
                     <TableRow>
@@ -46,9 +46,8 @@ export default function Orders(props) {
                             <TableCell>{row.recipientAddress}</TableCell>
                             <TableCell>{row.totalPrice.toLocaleString('ko-KR')} 원</TableCell>
                             <TableCell>{row.tokenAmount}</TableCell>
-                            {/*<TableCell align="right">{row.amount}</TableCell>*/}
                         </TableRow>
-                    )) : <LoaddingSpinner/>}
+                    )) : <TableRow><td><LoaddingSpinner/></td></TableRow>}
                 </TableBody>
             </Table>
             <div className={classes.seeMore}>

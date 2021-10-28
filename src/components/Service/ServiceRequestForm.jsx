@@ -14,7 +14,7 @@ const ServiceRequestForm = () => {
     const history                       = useHistory();
     const [imageInfo, setImageInfo]     = useState(null);
     const [prevImg, setPrevImg]         = useState(null);
-    const {enteredSeller,
+    const {
         valueChangeHandler: sellerChangeHandler,
         reset: resetSellerInput}        = useInput();
     const {value: enteredAddress,
@@ -41,48 +41,65 @@ const ServiceRequestForm = () => {
     const {value: eneteredContent,
         valueChangeHandler: contentChangeHandler,
         reset: resetContent}            = useInput();
-
+    const cancelHandler                 = () =>{
+        resetSellerInput();
+        resetAddress();
+        resetProductTypeInput();
+        resetBrand();
+        resetModel();
+        resetProductRate();
+        resetAmount();
+        resetPrice();
+        resetContent();
+        setImageInfo(null);
+        setPrevImg(null);
+        history.push("/shop");
+    }
     const formFetchHandler      =   event =>{
         event.preventDefault();
-        // console.log("image: " + image);
-        const requestData = {
-            brand: enteredBrand,
-            name: enteredModel,
-            state:enteredRate,
-            price: enteredPrice,
-            quantity:enteredAmount,
-            details: eneteredContent,
-            address: enteredAddress,
-            imageDtoList:[
-                {
-                    imgName: imageInfo[0].imgName,
-                    uuid: imageInfo[0].uuid,
-                    path: imageInfo[0].path,
-                }
-            ],
-        };
-        axios.post("/purchased-products?categoryIdx=" + parseInt(enteredCategory), requestData,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
-            .then(res => {
-            resetSellerInput();
-            resetAddress();
-            resetProductTypeInput();
-            resetBrand();
-            resetModel();
-            resetProductRate();
-            resetAmount();
-            resetPrice();
-            resetContent();
-            setImageInfo(null);
-            console.log("성공");
-            console.log(res.data);
-            alert("토큰 적립: " + res.data.expectedPointAmount);
-            history.push("/service/req-success");
+        if(imageInfo === null){
+            alert("사진을 첨부해주세요");
+            return;
+        }else{
+            const requestData = {
+                brand: enteredBrand,
+                name: enteredModel,
+                state:enteredRate,
+                price: enteredPrice,
+                quantity:enteredAmount,
+                details: eneteredContent,
+                address: enteredAddress,
+                imageDtoList:[
+                    {
+                        imgName: imageInfo[0].imgName,
+                        uuid: imageInfo[0].uuid,
+                        path: imageInfo[0].path,
+                    }
+                ],
+            };
+            axios.post("/purchased-products?categoryIdx=" + parseInt(enteredCategory), requestData,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                resetSellerInput();
+                resetAddress();
+                resetProductTypeInput();
+                resetBrand();
+                resetModel();
+                resetProductRate();
+                resetAmount();
+                resetPrice();
+                resetContent();
+                setImageInfo(null);
+                setPrevImg(null);
+                alert("토큰 예상 적립: " + res.data.expectedPointAmount);
+                history.push("/service/req-success");
 
-        }).catch(err => {
-            console.log(err.request);
-            console.log(err.response.data);
-            console.log(err.response.message);
-        });
+            }).catch(err => {
+                console.log(err.request);
+                console.log(err.response.data);
+                console.log(err.response.message);
+            });
+
+        }
     };
 
     return(
@@ -214,9 +231,9 @@ const ServiceRequestForm = () => {
                                   </Col>
                                   <Col lg={10}>
                                       <ImageUpload setImgInfo={setImageInfo} setPrevImg={setPrevImg}/>
-                                      <img src={prevImg} className={prevImg && "prevImg"}/>
+                                      {prevImg && <img src={prevImg} className={"prevImg"} alt={"imagePreview"}/>}
                                       <div className="form-actions">
-                                          <button type="button" className="btn btn-danger">취소</button>
+                                          <button type="button" className="btn btn-danger" onClick={cancelHandler}>취소</button>
                                           <button type="button" className="btn btn-primary" onClick={formFetchHandler}>전송</button>
                                       </div>
                                   </Col>

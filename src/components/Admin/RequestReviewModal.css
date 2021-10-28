@@ -1,0 +1,17 @@
+body{
+    font-family: twayair;
+    font-weight: 500;
+}
+.modal{
+    padding-left: 50px;
+}
+
+.inputBody input[type=text] {
+    width: 100%;
+    border: 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #E7EBED;
+    color: #838383;
+    font-weight: 500;
+    margin-bottom: 32px;
+}

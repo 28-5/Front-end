@@ -1,32 +1,49 @@
-import React, {useState} from "react";
+import React from "react";
 import {Link, useLocation} from "react-router-dom";
-import {useHistory} from "react-router";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./ProductCardList.css";
+import LoaddingSpinner from "../../UI/LoaddingSpinner";
 
-
-const ProductCardList = (props) => {
-    const { pathname }               = useLocation();
-    const history                    = useHistory();
-    const [selectedMenu, selectMenu] = useState(0);
-    let productData                  = props.data;
-    const subMenuHandler             = event =>{
-        selectMenu(event.target.value);
-        history.push(`${pathname}?category=${selectedMenu}`);
-        };
-
-    switch (selectedMenu) {
-        case 0: productData = props.data;
+const ProductCardListPerCategory = (props) => {
+    const location        = useLocation();
+    let categoryName;
+    switch (location.pathname.slice(15)) {
+        case "0": categoryName = "골프클럽";
                 break;
-        case 1: productData = props.categorizedData[0];
+        case "1": categoryName = "골프용품";
                 break;
-        case 2: productData = props.categorizedData[1];
+        case "2": categoryName = "골프웨어";
                 break;
-        case 3: productData = props.categorizedData[2];
+        case "3": categoryName = "드라이버";
                 break;
-        default: productData = props.data;
+        case "4": categoryName = "우드";
+                break;
+        case "5": categoryName = "아이언";
+                break;
+        case "6": categoryName = "풀세트";
+                break;
+        case "7": categoryName = "골프공";
+                break;
+        case "8": categoryName = "골프가방";
+                break;
+        case "9": categoryName = "골프장갑";
+                break;
+        case "10": categoryName = "골프모자";
+                break;
+        case "11": categoryName = "골프화";
+                break;
+        case "12": categoryName = "아우터";
+                break;
+        case "13": categoryName = "상의";
+                break;
+        case "14": categoryName = "하의";
+                break;
+        case "15": categoryName = "양말";
+                break;
+        default: categoryName = "즐거운 쇼핑!"
+                break;
     }
 return (
         <>
@@ -36,20 +53,13 @@ return (
                         <Row>
                             <Col lg={12} className="text-center">
                                 <div className="section-title">
-                                    {pathname === "/shop/allproducts" ? <h2>전체 상품</h2> : <h2>베스트 상품</h2>}
+                                   <h2>{categoryName}</h2>
                                 </div>
-                                <ul className="product-controls">
-                                    <li value={0} onClick={subMenuHandler}>전체</li>
-                                    <li value={1} onClick={subMenuHandler}>골프클럽</li>
-                                    <li value={2} onClick={subMenuHandler}>골프용품</li>
-                                    <li value={3} onClick={subMenuHandler}>골프웨어</li>
-                                </ul>
                             </Col>
                         </Row>
                     </div>
                     <Row className="row" id="product-list">
-
-                        {productData.map(item => (
+                        {props.data !== undefined ? props.data.map(item => (
                             <Col lg={3} sm={6} className="mix all dresses bags" key={item.idx}>
                                 <div className="single-product-item">
                                     <figure>
@@ -60,7 +70,6 @@ return (
                                             }}}>
                                             <img src={"/display?fileName="+item.imageDtoList[0].imageURL} alt=""/>
                                         </Link>
-                                        {pathname === "/shop" && <div className="p-status popular">BEST</div>}
                                     </figure>
                                     <div className="product-text">
                                         <h6>{item.title}</h6>
@@ -68,8 +77,7 @@ return (
                                     </div>
                                 </div>
                             </Col>
-                        ))}
-
+                        )): <LoaddingSpinner/>}
                     </Row>
                 </Container>
             </section>
@@ -77,4 +85,4 @@ return (
     );
 };
 
-export default ProductCardList;
+export default ProductCardListPerCategory;

@@ -5,25 +5,47 @@ import {useSelector} from "react-redux";
 const AddressForm = (props) => {
     const isAuth                                          = useSelector(state => state.auth.isAuthenticated);
     const userInfo                                        = useSelector(state => state.auth);
+    const tokenPrice                                      = useSelector(state => state.token.tokenPrice);
+    const totalPrice                                      = useSelector(state => state.cart.totalPrice);
     const [usedToken, setUsedToken]                       = useState(0);
     const [isBtnClicked, setIsBtnClicked]                 = useState(false);
+    const userOrderTokenPrice                             = (tokenPrice * usedToken);
     const usedTokenHandler = (event) =>{
         setUsedToken(event.target.value);
     };
 
     const tokenUseBtnHandler = () =>{
-        if(usedToken < 0.01){
-            alert("토큰 최소 사용금액은 0.01 입니다");
+        if(userInfo.tokenAmount <= 0){
+            alert("사용할 수 있는 토큰이 없습니다");
             setUsedToken(0);
-            return
-        }
-        else{
-            props.setUsedToken(usedToken);
-            setIsBtnClicked(true);
+            return;
+        }else{
+            if(usedToken > userInfo.tokenAmount){
+                alert("보유하신 양보다 더 큰 값을 입력하였습니다.")
+                setUsedToken(0);
+                return;
+            }
+            else{
+                if(userOrderTokenPrice > totalPrice){
+                    alert("토큰 사용이 구매 금액을 넘어설 수 없습니다.");
+                    setUsedToken(0);
+                }
+                else{
+                    if(usedToken < 0.01){
+                        alert("토큰 최소 사용금액은 0.01 입니다");
+                        setUsedToken(0);
+                        return;
+                    }
+                    else{
+                        props.setUsedToken(usedToken);
+                        setIsBtnClicked(true);
 
-            setTimeout(() => {
-                setIsBtnClicked(false);
-            }, 4000);
+                        setTimeout(() => {
+                            setIsBtnClicked(false);
+                        }, 4000);
+                    }
+                }
+            }
         }
     };
 

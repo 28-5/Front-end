@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Button from 'react-bootstrap/Button'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -10,58 +10,113 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import axios from "axios";
+import RequestRevieweModal from "./RequestReviewModal";
 const columns = [
     { id: 'idx', label: 'IDX', minWidth: 80,  align: 'center' },
     { id: 'regDate', label: '신청일', minWidth: 100,  align: 'center', format: (value) => value.slice(0, 10)},
     { id: 'catagory', label: '카테고리', minWidth: 100,  align: 'center' },
     { id: 'brand', label: '브랜드', minWidth: 150, align: 'center' },
-    { id: 'quentity', label: '수량', minWidth: 120, align: 'center' },
-    { id: 'price', label: '희망가격', minWidth: 120, align: 'center', format: (value) => value.toLocaleString('ko-KR') +" 원"},
+    { id: 'quantity', label: '수량', minWidth: 80, align: 'center' },
+    { id: 'price', label: '희망금액', minWidth: 120, align: 'center', format: (value) => value.toLocaleString('ko-KR') +" 원"},
+    { id: 'proposalPrice', label: '협상금액', minWidth: 120, align: 'center', format: (value) => value === 0? '.': value.toLocaleString('ko-KR') +" 원"},
+    { id: 'acceptedPrice', label: '합의금액', minWidth: 120, align: 'center', format: (value) => value === null? '.': value.toLocaleString('ko-KR') +" 원"},
+    { id: 'acceptedTokenAmount', label: '토큰보상', minWidth: 120, align: 'center', format: (value) => value === null ? '.' : value},
     { id: 'name', label: '제목', minWidth: 150,  align: 'center' },
     { id: 'details', label: '내용', minWidth: 150,  align: 'center' },
     { id: 'address', label: '주소', minWidth: 150,  align: 'center' },
-    { id: 'expectedPointAmount', label: '토큰', minWidth: 120, align: 'center' },
     { id: 'imageDtoList', label: '이미지', minWidth: 120, align: 'center' },
+    { id: 'step', label: '상태', minWidth: 120, align: 'center' },
 ];
 
 const useStyles = makeStyles((theme) => ({
     containerDiv:{
         paddingTop: "50px"
     },
+    tableRow:{
+        height: "10px",
+        padding: 0,
+        fontWeight: "bold",
+    },
     container:{
         width: "100%",
     },
     tableCell:{
-        fontSize: "18px"
+        fontSize: "18px",
+        height: "30px",
+        padding: 0
     },
-}));
+    productImg:{
+      height: "30px"
+    },
+    tableBtnCell:{
+        padding: 0,
+        width: "30px"
+    },
+    requestBtn:{
+      fontSize: "10px",
+      width: "40px",
+      height: "30px",
+      padding: 0,
+      marginRight: "5px"
+    },
 
+}));
 
 const ServiceRequestControl = props => {
     const classes                                = useStyles();
+    const [requestNum, setRequestNum]            = useState();
+    const [requestPrice, setRequestPrice]        = useState();
     const [page, setPage]                        = useState(0);
     const [rowsPerPage, setRowsPerPage]          = useState(10);
-    const handleChangePage = (event, newPage) => {
+    const [show, setShow]                        = useState(false);
+    const handleClose                            = () => setShow(false);
+    const handleChangePage                       = (event, newPage) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
+    const negoBtnHandler = (id, price) => {
+        setShow(true);
+        setRequestNum(id);
+        setRequestPrice(price);
+    };
+    const approvalBtn      = (idx, price) => {
+        if(window.confirm("승인하시겠습니까?")){
+            axios.put("/purchased-products/"+idx+"/step", {cost: price},{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    axios.put("/purchased-products/"+idx+"/step", {cost: price},{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                        .then(res => {
+                            alert("승인하였습니다.");
+                            window.location.replace("/admin");
+                        })
+                        .catch(err => {
+                            console.log(err.request);
+                            console.log(err.response.data);
+                            console.log(err.response.message);
+                        });
+                })
+                .catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+        }
+    };
     const deleteBtnHandler = idx => {
-        console.log(idx);
-        axios.delete("/purchased-products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
-            .then(res => {
-                alert("삭제하였습니다.");
-                window.location.replace("/admin");
-            })
-            .catch(err => {
-                console.log(err.request);
-                console.log(err.response.data);
-                console.log(err.response.message);
-            });
+        if(window.confirm("진행하시겠습니까")){
+            axios.delete("/purchased-products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    alert("삭제하였습니다.");
+                    window.location.replace("/admin");
+                })
+                .catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+        }
     };
     return (
         <>
@@ -70,13 +125,13 @@ const ServiceRequestControl = props => {
                 <TableContainer className={classes.container}>
                     <Table stickyHeader aria-label="sticky table" className={classes.container}>
                         <TableHead>
-                            <TableRow>
+                            <TableRow className={classes.tableRow}>
                                 {columns.map((column) => (
                                     <TableCell
                                         key={column.id}
                                         align={column.align}
                                         style={{ minWidth: column.minWidth }}
-                                    >
+                                        className={classes.tableRow}>
                                         {column.label}
                                     </TableCell>
                                 ))}
@@ -85,24 +140,39 @@ const ServiceRequestControl = props => {
                         <TableBody>
                             {props.requestData!== null ? props.requestData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={Math.random()}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={Math.random()*10} >
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
                                                 <TableCell key={column.id} align={column.align} className={classes.tableCell}>
                                                     {column.format ? column.format(value) : column.id.includes("image")?
-                                                        value.map(image => <img src={"/display?fileName="+image.imageURL} alt="productImg"/>) :value}
+                                                        value.map(image => <img src={"/display?fileName="+image.imageURL} className={classes.productImg}
+                                                                                key={Math.random()*10} alt={"productImg"}/>) :value}
                                                 </TableCell>
                                             );
                                         })
                                         }
-                                        <TableCell>
-                                            <Button variant="primary" onClick={() => {deleteBtnHandler(row.idx)}}>승인</Button>
-                                            <Button variant="danger" onClick={() => {deleteBtnHandler(row.idx)}}>거부</Button>
-                                        </TableCell>
+                                        {row.step === "FINISH" || row.step ==="CANCELED" ? null :
+                                        <>
+                                            {row.step === "RESERVATION"  &&
+                                            <TableCell className={classes.tableBtnCell}>
+                                                <Button variant="secondary" className={classes.requestBtn}  onClick={() => {negoBtnHandler(row.idx, row.price)}}>제안</Button>
+                                                {show === true && <RequestRevieweModal show={show} onHide={handleClose} handleClose={handleClose}
+                                                                   requestNum={requestNum} requestPrice={requestPrice}/>}
+                                            </TableCell>}
+
+                                            {row.step !== "PROPOSAL"  &&
+                                            <TableCell className={classes.tableBtnCell}>
+                                                <Button variant="primary" className={classes.requestBtn}  onClick={() => {approvalBtn(row.idx, row.price)}}>승인</Button>
+                                            </TableCell>}
+                                            <TableCell className={classes.tableBtnCell}>
+                                                <Button variant="danger" className={classes.requestBtn} onClick={() => {deleteBtnHandler(row.idx)}}>거절</Button>
+                                            </TableCell>
+                                        </>
+                                            }
                                     </TableRow>
                                 );
-                            }) : <h1> Loading... </h1> }
+                            }) : <TableRow> Loading... </TableRow> }
                         </TableBody>
                     </Table>
                 </TableContainer>

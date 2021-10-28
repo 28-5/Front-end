@@ -1,4 +1,7 @@
-
+.message{
+    text-align: center;
+    font-family: twayair;
+}
 .order-table {
     background: #f9fbfb;
     padding-top: 30px;
@@ -56,3 +59,4 @@
     font-weight: 600;
     margin: 0;
 }
+

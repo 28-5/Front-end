@@ -1,20 +1,11 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {Link} from "react-router-dom";
 import "./JoinSuccess.css";
-const useStyles = makeStyles({
-    mainContainer:{
-        paddingLeft:"260px",
-        paddingTop: "0px",
-        height:"100%",
-    },
-});
 
 const JoinSuccess = () =>{
-    const classes = useStyles();
     return(
         <>
             <div className="card">
