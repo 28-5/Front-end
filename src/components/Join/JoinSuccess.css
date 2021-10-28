@@ -1,9 +1,4 @@
-body {
-    text-align: center;
-    padding: 40px 0;
-    background: #EBF0F5;
-}
-.card {
+.cardSuccess {
     background: white;
     padding: 60px;
     border-radius: 4px;
@@ -11,7 +6,7 @@ body {
     display: inline-block;
     margin: 60px auto;
 }
-.card h1 {
+.cardSuccess h1 {
     color: #88B04B;
     font-family: "twayair";
     font-weight: 900;
@@ -19,14 +14,14 @@ body {
     margin-bottom: 10px;
     text-align: center;
 }
-.card p {
+.cardSuccess p {
     text-align: center;
     color: #404F5E;
     font-family: "twayair";
     font-size:20px;
     margin: 0;
 }
-.card i {
+.cardSuccess i {
     color: #9ABC66;
     font-size: 100px;
     line-height: 200px;

@@ -1,4 +1,5 @@
 import React from "react";
+import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,7 +9,7 @@ import "./JoinSuccess.css";
 const JoinSuccess = () =>{
     return(
         <>
-            <div className="card">
+            <Container className="cardSuccess">
                 <div className="messageBox">
                     <i className="checkmark">✓</i>
                 </div>
@@ -19,7 +20,7 @@ const JoinSuccess = () =>{
                     </Col>
                     <Button variant="outlined" color={"primary"} component={Link} to={"/shop"} className="btn">메인으로</Button>
                 </Row>
-            </div>
+            </Container>
         </>
     )
 }
