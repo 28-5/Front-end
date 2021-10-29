@@ -18,7 +18,7 @@
 ### 개발환경
 + Operating System: Win 10
 + IDE: IntelliJ IDEA
-+ Front-end: React: 17.0.2, React-redux: 7.2.6, Material-ui: 4.12.3, React-bootstrap: 2.0.0, Bootstrap: 5.1.3, React-router-dom: 5.3.,
++ Front-end: React: 17.0.2, React-redux: 7.2.6, Material-ui: 4.12.3, React-bootstrap: 2.0.0, Bootstrap: 5.1.3, React-router-dom: 5.3
 
 
 ## 설치
