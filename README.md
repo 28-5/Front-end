@@ -471,7 +471,7 @@ export const getCartData = () => {  //카트 데이터 불러오기
     }
 };
 
-export const sendCartData = cart => { // 카트 데이 업데이트
+export const sendCartData = cart => { // 카트 데이터 업데이트
     return async dispatch => {
         dispatch(uiActions.showNotification({
             status:"Pending",
@@ -660,7 +660,7 @@ const cartSlice = createSlice({
 });
 ```
 
-### store/order-slice.js
+### store/order-slice.js // 구매 페이지에서 사용하기 위한 reducer
 ```javascript
 const orderSlice = createSlice({
     name: "order",
@@ -678,10 +678,10 @@ const orderSlice = createSlice({
 
 ### store/product-actions.js 
 ```javascript
-export const getProductdata = () =>{
+export const getProductdata = () =>{ // DB에 저장되어 있는 상품 정보를 가져옴
     return async dispatch => {
         //1, 2, 3번은 상위 카테고리임.
-        //data 배열의 0~2번은 상위카테고리이기 때문에 거기에 해당하는 제품들이 다시 3~16번에 나타남.
+        //data 배열의 0~2번은 상위카테고리이기 때문에 거기에 해당하는 제품들이 다시 3~15번에 나타남.
         const getData = async () =>{
             let data = [];
             for (let a = 1; a < 17 ; a++){
@@ -719,19 +719,18 @@ const productSlice = createSlice({
         updateProductList(state, action){
             state.items         = action.payload.items;
         },
-        //a next reducer comes here
     },
 });
 ```
 
 ### store/token-actions.js 
 ```javascript
-export const getTokenPrice = () =>{
+export const getTokenPrice = () =>{ //백엔드에서 Bithumb API를 이용하여 토큰 시세 정보를 가져오도록 구현하였고, 백엔드에서 프런트로 그 시세 데이터만 넘겨주고 있음.
     return async dispatch => {
         const getData = async () =>{
             const response = axios.get("/point");
             if(!response){
-                throw new Error("Could not get product data!");
+                throw new Error("Could not get token data!");
             }
             const data = (await response).data;
             return data;
@@ -762,7 +761,7 @@ const tokenSlice = createSlice({
 });
 ```
 
-### store/ui-slice.js 
+### store/ui-slice.js // 장바구니와 연동하기위한 ui
 ```javascript
 const uiSlice = createSlice({
     name: "ui",
@@ -792,6 +791,7 @@ const uiSlice = createSlice({
 });
 
 ```
+#### 기본적으로 프로젝트 전반에서 사용되는 데이터들을 효율적으로 관리하게 Redux를 사용하였습니다. Redux를 이용하여 로그인 세션이라던지 카트, 상품, 구매 데이터 등 여러 데이터들을 전역적으로 사용할 수 있었습니다. 프로젝트 초기에는 프로젝트 사이즈가 크지 않아 단순히 props로 넘겨주었지만 사이즈가 점점 커짐에따라 컴포넌트는간에 props로 넘겨주는게 매우 비효율적일 뿐만 아니라 코드가 매우 길어졌습니다. 처음에는 Context API를 사용하다가 프로젝트 중후반에 Redux를 학습하여 Context API로 구현한 것들을 모두 교체하였습니다.
 
 ### .js
 ```javascript
@@ -802,3 +802,6 @@ const uiSlice = createSlice({
 ```javascript
 
 ```
+
+## 마치며
+#### 이 프로젝트는 저에게 첫 팀 프로젝트였습니다. 협업을 위해 Zoom, Kakaotalk, Slack, Github, Postman 등을 활용하였습니다. 프로젝트의 약 90%를 비대면으로 진행하였는데 쉽지 않은 과정이었습니다. 옆에서 같이 개발하는게 아니니 자연스럽게 소통이 줄게 되었고, 소통이줄어드니 프론트와 백엔드를 서로 연결할 때에 있어서 많은 어려움이 있었을 뿐만 아니라 서로 원하는 개발 방향을 조율하기가 힘들었습니다. 결국에 프론트와 백엔드 연결에 있어서 많은 시간을 소비하게 되었습니다. 어려움 극복에 있어서 대면 회수 증가를 통한 소통 극복이 해결책이긴 하였지만, 백신 접종 완료 이전까지는 다른 방법으로 어려움을 최소화 하도록 노력하였습니다. 에를들어, Postman을 통해서 백엔드와 프론트 통신에 있어서 필요한 변수들의 이름과 URL 주소들을 폴더별로 만들어 효율적이고 개발자다운 소통을 늘렸습니다. 이후, 프로젝트 후반에가서 팀원 모두 백신 접종을 완료하게 되었고 기존 보다 조금 더 대면하여 같이 개발하는 회수를 늘림으로써 자연스러운 소통 증가로 연결시켰고 최초 계획한 목표만큼 개발을 마무리할 수 있었습니다.
