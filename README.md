@@ -660,14 +660,14 @@ const cartSlice = createSlice({
 });
 ```
 
-### store/order-slice.js // 구매 페이지에서 사용하기 위한 reducer
+### store/order-slice.js 
 ```javascript
 const orderSlice = createSlice({
     name: "order",
     initialState: {
         finalPrice: 0,
     },
-    reducers: {
+    reducers: { // 구매 페이지에서 사용하기 위한 reducer
         updateFinalPrice(state, action){
             state.finalPrice = action.payload;
         },
@@ -761,9 +761,9 @@ const tokenSlice = createSlice({
 });
 ```
 
-### store/ui-slice.js // 장바구니와 연동하기위한 ui
+### store/ui-slice.js
 ```javascript
-const uiSlice = createSlice({
+const uiSlice = createSlice({  // 장바구니와 연동하기위한 ui
     name: "ui",
     initialState: {
         isCartVisible: false,
@@ -804,4 +804,10 @@ const uiSlice = createSlice({
 ```
 
 ## 마치며
-#### 이 프로젝트는 저에게 첫 팀 프로젝트였습니다. 협업을 위해 Zoom, Kakaotalk, Slack, Github, Postman 등을 활용하였습니다. 프로젝트의 약 90%를 비대면으로 진행하였는데 쉽지 않은 과정이었습니다. 옆에서 같이 개발하는게 아니니 자연스럽게 소통이 줄게 되었고, 소통이줄어드니 프론트와 백엔드를 서로 연결할 때에 있어서 많은 어려움이 있었을 뿐만 아니라 서로 원하는 개발 방향을 조율하기가 힘들었습니다. 결국에 프론트와 백엔드 연결에 있어서 많은 시간을 소비하게 되었습니다. 어려움 극복에 있어서 대면 회수 증가를 통한 소통 극복이 해결책이긴 하였지만, 백신 접종 완료 이전까지는 다른 방법으로 어려움을 최소화 하도록 노력하였습니다. 에를들어, Postman을 통해서 백엔드와 프론트 통신에 있어서 필요한 변수들의 이름과 URL 주소들을 폴더별로 만들어 효율적이고 개발자다운 소통을 늘렸습니다. 이후, 프로젝트 후반에가서 팀원 모두 백신 접종을 완료하게 되었고 기존 보다 조금 더 대면하여 같이 개발하는 회수를 늘림으로써 자연스러운 소통 증가로 연결시켰고 최초 계획한 목표만큼 개발을 마무리할 수 있었습니다.
+#### 이 프로젝트는 저에게 첫 팀 프로젝트였습니다. 협업을 위해 다음의 툴들을 이용하였습니다.
+ + Zoom
+ + Kakaotalk
+ + Slack
+ + Github
+ + Postman
+프로젝트의 약 90%를 비대면으로 진행하였는데 쉽지 않은 과정이었습니다. 옆에서 같이 개발하는게 아니니 자연스럽게 소통이 줄게 되었고, 소통이줄어드니 프론트와 백엔드를 서로 연결할 때에 있어서 많은 어려움이 있었을 뿐만 아니라 서로 원하는 개발 방향을 조율하기가 힘들었습니다. 결국에 프론트와 백엔드 연결에 있어서 많은 시간을 소비하게 되었습니다. 어려움 극복에 있어서 대면 회수 증가를 통한 소통 극복이 해결책이긴 하였지만, 백신 접종 완료 이전까지는 다른 방법으로 어려움을 최소화 하도록 노력하였습니다. 에를들어, Postman을 통해서 백엔드와 프론트 통신에 있어서 필요한 변수들의 이름과 URL 주소들을 폴더별로 만들어 효율적이고 개발자다운 소통을 늘렸습니다. 이후, 프로젝트 후반에가서 팀원 모두 백신 접종을 완료하게 되었고 기존 보다 조금 더 대면하여 같이 개발하는 회수를 늘림으로써 자연스러운 소통 증가로 연결시켰고 최초 계획한 목표만큼 개발을 마무리할 수 있었습니다.
