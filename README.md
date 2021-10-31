@@ -35,75 +35,9 @@ npm start
 ├─ README.md
 ├─ package-lock.json
 ├─ package.json
-├─ public
-│  ├─ img
-│  │  ├─ ads
-│  │  │  ├─ ads1.jpg
-│  │  │  ├─ ads2.jpg
-│  │  │  ├─ ads3.jpg
-│  │  │  ├─ ads4.jpg
-│  │  │  └─ orderAd.jpg
-│  │  ├─ carousel
-│  │  │  ├─ img1.jpg
-│  │  │  ├─ img2.jpg
-│  │  │  ├─ img3.jpg
-│  │  │  ├─ img4.jpg
-│  │  │  └─ img5.jpg
-│  │  ├─ favicon.png
-│  │  ├─ icons
-│  │  │  ├─ bag.png
-│  │  │  ├─ chat.png
-│  │  │  ├─ coin.png
-│  │  │  ├─ delivery.png
-│  │  │  ├─ f-delivery.png
-│  │  │  ├─ man.png
-│  │  │  ├─ sales.png
-│  │  │  ├─ search.png
-│  │  │  ├─ voucher.png
-│  │  │  └─ zoom-plus.png
-│  │  ├─ kakaopay.jpg
-│  │  ├─ logo
-│  │  │  └─ logo.png
-│  │  ├─ mainImg1.jpg
-│  │  ├─ mainImg2.jpg
-│  │  ├─ partners.jpg
-│  │  ├─ productImg
-│  │  │  ├─ 1.png
-│  │  │  ├─ 2.png
-│  │  │  ├─ 3.png
-│  │  │  ├─ 4.png
-│  │  │  ├─ 5.png
-│  │  │  ├─ 6.png
-│  │  │  ├─ 7.png
-│  │  │  ├─ 8.png
-│  │  │  ├─ 유명 브랜드.png
-│  │  │  ├─ 초급자연습용 컬러.png
-│  │  │  ├─ 초급자연습용 토탈 브랜드 볼.png
-│  │  │  ├─ 캘러웨이.png
-│  │  │  ├─ 타이틀리스트 컬러볼.png
-│  │  │  ├─ 타이틀리스트.png
-│  │  │  ├─ 테일러메이드 컬러.png
-│  │  │  └─ 테일러메이드.png
-│  │  ├─ products
-│  │  │  ├─ ball_callewayball.jpg
-│  │  │  ├─ ball_phyzball.jpg
-│  │  │  ├─ ball_titlelistball1.jpg
-│  │  │  ├─ ball_volvikball.jpg
-│  │  │  ├─ club_brideJ819.jpg
-│  │  │  ├─ club_misnomp4.jpg
-│  │  │  ├─ club_mp20.jpg
-│  │  │  ├─ club_pingG425.jpeg
-│  │  │  ├─ club_titlelistt100.jpg
-│  │  │  ├─ hat_cleavelandhat2.jpg
-│  │  │  ├─ hat_clevelandhat1.jpg
-│  │  │  ├─ hat_titleliasthat2.jpg
-│  │  │  ├─ hat_titlelisthat1.jpg
-│  │  │  └─ wear_nikewear.jpg
-│  │  ├─ reborn1.svg
-│  │  ├─ reborn2.jpg
-│  │  └─ team
-│  │     └─ team.jpg
-│  └─ index.html
+├─ public
+│  │    
+│  └─ index.html
 └─ src
    ├─ App.css
    ├─ App.js
@@ -793,12 +727,487 @@ const uiSlice = createSlice({  // 장바구니와 연동하기위한 ui
 ```
 #### 기본적으로 프로젝트 전반에서 사용되는 데이터들을 효율적으로 관리하게 Redux를 사용하였습니다. Redux를 이용하여 로그인 세션이라던지 카트, 상품, 구매 데이터 등 여러 데이터들을 전역적으로 사용할 수 있었습니다. 프로젝트 초기에는 프로젝트 사이즈가 크지 않아 단순히 props로 넘겨주었지만 사이즈가 점점 커짐에따라 컴포넌트는간에 props로 넘겨주는게 매우 비효율적일 뿐만 아니라 코드가 매우 길어졌습니다. 처음에는 Context API를 사용하다가 프로젝트 중후반에 Redux를 학습하여 Context API로 구현한 것들을 모두 교체하였습니다.
 
-### .js
+### Admin/Dashboard.jsx
+```javascript
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+                REBORN
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
+export default function Dashboard() {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(true);
+    const [orderData, setOrderData] = useState(null);
+    const [requestData, setRequestData]          = useState(null);
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+    useEffect(() => { // 유저 구매목록 조회
+        axios.get("/orders/user")
+            .then(res => {
+                setOrderData(res.data);
+            })
+            .catch(err => console.log(err));
+        axios.get("/purchased-products") // 유저 판매 신청 기록 조회
+            .then(res => {
+                setRequestData(res.data.dtoList);
+            })
+            .catch(err => console.log(err));
+    }, [open])
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <SideMenu/>
+            <main className={classes.content}>
+                <div className={classes.appBarSpacer} />
+                <Container maxWidth="lg" className={classes.container}>
+                    <Grid container spacing={3} className={classes.gridContainer}>
+                        {/* Chart */}
+                        <Grid item xs={12} md={8} lg={9}>
+                            <Paper className={fixedHeightPaper}>
+                                <Chart />
+                            </Paper>
+                        </Grid>
+                        {/* Recent Deposits */}
+                        <Grid item xs={12} md={4} lg={3}>
+                            <Paper className={fixedHeightPaper}>
+                                <Deposits orderData={orderData}/> // 전체 매출량
+                            </Paper>
+                        </Grid>
+                        {/* Recent Orders */}
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                <Orders setOrderData={setOrderData} orderData={orderData}/> // 전체 주문 관리
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                <ProductControl/> // 상품관리
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Paper className={classes.paper}>
+                                <ServiceRequestControl requestData={requestData}/>  // 전체 판매 요청 관리
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                    <Box pt={4}>
+                        <Copyright />
+                    </Box>
+                </Container>
+            </main>
+        </div>
+    );
+}
+```
+
+### Orders.jsx 
+```javascript
+export default function Orders(props) {
+    const classes = useStyles();
+
+    return (
+        <React.Fragment>
+            <Title>최근 주문</Title>
+            <Table size="small">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>날짜</TableCell>
+                        <TableCell>주문번호</TableCell>
+                        <TableCell>구매자</TableCell>
+                        <TableCell>배송정보</TableCell>
+                        <TableCell>결제금액</TableCell>
+                        <TableCell>토큰지급</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {props.orderData !== null? props.orderData.dtoList.map((row) => ( //Dashboard에서 받아온 props.orderData가 null이 아닌 경우에만 테이블 출력
+                        <TableRow key={row.idx}>
+                            <TableCell>{row.regDate.slice(0, 10)}</TableCell>
+                            <TableCell>{row.orderNumber}</TableCell>
+                            <TableCell>{row.userName}</TableCell>
+                            <TableCell>{row.recipientAddress}</TableCell>
+                            <TableCell>{row.totalPrice.toLocaleString('ko-KR')} 원</TableCell>
+                            <TableCell>{row.tokenAmount}</TableCell>
+                        </TableRow>
+                    )) : <TableRow><td><LoaddingSpinner/></td></TableRow>}
+                </TableBody>
+            </Table>
+            <div className={classes.seeMore}>
+                <Link color="primary" href="#" onClick={preventDefault}>
+                    See more orders
+                </Link>
+            </div>
+        </React.Fragment>
+    );
+}
+```
+### ProductControl.jsx
+```javascript
+const ProductControl = props => {
+    const classes = useStyles();
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const allItems        =   [];
+    const allItemsRedeux  =   useSelector(state => state.product.items); //리덕스를 통해 상품 전체 목록을 가져옴.
+    if(allItemsRedeux.length > 1){ // 상품 배열의 0, 1, 2, 만 넣는 이유는 이 번호가 최상위 카테고리를 나타내는 번호라서 3개 배열만 가져오면 전체 상품을 가져올 수 있음.
+        for (let a = 0 ; a < 3 ; a++){
+            allItemsRedeux[a].forEach(item => {
+                allItems.push({IDX: item.idx, Title: item.title, Brand: item.brand, Quantity: item.quantity});
+            });
+        }
+    }
+    const rows = allItems;
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+    const deleteBtnHandler = idx => { // 상품 
+        console.log(idx);
+        axios.delete("/products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+            .then(res => {
+                alert("삭제하였습니다.");
+                window.location.replace("/admin");
+            })
+            .catch(err => {
+                console.log(err.request);
+                console.log(err.response.data);
+                console.log(err.response.message);
+            });
+    }
+    return (
+        <>
+            <h3 id={"productControl"}>상품 관리</h3>
+            <Paper className={classes.root}>
+                <TableContainer className={classes.container}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                        className={classes.tableRow}>
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.length >0 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={Math.random()} className={classes.tableCell}>
+                                        {columns.map((column) => {
+                                            const value = row[column.id];
+                                            return (
+                                                <TableCell key={column.id} align={column.align} className={classes.tableCell}>
+                                                    {value}
+                                                </TableCell>
+                                            );
+                                        })
+                                        }
+                                        <TableCell className={classes.tableBtnCell}>
+                                            <Button variant="danger" onClick={() => {deleteBtnHandler(row.IDX)}} className={classes.requestBtn}>
+                                                삭제
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            }) : <TableRow><td> Loading... </td></TableRow>}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Paper>
+        </>
+    )
+};
+```
+### ServiceRequestControl.jsx 
+```javascript
+const columns = [
+    { id: 'idx', label: 'IDX', minWidth: 80,  align: 'center' },
+    { id: 'regDate', label: '신청일', minWidth: 100,  align: 'center', format: (value) => value.slice(0, 10)},
+    { id: 'catagory', label: '카테고리', minWidth: 100,  align: 'center' },
+    { id: 'brand', label: '브랜드', minWidth: 150, align: 'center' },
+    { id: 'quantity', label: '수량', minWidth: 80, align: 'center' },
+    { id: 'price', label: '희망금액', minWidth: 120, align: 'center', format: (value) => value.toLocaleString('ko-KR') +" 원"},
+    { id: 'proposalPrice', label: '협상금액', minWidth: 120, align: 'center', format: (value) => value === 0? '.': value.toLocaleString('ko-KR') +" 원"},
+    { id: 'acceptedPrice', label: '합의금액', minWidth: 120, align: 'center', format: (value) => value === null? '.': value.toLocaleString('ko-KR') +" 원"},
+    { id: 'acceptedTokenAmount', label: '토큰보상', minWidth: 120, align: 'center', format: (value) => value === null ? '.' : value},
+    { id: 'name', label: '제목', minWidth: 150,  align: 'center' },
+    { id: 'details', label: '내용', minWidth: 150,  align: 'center' },
+    { id: 'address', label: '주소', minWidth: 150,  align: 'center' },
+    { id: 'imageDtoList', label: '이미지', minWidth: 120, align: 'center' },
+    { id: 'step', label: '상태', minWidth: 120, align: 'center' },
+];
+
+const ServiceRequestControl = props => {
+    const classes                                = useStyles();
+    const [requestNum, setRequestNum]            = useState();
+    const [requestPrice, setRequestPrice]        = useState();
+    const [page, setPage]                        = useState(0);
+    const [rowsPerPage, setRowsPerPage]          = useState(10);
+    const [show, setShow]                        = useState(false);
+    const handleClose                            = () => setShow(false);
+    const handleChangePage                       = (event, newPage) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+    const negoBtnHandler = (id, price) => { // 
+        setShow(true);
+        setRequestNum(id);
+        setRequestPrice(price);
+    };
+    const approvalBtn      = (idx, price) => { // 승인 버튼. Reservation -> Proposal -> Acceptance -> Finish 단계로 구성되어 있는데 Reservation 단계에서 토큰이 이동하난 Acceptance 
+                                              //로 바로 넘어갈 수 있또록 .then 속에 다시 한번 axio를 사용. 
+        if(window.confirm("승인하시겠습니까?")){
+            axios.put("/purchased-products/"+idx+"/step", {cost: price},{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    axios.put("/purchased-products/"+idx+"/step", {cost: price},{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                        .then(res => {
+                            alert("승인하였습니다.");
+                            window.location.replace("/admin");
+                        })
+                        .catch(err => {
+                            console.log(err.request);
+                            console.log(err.response.data);
+                            console.log(err.response.message);
+                        });
+                })
+                .catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+        }
+    };
+    const deleteBtnHandler = idx => { // 거부 
+        if(window.confirm("진행하시겠습니까")){
+            axios.delete("/purchased-products/"+idx, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    alert("삭제하였습니다.");
+                    window.location.replace("/admin");
+                })
+                .catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+        }
+    };
+    return (
+        <>
+            <h3 id={"userRequest"}>유저 판매 신청 리스트</h3>
+            {props.requestData && <Paper className={classes.root}>
+                <TableContainer className={classes.container}>
+                    <Table stickyHeader aria-label="sticky table" className={classes.container}>
+                        <TableHead>
+                            <TableRow className={classes.tableRow}>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                        className={classes.tableRow}>
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {props.requestData!== null ? props.requestData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={Math.random()*10} >
+                                        {columns.map((column) => {
+                                            const value = row[column.id];
+                                            return (
+                                                <TableCell key={column.id} align={column.align} className={classes.tableCell}>
+                                                    {column.format ? column.format(value) : column.id.includes("image")?
+                                                        value.map(image => <img src={"/display?fileName="+image.imageURL} className={classes.productImg}
+                                                                                key={Math.random()*10} alt={"productImg"}/>) :value}
+                                                </TableCell>
+                                            );
+                                        })
+                                        }
+                                        {row.step === "FINISH" || row.step ==="CANCELED" ? null :
+                                        <>
+                                            {row.step === "RESERVATION"  &&
+                                            <TableCell className={classes.tableBtnCell}> //제안 버튼을 누르면 모달창을 띄워서 원하는 협상가격을 입력할 
+                                                <Button variant="secondary" className={classes.requestBtn}  onClick={() => {negoBtnHandler(row.idx, row.price)}}>제안</Button>
+                                                {show === true && <RequestRevieweModal show={show} onHide={handleClose} handleClose={handleClose}
+                                                                   requestNum={requestNum} requestPrice={requestPrice}/>}
+                                            </TableCell>}
+
+                                            {row.step !== "PROPOSAL"  &&
+                                            <TableCell className={classes.tableBtnCell}>
+                                                <Button variant="primary" className={classes.requestBtn}  onClick={() => {approvalBtn(row.idx, row.price)}}>승인</Button>
+                                            </TableCell>}
+                                            <TableCell className={classes.tableBtnCell}>
+                                                <Button variant="danger" className={classes.requestBtn} onClick={() => {deleteBtnHandler(row.idx)}}>거절</Button>
+                                            </TableCell>
+                                        </>
+                                            }
+                                    </TableRow>
+                                );
+                            }) : <TableRow> Loading... </TableRow> }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={props.requestData.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+            </Paper>}
+        </>
+    )
+};
+```
+### RequestReviewModal.jsx 
+```javascript
+const RequestRevieweModal = props => { //협상을 제안하게 되면 판매 신청 status가 Reservation에서 Proposal로 변경됨
+    const { value: enteredPrice,
+        valueChangeHandler: priceChangeHandler,
+        reset: resetPrice}              = useInput();
+    const negotiationBtn                = (event) =>{
+      event.preventDefault();
+        if(window.confirm("제안하시겠습니까?")){
+            axios.put("/purchased-products/"+props.requestNum+"/step", {cost: enteredPrice},
+                {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                .then(res => {
+                    alert(enteredPrice + " 에 제안하였습니다.");
+                    resetPrice();
+                    window.location.replace("/admin");
+                })
+                .catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+        }
+    };
+    return(
+        <Modal show={props.show} onHide={props.handleClose} backdrop="static" keyboard={false} centered={true}
+                className="modal">
+            <Modal.Header closeButton>
+                <Modal.Title>협상</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="inputBody">
+                <Row>
+                    <Col lg={3}>
+                        <p className="in-name">신청번호</p>
+                    </Col>
+                    <Col lg={9}>
+                        <input required type="text" readOnly value={props.requestNum}/>
+                    </Col>
+                    <Col lg={3}>
+                        <p className="in-name">가격</p>
+                    </Col>
+                    <Col lg={9}>
+                        <input required type="text" placeholder={props.requestPrice.toLocaleString('ko-KR') +" 원"} value={enteredPrice} onChange={priceChangeHandler}/>
+                    </Col>
+                </Row>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={props.handleClose}>
+                     취소
+                </Button>
+                <Button variant="primary" onClick={negotiationBtn}>제안</Button>
+            </Modal.Footer>
+        </Modal>
+    )
+};
+```
+#### Admin 페이지는 로그인시 Role에 따라 매니저와 일반 유저를 구분하며 일반 유저인 경우 메뉴가 보이지 않도록 구현해두었습니다. 컴포넌트들은 상품등록, 삭제, 유저 판매 신청 관리, 전체 매출 조회 등 서비스 관리를 손쉽게 할 수 있도록 구현하였습니다. 기본적으로 데이터를 추가하게 되면 백엔드를 통해 DB에 저장되고 있으며 삭제시 DB에서 삭제가 되지 않고 삭제여부를 나타내는 DB값을 변경시켜 문제 발생시 증거로 사용할 수 있도록 구현하였습니다.
+
+### .jsx
 ```javascript
 
 ```
+### .jsx
+```javascript
 
-### .js
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
+```javascript
+
+```
+### .jsx
 ```javascript
 
 ```
