@@ -806,7 +806,7 @@ export default function Dashboard() {
 }
 ```
 
-### Orders.jsx 
+### Admin/Orders.jsx 
 ```javascript
 export default function Orders(props) {
     const classes = useStyles();
@@ -847,7 +847,7 @@ export default function Orders(props) {
     );
 }
 ```
-### ProductControl.jsx
+### Admin/ProductControl.jsx
 ```javascript
 const ProductControl = props => {
     const classes = useStyles();
@@ -942,7 +942,7 @@ const ProductControl = props => {
     )
 };
 ```
-### ServiceRequestControl.jsx 
+### Admin/ServiceRequestControl.jsx 
 ```javascript
 const columns = [
     { id: 'idx', label: 'IDX', minWidth: 80,  align: 'center' },
@@ -1090,7 +1090,7 @@ const ServiceRequestControl = props => {
     )
 };
 ```
-### RequestReviewModal.jsx 
+### Admin/RequestReviewModal.jsx 
 ```javascript
 const RequestRevieweModal = props => { //협상을 제안하게 되면 판매 신청 status가 Reservation에서 Proposal로 변경됨
     const { value: enteredPrice,
