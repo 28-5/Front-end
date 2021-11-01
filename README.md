@@ -8,6 +8,8 @@
 ## 프로젝트 프론트엔드 주요기능
 + Redux를 통한 상태관리
 + React Material-ui & React Bootstrap
++ Custom hooks
++ RESTful API
 + JWT 토큰을 활용한 회원가입 및 로그인 (정보 수정과 탈퇴)
 + 다양한 상품 리스트 (상세페이지)
 + 장바구니 (추가, 부분 추가, 제거, 부분제거, 장바구니 비우기)
@@ -1537,17 +1539,215 @@ const WrtForm = props => { // 글작성 폼
 ```
 #### 위의 코드들은 게시판을 위한 컴포넌트들 입니다. 게시판은 Q&A와 공지사항으로 두 종류가 있으며 데이터만 다르고 레이아웃은 같기에 컴포넌트 재사용률을 높이고자 노력하였습니다. 우선 BoardDataUse를 통해서 두 게시판의 데이터들을 모두 가져와서 App.js에서 [noticeList, qnaList] 로 저장하였습니다. 저장한 데이터들은 qna게시판이 선택되면 QnA 컴포넌트에 qnaList를 전달해주었고, 공지사항이 선택되면 Notice 컴포넌트에 noticeList를 전달해주었습니다. 각 컴포넌트들이 실행되면 전달된 데이터를 BoardListForm를 호출하면서 전달해줍니다. BoardListForm는 게시판 데이터를 화면에 출력해주고 글 선택을 통해 글 상세페이지로 이동할 수 있도록 하는 역할을 해줍니다. 각 게시물은 Link를 통해 해당 게시물의 정보를 state를 통해 넘겨주고 있습니다. 게시물을 선택하게 되면 Article 컴포넌트가 호출되고 Link를 통해 전달된 데이터를 사용할 수 있게 useLocation으로 받아주었습니다.
 
-다시한번, 공지사항과 QNA는 데이터만 다르고 나머지는 거의 비슷하기에 불필요한 코드 중복을 피하고자 컴포넌트 생성을 최소화 하였습니다. 두 게시판을 관리할 수 있도록 공지사항의 게시물인지 QNA의 게시물인지의 따라 location을 이용하여 수정과 삭제를 위한 path를 약간만 수정하여 사용할 수 있도록 switch와 slice를 사용하였습니다. WrtForm 또한 위의 같은 이유로 비슷한 로직으로 작성하여 만들었습니다.
+#### 다시한번, 공지사항과 QNA는 데이터만 다르고 나머지는 거의 비슷하기에 불필요한 코드 중복을 피하고자 컴포넌트 생성을 최소화 하였습니다. 두 게시판을 관리할 수 있도록 공지사항의 게시물인지 QNA의 게시물인지의 따라 location을 이용하여 수정과 삭제를 위한 path를 약간만 수정하여 사용할 수 있도록 switch와 slice를 사용하였습니다. WrtForm 또한 위의 같은 이유로 비슷한 로직으로 작성하여 만들었습니다.
 
 
-### .jsx
+### Join/Join.jsx
 ```javascript
+const Join = ({history}) => {
+    const classes = useStyles();
+    const [open, setOpen] = useState(false);
+    const [IsModalOpen, setModalOpen] = useState(false);
+    const [userEmail, setUserEmail]   = useState(null);
+    const [userPass, setUserPass]   = useState(null);
+    const [userName, setUserName]   = useState(null);
+    const [userPhoneNum, setUserPhoneNum]   = useState(null);
+    const [userAddress, setUserAddress] = useState('주소');
 
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const modalOpenHandler = () => {
+        setModalOpen(true);
+    };
+
+    const modalCloseHandler = () => {
+        setModalOpen(false);
+    };
+    const signupEmailHandler = event =>{
+        setUserEmail(event.target.value);
+    };
+    const signupPassHandler = event =>{
+        setUserPass(event.target.value);
+    };
+    const signupNameHandler = event =>{
+        setUserName(event.target.value);
+    };
+    const signupPhoneNumHandler = event =>{
+        setUserPhoneNum(event.target.value);
+    };
+
+    const signupAddressHandler = props =>{
+        setUserAddress(props);
+    };
+
+
+
+    const fetchJoinInfo = (event) =>{ //회원가입 
+        event.preventDefault();
+        if(userEmail === null || userPass === null || userName === null || userPhoneNum === null || userAddress === null){
+            alert("제대로 입력되지 않은 부분이 있습니다!");
+            return;
+        }else{
+            axios.post("/member/", {
+                email : userEmail,
+                password: userPass,
+                name: userName,
+                phone: userPhoneNum,
+                address: userAddress,
+            }).then(res => {
+                console.log("Join success! + res.data: " + res.data);
+                history.push("/member/success");
+            }).catch(err => {
+               alert("가입에 실패하였습니다. 다시 시도 해주세요");
+            });
+        }
+    };
+
+    useEffect(() => {
+        window.scrollTo(0,100);
+    }, []);
+    return (
+        <section className={classes.section}>
+            <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+                <CircularProgress color="primary" />
+            </Backdrop>
+            <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.joinBox}>
+                <form onSubmit={fetchJoinInfo}>
+                    <Grid item xs={12} >
+                        <Input type="email" name="userEmail" placeholder="이메일" onChange={signupEmailHandler}
+                               startAdornment={( <InputAdornment position="start">
+                                   <EmailIcon />
+                               </InputAdornment>)}
+                               className={classes.joinInput}/>
+                    </Grid>
+                    <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
+                        <Input type="password" name="userPass" placeholder="비밀번호" onChange={signupPassHandler}
+                               startAdornment={( <InputAdornment position="start">
+                                   <LockIcon />
+                               </InputAdornment>)}
+                               className={classes.passInput}/>
+                    </Grid>
+                    <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
+                        <Input type="password" name="userPassCheck" placeholder="비밀번호 확인"
+                               startAdornment={( <InputAdornment position="start">
+                                   <LockIcon />
+                               </InputAdornment>)}
+                               className={classes.passInput}/>
+                    </Grid>
+                    <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
+                        <Input type="text" name="userName" placeholder="이름" onChange={signupNameHandler}
+                               startAdornment={( <InputAdornment position="start">
+                                   <AssignmentIndIcon />
+                               </InputAdornment>)}
+                               className={classes.joinInput}/>
+                    </Grid>
+                    <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
+                        <Input type="tel" name="userPhone" placeholder="휴대폰번호" onChange={signupPhoneNumHandler}
+                               startAdornment={( <InputAdornment position="start">
+                                   <PhoneIphoneIcon />
+                               </InputAdornment>)}
+                               className={classes.joinInput}/>
+                    </Grid>
+                    <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
+                        <Input type="text" name="userAddr" placeholder={userAddress}
+                               startAdornment={( <InputAdornment position="start">
+                                   <HomeIcon />
+                               </InputAdornment>)}
+                               disabled={true}
+                               className={classes.addressInput}/>
+                        <Button color="secondary" variant="outlined" className={classes.addressBtn} onClick={modalOpenHandler}>주소찾기</Button> // 다음 주소 API
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button type="submit" className={classes.joinBtn} >회원가입</Button>
+                    </Grid>
+                </form>
+            </Grid>
+            {IsModalOpen && <AddressModal modalOpen={IsModalOpen} closeModal={modalCloseHandler} getAddress={signupAddressHandler}/>}
+        </section>
+    );
+};
 ```
-### .jsx
+#### 회원가입에 필요한 input들은 몇개 되지 않아 간편하게 useState를 통해 상태관리를 하였습니다. 하지만 양식을 작성하는 다른 페이지들에서는 수 많은 input들이 있고 비슷한 로직들이 반복되기에 custom hooks를 만들어 사용하였습니다. 회원가입시 필요한 주소검색은 다음 주소 API를 활용하였습니다. 회원가입이 성공하면 success 페이지로 이동하게 됩니다.
+
+### Login/Login.jsx
 ```javascript
+const Login = props => {
+    const classes               = useStyles();
+    const dispatch              = useDispatch();
+    const [userEmail, setUserEmail]   = useState(null);
+    const [userPass, setUserPass]   = useState(null);
+    const loginEmailHandler = event =>{
+        setUserEmail(event.target.value);
+    };
+    const loginPassHandler = event =>{
+        setUserPass(event.target.value);
+    };
 
+    const loginHandler = (event) =>{
+        event.preventDefault();
+        const loginData = {
+            email : userEmail,
+            password: userPass,
+        };
+        axios.post("/member/login", loginData) //로그인 post
+            .then(res => {
+                localStorage.setItem("jwt", res.data); // 백엔드로부터 jwt 토큰을 받아 저장.
+                const jwtToken    =   res.data;
+                let jwt = require("jsonwebtoken");
+                let decode = jwt.decode(jwtToken);
+                let roles = decode.role.split(",");
+                let isManager = false;
+                for(let i=0; i< roles.length; i++) { // 매니저 여부 확인
+                    if(roles[i] === "ROLE_MANAGER"){
+                        console.log(roles[i]);
+                        isManager = true;
+                    }
+                }
+                dispatch(authActions.login({ // 리덕스를 이용하여 auth 값 입력.
+                    token: jwtToken,
+                    admin: isManager,
+                }));
+                window.location.replace("/shop");
+            }).catch(err => {
+                console.log("Login Failed");
+        });
+    }
+
+    return (
+        <section className={classes.section}>
+            <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.loginBox}>
+                <form>
+                <Grid item xs={12} >
+                    <Input type="email" name="userEmail" placeholder="이메일" onChange={loginEmailHandler}
+                           startAdornment={( <InputAdornment position="start">
+                                                <EmailIcon className={classes.icon}/>
+                                            </InputAdornment>)}
+                           className={classes.loginInput}/>
+                </Grid>
+                <Grid item xs={12} className={clsx(classes.inputGridPadding)}>
+                    <Input type="password" name="userPass" placeholder="비밀번호" onChange={loginPassHandler}
+                           startAdornment={( <InputAdornment position="start">
+                               <LockIcon className={classes.icon}/>
+                           </InputAdornment>)}
+                           className={classes.passInput}/>
+                </Grid>
+                <Grid item xs={12} className={classes.inputGrid}>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button type="submit" className={classes.loginBtn} onClick={loginHandler}>로그인</Button>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button type="submit" href="/member/register" className={clsx(classes.joinBtn)}>회원가입</Button>
+                </Grid>
+                </form>
+            </Grid>
+        </section>
+    );
+}
 ```
+#### 로그인시 post를 통하여 성공하면 백엔드로부터 그 유저의 jwt 토큰을 받아옵니다. 받아온 토큰을 우선 localStorage에 저장하고, 이 토큰을 이용하여 유저등급을 조회하여 매니저 등급이 있는지 확인을 합니다. 단순 유저이면 isManager는 false를 유지하며 관리자 등급이 있으면 true 값으로 바뀌게 되면 리덕스를 통해 auth 값을 넣어줄때 admin에 true가 들어가게 됩니다. admin이 true가 되면 메뉴에 보이지 않던 '관리자' 메뉴가 활성화 됩니다.
+
 ### .jsx
 ```javascript
 
