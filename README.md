@@ -1,7 +1,8 @@
 # 리본 프로젝트 (프론트엔드)
 ### 리본 프로젝트는 블록체인을 활용한 중고 골프용품 쇼핑몰입니다 (이하 리본). 이용자들은 리본에 중고용품 판매 신청을 할 수 있으며 리본이 신청을 승인하면 매입과 매입금액의 10% 만큼의 토큰을 지급하고 있습니다. 또한, 구매를 위한 쇼핑몰도 구현되어 있으며 물품 구매를 위해 토큰을 사용할 수 있으며 물품을 구매한 유저들은 결제 금액의 3% 만큼 토큰으로 보상받도록 구현하였습니다.
 
-### 시연 영상:
+### 시연 영상: [리본 시연 영상](https://user-images.githubusercontent.com/85688551/139671735-608884c8-b3d7-462c-9d7d-4ccee540a69a.mp4)
+### 발표자료: [리본.pdf](https://github.com/28-5/Front-end/files/7452928/_.pdf)
 ### 프로젝트 기간 : 2021년 9월 ~ 2021년 10월 28일
 
 ## 프로젝트 프론트엔드 주요기능
@@ -1147,22 +1148,398 @@ const RequestRevieweModal = props => { //협상을 제안하게 되면 판매 �
 ```
 #### Admin 페이지는 로그인시 Role에 따라 매니저와 일반 유저를 구분하며 일반 유저인 경우 메뉴가 보이지 않도록 구현해두었습니다. 컴포넌트들은 상품등록, 삭제, 유저 판매 신청 관리, 전체 매출 조회 등 서비스 관리를 손쉽게 할 수 있도록 구현하였습니다. 기본적으로 데이터를 추가하게 되면 백엔드를 통해 DB에 저장되고 있으며 삭제시 DB에서 삭제가 되지 않고 삭제여부를 나타내는 DB값을 변경시켜 문제 발생시 증거로 사용할 수 있도록 구현하였습니다.
 
-### .jsx
+### Board/BoardDataUse.jsx
 ```javascript
+export const BoardDataUse = () =>{ // Q&A와 공지사항 
+    const [noticeListData, setNoticeListData] = useState([]);
+    const [qnaListData, setQnaListData]       = useState([]);
+    const [error, setError]                   = useState(null);
 
+    const boardDataAxiosHandler= useCallback(async () => {
+        setError(null);
+
+        try{
+            const responseNotice  = await axios.get("/notices");
+            const responseQnA     = await axios.get("/qnas");
+            if(responseNotice.status !== 200 || responseQnA.status !== 200){
+                throw new Error("Something went wrong!");
+            }
+            const noticeList = responseNotice.data.dtoList.map(list => {
+                return{
+                    postNum: list.idx,
+                    postTitle: list.title,
+                    postContent: list.content,
+                    userEmail: list.email,
+                    userName: list.name,
+                    postDate: list.regDate,
+                    views: list.views,
+                };
+            });
+            const qnaList = responseQnA.data.dtoList.map(list => {
+                return{
+                    postNum: list.idx,
+                    postTitle: list.title,
+                    postContent: list.content,
+                    userEmail: list.email,
+                    userName: list.name,
+                    postDate: list.regDate,
+                    postAnswer: list.answer,
+                    views: list.views,
+                };
+            });
+            setNoticeListData(noticeList);
+            setQnaListData(qnaList);
+        }catch (error) {
+            setError(error.message);
+            console.log(error);
+        }
+    }, []);
+
+    useEffect( ()=>{
+        boardDataAxiosHandler();
+    }, [boardDataAxiosHandler]);
+
+    return [noticeListData, qnaListData];
+};
 ```
-### .jsx
+### Board/BoardListForm.jsx 
 ```javascript
+const columns = [
+    { id: 'postNum', label: '번호', maxWidth: 30 },
+    { id: 'postTitle', label: '제목', minWidth: 300 },
+    {
+        id: 'userName',
+        label: '작성자',
+        maxWidth: 50,
+        align: 'right',
+    },
+    {
+        id: 'postDate',
+        label: '작성일자',
+        maxWidth: 50,
+        align: 'right',
+        format: (value) => value.slice(0,10),
+    },
+    {
+        id: 'views',
+        label: '조회수',
+        maxWidth: 50,
+        align: 'right',
+        // format: (value) => value.toLocaleString('en-US'),
+    },
 
+];
+
+
+const BoardListForm = props => {
+    const classes                       = useStyles();
+    const [page, setPage]               = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const boardData                     = props.data.sort((a, b) => {
+                                                return b.postNum - a.postNum;
+                                            });;
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+    return (
+        <>
+            <Container maxWidth="xl" className={classes.mainContainer}>
+                <Col lg={12}>
+                    <h3 className={classes.title}>{(props.path.slice(1, -1)).toUpperCase()}</h3>
+                </Col>
+                {boardData ===undefined? <LoaddingSpinner/>:
+                <Paper className={classes.root}>
+                    <TableContainer className={classes.container}>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }} className={classes.tableColumns}>
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                                <TableBody>
+                                    {boardData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={row.postDate}>
+                                                {columns.map((column) => {
+                                                    const value = row[column.id];
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align} className={classes.tableRows}>
+                                                            {column.label==="제목"?
+                                                            <Link to={{ pathname: props.path +"/article/"+row.postNum, // 상세 게시물
+                                                                    state: {
+                                                                    data: row
+                                                                    }}}
+                                                                  className={classes.boardLink}>
+                                                                {value}
+                                                            </Link>:
+                                                            column.label==="작성일자"? column.format(value) : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination rowsPerPageOptions={[10, 25, 100]} component="div" count={boardData.length} rowsPerPage={rowsPerPage} page={page}
+                                     onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} />
+                </Paper>
+                }
+            </Container>
+        </>
+    );
+}
 ```
-### .jsx
+### Board/Article.jsx 
 ```javascript
+const Article = props => { // 게시물 내용 출력
+    const location            = useLocation();
+    const { data }            = location.state;
+    const articleNum          = data.postNum;
+    const [answer, setAnswer] = useState([]);
+    let deletePath;
+    let modifyPath;
+    switch (props.match.url.slice(0,3)) { // 들어온 곳이 qna인지 공지사항인지 여부에 따라 slice 위치를 약간씩만 변경해주어 한 컴포넌트로 두 게시판의 수정과 삭제 가능
+        case "/no": modifyPath = props.match.url.slice(0,8);
+                    deletePath = props.match.url.slice(0,8) + props.match.url.slice(16);
+                    break;
+        default: modifyPath    = props.match.url.slice(0,5);
+                 deletePath    = props.match.url.slice(0,6) + props.match.url.slice(14);
+                    break;
+    }
+    const deleteHandler = () => { // 게시물 삭제
+        axios.delete(deletePath,{Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+            .then(res => {
+                console.log("글 삭제 성공");
+                window.location.replace(modifyPath);
+            }).catch(err => {
+            console.log(err.request);
+            console.log(err.response);
+            console.log(err.response.message);
+        });
+    };
+    const listBtnHandler = () => {
+        window.location.replace(modifyPath);
+    };
 
+    useEffect(() => { // 게시물의 답변 가져오기
+        axios.get("/qnas/" + articleNum)
+            .then(res => setAnswer(res.data.answer))
+            .catch(err => console.log(err));
+    }, []);
+    return(
+        <>
+            <Container className="content">
+                <Row className="row">
+                    <Col>
+                        <div className="card">
+                            <div className="card-header">{data.postTitle}<span>{data.postDate.toString().slice(0,10)}</span></div>
+                            <div className="card-body height3">
+                                <ul className="chat-list">
+                                    {props.match.url.slice(0,3) !== "/no" ?
+                                    <li className="in">
+                                        <div className="chat-img">
+                                            <img alt="Avtar" src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"/>
+                                        </div>
+                                        <div className="chat-body">
+                                            <div className="chat-message">
+                                                <h5>{data.userEmail}</h5>
+                                                <p>{data.postContent}</p>
+                                            </div>
+                                        </div>
+                                    </li>:<li className="out">
+                                            <div className="chat-img">
+                                                <img alt="Avtar" src="https://cdn.pixabay.com/photo/2021/03/11/07/37/man-6086415_960_720.png"/>
+                                            </div>
+                                            <div className="chat-body">
+                                                <div className="chat-message">
+                                                    <h5>관리자</h5>
+                                                    <p>안녕하세요. {data.postContent}</p>
+                                                </div>
+                                            </div>
+                                        </li>}
+                                    {props.match.url.slice(0,3) !== "/no" && answer.length > 0  &&
+                                    <li className="out">
+                                        <div className="chat-img">
+                                            <img alt="Avtar" src="https://cdn.pixabay.com/photo/2021/03/11/07/37/man-6086415_960_720.png"/>
+                                        </div>
+                                        <div className="chat-body">
+                                            <div className="chat-message">
+                                                <h5>{answer[0].name}의 답글 {answer[0].regDate.slice(5, 10)} </h5>
+                                                <p>안녕하세요 {data.userEmail} 님</p>
+                                                <p>{answer[0].content}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <Button variant="outlined" color="primary" component={Link} to={{
+                            pathname: modifyPath + "/modify",
+                            state: {data: data}}}>
+                            수정
+                        </Button>
+                        <Button variant="outlined" color="secondary" onClick={deleteHandler} >
+                            삭제
+                        </Button>
+                        <Button variant="outlined" color="primary" onClick={listBtnHandler} className="listBtn">
+                            목록으로
+                        </Button>
+                        {props.match.url.slice(0,3) !== "/no" &&
+                        <Button variant="outlined" color="primary" component={Link} to={{
+                            pathname: modifyPath + "/answer",
+                            state: {data: data}}}  className="replyBtn">
+                            답변
+                        </Button>}
+                    </Col>
+                    <Col lg={2} className="offset-lg-1">
+                        <div className="contact-widget">
+                            <div className="cw-item">
+                                <h5>사무실 위치</h5>
+                                <ul>
+                                    <li>서울시 구로구 가산동</li>
+                                    <li>우림라이온스밸리 A동 804호</li>
+                                </ul>
+                            </div>
+                            <div className="cw-item">
+                                <h5>연락처</h5>
+                                <ul>
+                                    <li>+82 2 123-4592</li>
+                                </ul>
+                            </div>
+                            <div className="cw-item">
+                                <h5>E-mail</h5>
+                                <ul>
+                                    <li>contact@reborn.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+
+        </>
+
+    );
+}
 ```
-### .jsx
+### Board/WrtForm.jsx 
 ```javascript
+const WrtForm = props => { // 글작성 폼
+    const path                  =   props.path;
+    const [title, setTitle]     =   useState(null);
+    const [content, setContent] =   useState(null);
+    const location              =   useLocation();
+    let   data ;
+    if(location.state !== undefined){
+        data =   location.state.data;
+    }
+    const titleChangeHandler    =   event =>{
+        setTitle(event.target.value);
+    };
+    const contentChangeHandler  =   event =>{
+        setContent(event.target.value);
+    };
+    const formFetchHandler      =   event =>{
+        event.preventDefault();
+        if(location.pathname.includes("/answer")){ // 글 작성 폼이 답변을 위한 폼인 경우 아래 코드가 실행됨.
+            console.log(path);
+            console.log(data.postNum);
+            axios.post(path, {pidx: data.postNum, title:title, content:content}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+                .then(res => {
+                    window.location.replace(path);
+                }).catch(err => {
+                console.log(err.request);
+                console.log(err.response);
+                console.log(err.response.message);
+            });
+        }else{ // 답변이 아닌 단순 글 작성이면 아래 코드 
+            axios.post(path, {title:title, content:content}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+                .then(res => {
+                    window.location.replace(path);
+                }).catch(err => {
+                console.log(err.request);
+                console.log(err.response);
+                console.log(err.response.message);
+            });
+        }
+    };
+    useEffect(() => {
+        window.scrollTo(0,100);
+    }, [])
+    return (
+        <div className="contact-section">
+            <Container className="container">
+                <Row className="row">
+                    <Col lg={8}>
+                        <form action="#" className="contact-form">
+                            <Row className="row">
+                                <Col lg={12}>
+                                    <FormControl placeholder="제목" aria-label="제목" aria-describedby="basic-addon2" onChange={titleChangeHandler}/>
+                                    <FormControl as="textarea" aria-label="내용" placeholder="내용" onChange={contentChangeHandler}/>
+                                </Col>
+                                <Col lg={12} className="text-right">
+                                    <button type="button" className="formBtn" onClick={formFetchHandler}>올리기</button>
+                                </Col>
+                            </Row>
+                        </form>
+                    </Col>
+                    <Col lg={3} className="offset-lg-1">
+                        <div className="contact-widget">
+                            <div className="cw-item">
+                                <h5>사무실 위치</h5>
+                                <ul>
+                                    <li>서울시 구로구 가산동</li>
+                                    <li>우림라이온스밸리 A동 804호</li>
+                                </ul>
+                            </div>
+                            <div className="cw-item">
+                                <h5>연락처</h5>
+                                <ul>
+                                    <li>+82 2 123-4592</li>
+                                </ul>
+                            </div>
+                            <div className="cw-item">
+                                <h5>E-mail</h5>
+                                <ul>
+                                    <li>contact@reborn.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
 
+    );
+}
 ```
+#### 위의 코드들은 게시판을 위한 컴포넌트들 입니다. 게시판은 Q&A와 공지사항으로 두 종류가 있으며 데이터만 다르고 레이아웃은 같기에 컴포넌트 재사용률을 높이고자 노력하였습니다. 우선 BoardDataUse를 통해서 두 게시판의 데이터들을 모두 가져와서 App.js에서 [noticeList, qnaList] 로 저장하였습니다. 저장한 데이터들은 qna게시판이 선택되면 QnA 컴포넌트에 qnaList를 전달해주었고, 공지사항이 선택되면 Notice 컴포넌트에 noticeList를 전달해주었습니다. 각 컴포넌트들이 실행되면 전달된 데이터를 BoardListForm를 호출하면서 전달해줍니다. BoardListForm는 게시판 데이터를 화면에 출력해주고 글 선택을 통해 글 상세페이지로 이동할 수 있도록 하는 역할을 해줍니다. 각 게시물은 Link를 통해 해당 게시물의 정보를 state를 통해 넘겨주고 있습니다. 게시물을 선택하게 되면 Article 컴포넌트가 호출되고 Link를 통해 전달된 데이터를 사용할 수 있게 useLocation으로 받아주었습니다.
+
+다시한번, 공지사항과 QNA는 데이터만 다르고 나머지는 거의 비슷하기에 불필요한 코드 중복을 피하고자 컴포넌트 생성을 최소화 하였습니다. 두 게시판을 관리할 수 있도록 공지사항의 게시물인지 QNA의 게시물인지의 따라 location을 이용하여 수정과 삭제를 위한 path를 약간만 수정하여 사용할 수 있도록 switch와 slice를 사용하였습니다. WrtForm 또한 위의 같은 이유로 비슷한 로직으로 작성하여 만들었습니다.
+
+
 ### .jsx
 ```javascript
 
