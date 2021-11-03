@@ -1748,6 +1748,304 @@ const Login = props => {
 ```
 #### 로그인시 post를 통하여 성공하면 백엔드로부터 그 유저의 jwt 토큰을 받아옵니다. 받아온 토큰을 우선 localStorage에 저장하고, 이 토큰을 이용하여 유저등급을 조회하여 매니저 등급이 있는지 확인을 합니다. 단순 유저이면 isManager는 false를 유지하며 관리자 등급이 있으면 true 값으로 바뀌게 되면 리덕스를 통해 auth 값을 넣어줄때 admin에 true가 들어가게 됩니다. admin이 true가 되면 메뉴에 보이지 않던 '관리자' 메뉴가 활성화 됩니다.
 
+### hooks/use-input.jsx 
+```javascript
+const useInput = validateValue => {
+    const [enteredValue, setEnteredValue]           =   useState('');
+    const [checkboxItem, setCheckboxItem]           =   useState([]);
+    const [isTouched, setIsTouched]                 =   useState(false);
+    const [validation, setValidation]               =   useState(true);
+
+    const deleteCheckboxValue                       =   value =>{
+        setCheckboxItem(prevValue => {
+            return prevValue.filter( (item, index) =>{
+                return item !== value;
+            })
+        });
+    };
+
+    const valueChangeHandler                        =   event =>{
+        setEnteredValue(event.target.value);
+    };
+    const nameChangeHandler                         =    event =>{
+        const selectedItem  =   event.target.name;
+        if(event.target.checked){
+            setCheckboxItem(prevVal => {
+                return [
+                    ...prevVal,
+                    selectedItem,
+                ]
+            });
+        }else{
+            deleteCheckboxValue(event.target.name);
+        }
+    };
+
+    const reset                                     =   () =>{
+        setEnteredValue('');
+        setValidation(true);
+        setIsTouched(false);
+    };
+
+    return{
+        value: enteredValue,
+        chkValue: checkboxItem,
+        validation,
+        valueChangeHandler,
+        nameChangeHandler,
+        reset
+    };
+};
+```
+#### useState를 이용한 input이 빈번하게 사용되고 있기에 custom hooks를 이용하여 불필요한 중복 코드 작성을 최소화 하였습니다. 만든 custom hooks들은 input을 많이 사용하는 폼들, 예를들어 ProductRegistrationForm, ServiceRequestForm 등에서 활용하였습니다.
+
+### Service/ProductRegistrationForm.jsx 
+```javascript
+const ProductRegistrationForm = (props) =>{
+    const history                       = useHistory();
+    const [imageInfo, setImageInfo]     = useState(null); // 이미지 정보
+    const [prevImg, setPrevImg]         = useState(null); // 이미지 미리보기 
+    const {value: enteredCategory,                        // 카테고리 정보
+        valueChangeHandler: productTypeNameChangeHandler,
+        reset: resetProductTypeInput}   = useInput();
+    const { value: enteredBrand,                          // 브랜드 정보
+        valueChangeHandler: brandChangeHandler,
+        reset: resetBrand}              = useInput();
+    const { value: enteredAmount,                         // 수량
+        valueChangeHandler: amountChangeHandler,
+        reset: resetAmount}             = useInput();
+    const { value: enteredPrice,                          // 가격
+        valueChangeHandler: priceChangeHandler,
+        reset: resetPrice}              = useInput();
+    const { value: enteredTitle,                          // 제목
+        valueChangeHandler: titleChangeHandler,
+        reset: resetTitle}              = useInput();
+    const { value: enteredContent,                        // 내용
+        valueChangeHandler: contentChangeHandler,
+        reset: resetContent}            = useInput();
+    const cancelHandler                 = () =>{          // 등록 취소
+        resetProductTypeInput();
+        resetBrand();
+        resetAmount();
+        resetPrice();
+        resetContent();
+        setImageInfo(null);
+        setPrevImg(null);
+        history.push("/admin");
+    }
+    const formFetchHandler      =   event =>{             // 등록
+        event.preventDefault();
+        if(imageInfo === null){                           // 이미지 첨부가 안 됬을 경우 return
+            alert("사진을 첨부해주세요");
+            return;
+        }else{
+            if(enteredCategory === '' || enteredBrand === '' || enteredAmount === '' || enteredPrice === '' ||
+                enteredTitle === '' || enteredContent === ''){
+                alert("빠진 내용이 있습니다.");
+                return;
+            }else{
+                let productData = {
+                    categoryIdx: parseInt(enteredCategory),
+                    title: enteredTitle,
+                    brand:enteredBrand,
+                    quantity:enteredAmount,
+                    price:enteredPrice,
+                    content: enteredContent,
+                    imageDtoList:[
+                        {
+                            imgName: imageInfo[0].imgName,
+                            uuid: imageInfo[0].uuid,
+                            path: imageInfo[0].path,
+                        }
+                    ],
+                };
+                axios.post(`/categories/${enteredContent}/products`, productData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': 'application/json; charset=UTF-8'})
+                    .then(res => {
+                    resetProductTypeInput();
+                    resetBrand();
+                    resetAmount();
+                    resetPrice();
+                    resetTitle();
+                    resetContent();
+                    setImageInfo(null);
+                    console.log("성공");
+                    history.push("/service/success");
+
+                }).catch(err => {
+                    console.log(err.request);
+                    console.log(err.response.data);
+                    console.log(err.response.message);
+                });
+            }
+        }
+    };
+
+    return(
+        <>
+            <section className="cart-total-page spad">
+                <Container>
+                    <form action="#" className="checkout-form">
+                        <Row>
+                            <Col lg={12}>
+                                <h3>상품등록</h3>
+                            </Col>
+                            <Col lg={9}>
+                                <Row>
+                                    <Col lg={2}>
+                                        <p className="in-name">제목*</p>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <input required type="text" onChange={titleChangeHandler}/>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={2}>
+                                        <p className="in-name">브랜드*</p>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <select className="form-select cart-select country-usa" onChange={brandChangeHandler}
+                                                defaultValue="">
+                                            <option value=""></option>
+                                            <option value="타이틀리스트">타이틀리스트</option>
+                                            <option value="캘러웨이">캘러웨이</option>
+                                            <option value="테일러메이드">테일러메이드</option>
+                                            <option value="핑">핑</option>
+                                            <option value="미즈노">미즈노</option>
+                                            <option value="클리브랜드">클리브랜드</option>
+                                            <option value="혼마">혼마</option>
+                                            <option value="PXG">PXG</option>
+                                            <option value="코브라킹">코브라킹</option>
+                                            <option value="브리지스톤">브리지스톤</option>
+                                            <option value="볼빅">볼빅</option>
+                                            <option value="파이즈">파이즈</option>
+                                            <option value="나이키">나이키</option>
+                                        </select>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={2}>
+                                        <p className="in-name">카테고리*</p>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <select className="form-select cart-select country-usa" onChange={productTypeNameChangeHandler}
+                                                defaultValue="">
+                                            <option value=""></option>
+                                            <option value="1">골프클럽</option>
+                                            <option value="2">골프용품</option>
+                                            <option value="3">골프웨어</option>
+                                            <option value="4">드라이버</option>
+                                            <option value="5">우드</option>
+                                            <option value="6">아이언</option>
+                                            <option value="7">풀세트</option>
+                                            <option value="8">골프공</option>
+                                            <option value="9">골프가방</option>
+                                            <option value="10">골프장갑</option>
+                                            <option value="11">골프모자</option>
+                                            <option value="12">골프화</option>
+                                            <option value="13">아우터</option>
+                                            <option value="14">상의</option>
+                                            <option value="15">하의</option>
+                                            <option value="16">양말</option>
+                                        </select>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={2}>
+                                        <p className="in-name">재고*</p>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <input required type="text" onChange={amountChangeHandler}/>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={2}>
+                                        <p className="in-name">가격*</p>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <input required type="text" onChange={priceChangeHandler}/>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={2}>
+                                        <p className="in-name">내용*</p>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <FormControl as="textarea" aria-label="내용" placeholder="내용"  className="formArea"
+                                                     onChange={contentChangeHandler}/>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={2}>
+                                    </Col>
+                                    <Col lg={10}>
+                                        <ImageUpload setImgInfo={setImageInfo} setPrevImg={setPrevImg}/>
+                                        {prevImg && <img src={prevImg} className={prevImg && "prevImg"} alt={"imagePreview"}/>}
+                                        <div className="form-actions">
+                                            <button type="button" className="btn btn-danger" onClick={cancelHandler}>취소</button>
+                                            <button type="button" className="btn btn-primary" onClick={formFetchHandler}>전송</button>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </form>
+                </Container>
+            </section>
+        </>
+    );
+};
+```
+#### 위의 코드는 상품 등록을 위한 컴포넌트 입니다. 이와 매우 비슷한 구조로 ServiceRequestForm 컴포넌트를 만들었습니다. 이 컴포넌트에서는 custom hooks를 이용해서 상품 등록에 필요한 정보를 입력을 합니다. 상품 등록에 필요한 이미지가 첨부되지 않으면 alert로 메시지를 보여주며 return 합니다. 모든것들이 작성되고 이미지가 첨부되었다면 전송 버튼을 통해 상품 등록을 진행하고 있습니다.
+
+### Service/ImageUpload.jsx 
+```javascript
+const ImageUpload = props => { // 이미지 업로드 컴포넌트
+    const classes                       =   useStyles();
+    const imgInput                      =   useRef();
+    const [imgName, setImgName]         =   useState(null);
+    const [loading, setLoadding]        =   useState(false);
+    const imageFileHandler              =   event =>{ // 이미지 전송을 위한 이미지 정보 저장과 미리보기를 위한 정보를 저장함
+        setImgName(event.target.files[0]);
+        const reader      = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = () =>{
+        props.setPrevImg(reader.result);
+        }
+    };
+    const imageUploadHandler            =   async (event) =>{ // 이미지 업로드
+        event.preventDefault();
+        setLoadding(true);
+        alert("업로드 되었습니다")
+        const formData    = new FormData();
+
+        formData.append("uploadFiles", imgName);
+        axios.post("/img", formData, {Authorization: `Bearer ${localStorage.getItem("jwt")}`, 'Content-Type': "multipart/form-data"})
+            .then(res => {
+            console.log("Image upload success");
+            props.setImgInfo(res.data);
+            })
+            .catch(err =>{
+            console.log(err.request);
+            console.log(err.response.data);
+            console.log(err.response.message);
+        });
+        setLoadding(false);
+    };
+    return(
+        <>
+            {/*<input accept="image/*" ref={imgInput} className={classes.input} id="contained-button-file" multiple type="file" onChange={imageFileHandler}/>*/}
+            <input accept="image/*" ref={imgInput} className={classes.input} id="contained-button-file" type="file" onChange={imageFileHandler}/>
+            {imgName && <label htmlFor="contained-button-file" className={classes.imgBtn}>
+                <Button variant="contained" color="primary" component="span" className={classes.uploadBtn} onClick={imageUploadHandler}>
+                    <span className={classes.btnText}>사진첨부</span>
+                </Button>
+            </label>}
+        </>
+    );
+};
+```
+#### 이미지 업로드를 위한 컴포넌트 입니다. input을 통해 사진첨부를 누르게 되면 업로드 창이 뜨게 되고 사진을 업로드 할 수 있습니다. 업로드 시 imageUploadHandler로 우선 이미지 업로드에 필요한 정보를 setImageName을 통해 저장하고 있으며 미리보기에 필요한 정보또한 ProductRegistrationForm과 ServiceRequestForm에서 건내준 props.setPreImg를 통해 저장해주고 있습니다. 이미지를 첨부가되면 Button이 활성화되고 사진첨부를 누르면 imageUploadHandler를 통해 서버에 사진을 전송합니다.
+
 ### .jsx
 ```javascript
 
@@ -1778,15 +2076,6 @@ const Login = props => {
 ```
 ### .jsx
 ```javascript
-
-```
-### .jsx
-```javascript
-
-```
-### .jsx
-```javascript
-
 ```
 
 ## 마치며
