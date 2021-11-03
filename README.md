@@ -2046,14 +2046,105 @@ const ImageUpload = props => { // 이미지 업로드 컴포넌트
 ```
 #### 이미지 업로드를 위한 컴포넌트 입니다. input을 통해 사진첨부를 누르게 되면 업로드 창이 뜨게 되고 사진을 업로드 할 수 있습니다. 업로드 시 imageUploadHandler로 우선 이미지 업로드에 필요한 정보를 setImageName을 통해 저장하고 있으며 미리보기에 필요한 정보또한 ProductRegistrationForm과 ServiceRequestForm에서 건내준 props.setPreImg를 통해 저장해주고 있습니다. 이미지를 첨부가되면 Button이 활성화되고 사진첨부를 누르면 imageUploadHandler를 통해 서버에 사진을 전송합니다.
 
-### .jsx
+### Shopping/ShoppingMain.jsx 
 ```javascript
+const ShoppingMain = (props) => {
+    const allItems        =   []; // 전체 카테고리 출력을 위해 리덕스에 담겨져 있는 상품의 0, 1, 2번 배열을 담습니다.
+    const allItemsRedeux  =   useSelector(state => state.product.items); // 리덕스에 담겨져 있는 모든 상품 정보를 가져옵니다.
+
+    if(allItemsRedeux.length > 0){
+        for (let a = 0 ; a < 3 ; a++){
+            allItemsRedeux[a].forEach(item => {
+                allItems.push(item);
+            });
+        }
+    }
+    useEffect(() => {
+        window.scrollTo(0,0);
+    }, [])
+    return(
+        <>
+            <ShoppingCarousel /> // 메인 상단의 Carousel
+            <ShoppingAds/>       // 메인 중간의 프로모션 
+            <ProductCardList data={allItems} categorizedData={allItemsRedeux}/> // 상품 출력
+        </>
+    );
+};
 
 ```
-### .jsx
+### Shopping/Product/ProductCardList.jsx 
 ```javascript
+const ProductCardList = (props) => {
+    const { pathname }               = useLocation();
+    const history                    = useHistory();
+    const [selectedMenu, selectMenu] = useState(0);
+    let productData                  = props.data;
+    const subMenuHandler             = event =>{  // 상품 리스트 위에 있는 메뉴를 선택하면 그 메뉴 값을 받고 url을 이동합니다.
+        selectMenu(event.target.value);
+        history.push(`${pathname}?category=${selectedMenu}`);
+        };
 
+    switch (selectedMenu) {
+        case 0: productData = props.data; // 모든 상품을 보여줍니다.
+                break;
+        case 1: productData = props.categorizedData[0]; // 골프클럽에 해당하는 모든 아이템을 보여줍니다.
+                break;
+        case 2: productData = props.categorizedData[1]; // 골프용품에 해당하는 모든 아이템을 보여줍니다.
+                break;
+        case 3: productData = props.categorizedData[2]; // 골프웨어에 해당하는 모든 아이템을 보여줍니다.
+                break;
+        default: productData = props.data;
+    }
+return (
+        <>
+            <section className="latest-products spad">
+                <Container>
+                    <div className="product-filter">
+                        <Row>
+                            <Col lg={12} className="text-center">
+                                <div className="section-title">
+                                    {pathname === "/shop/allproducts" ? <h2>전체 상품</h2> : <h2>베스트 상품</h2>}
+                                </div>
+                                <ul className="product-controls">
+                                    <li value={0} onClick={subMenuHandler}>전체</li>
+                                    <li value={1} onClick={subMenuHandler}>골프클럽</li>
+                                    <li value={2} onClick={subMenuHandler}>골프용품</li>
+                                    <li value={3} onClick={subMenuHandler}>골프웨어</li>
+                                </ul>
+                            </Col>
+                        </Row>
+                    </div>
+                    <Row className="row" id="product-list">
+
+                        {productData.map(item => (
+                            <Col lg={3} sm={6} className="mix all dresses bags" key={item.idx}>
+                                <div className="single-product-item">
+                                    <figure>
+                                        <Link to={{ // 제품 상세페이지 
+                                            pathname: "/shop/product/" + item.idx,
+                                            state: {
+                                                data: item
+                                            }}}>
+                                            <img src={"/display?fileName="+item.imageDtoList[0].imageURL} alt=""/>
+                                        </Link>
+                                        {pathname === "/shop" && <div className="p-status popular">BEST</div>}
+                                    </figure>
+                                    <div className="product-text">
+                                        <h6>{item.title}</h6>
+                                        <p>{item.price.toLocaleString('ko-KR')}</p>
+                                    </div>
+                                </div>
+                            </Col>
+                        ))}
+
+                    </Row>
+                </Container>
+            </section>
+        </>
+    );
+};
 ```
+#### 위 컴포넌트으 메인에서 상품 전체를 출력해주는 컴포넌트 입니다. 상품 리스트 위에는 전체, 골프클럽, 골프용품, 골프웨어 메뉴들이 있고 메뉴를 클릭하면 그 카테고리에 해당하는 아이템만 보여주도록 구현하였습니다. 메뉴를 선택하면 selectMenu를 통해 그 메뉴 value 값이 변경되며 변경된 값은 switch문을 통해 선택된 메뉴에 해당하는 데이터를 넣을 수 있도록 관리해주고 있습니다. 또한 각 상품을 클릭 시 그 상품에 해당하는 상세페이지로 이동하게 됩니다.
 ### .jsx
 ```javascript
 
