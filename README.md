@@ -2265,17 +2265,472 @@ const CartModal = props => {
 #### 장바구니 기능은 Redux를 적극 활용하였습니다. 구매페이지에서 수량을 선택하고 장바구니 담기를 선택하게 되면 장바구니에 해당 아이템이 담겨집니다. 제품이미지, 이름, 수량, 가격으로 표시되며 + -를 통해 수량 조절을 할 수 있습니다. 우선 +로 수량을 늘릴 경우 redux를 통해 addOneItemr를 호출하고 해당 아이템의 번호인 productIdx와 제품 이름과 수량을 넘겨줍니다. -로 수량 1개를 줄이는 경우 줄여지는 아이템 번호를 removeItem의 매개변수로 넘겨주고 있으며 장바구니에 담겨져 있는 items를 find를 통해 매개변수로 넘겨준 id가 있는지 보고 있으면 해당하는 index 값을 반환해줍니다. 장바구니에 해당 아이템이 1개만 있다면 반환해준 인덱스 번호로 filter를 통해 해당하는 인덱스 아이템을 빼고 새롭게 배열을 만들어 items로 넣어주고 있습니다 (쉽게 말해 제거). 해당하는 아이템이 2개 이상인 경우 수량과 전체 아이템 개수를 줄여주고 있습니다. 해당 아이템 전체 제거를 하는 cartItemAllRemoveHandler는 위의 로직을 이용하여 for문으로 처리해주고 있습니다. 장바구니 전체 비우기는 장바구니의 초기값을 다시 넣어줌으로써 비워주도록 하였습니다. 
 수량 조절에 따라 하단의 전체 가격과 Navbar에 있는 장바구니 개수가 바뀝니다. 장바구니의 상태가 변할때 마다 메시지를 출력해주는 ui-slice가 있습니다 (코드는 상단에 있음). 장바구니에 성공적으로 추가되면 '담기 성공'등의 메시지가 출력이 되고, 어떠한 오류로 담을 수가 없을 경우 '담기 실패'가 뜹니다. 메시지를 출력해줌으로써 유저가 장바구니에 물건이 담기고있는지 알 수 있도록 직관적으로 구현하였습니다.
 
-### .jsx
+### Shopping/Order/Order.jsx 
 ```javascript
+function getSteps() {
+    return ['구매정보 입력', '결제', '구매완료'];
+}
 
-```
-### .jsx
-```javascript
+const Order = () => {
+    const dispatch                         = useDispatch();
+    const isAuth                           = useSelector(state => state.auth.isAuthenticated);
+    const [activeStep, setActiveStep]      = useState(0);
+    const [usedToken, setUsedToken]        = useState(0);
+    const [paymentSuccessData, setPaymentSuccessData] = useState(); // 카카오페이 결제 성공 데이터
+    const steps                            = getSteps(); // 주문 단계
+    let   isFormValid                      = false;
+    const [isBtnClicked, setIsBtnClicked]  = useState(false); // 구매자와 수령인 정보가 동일한지 
+    const [orderList, setOrderList]        = useState(null); // 장바구니 정보
+    
+    const { value: enteredBuyer, valueChangeHandler: buyerChangeHandler, // 구매자
+        reset: resetBuyerInput}            = useInput();
+    const { value: enteredReceiver, valueChangeHandler: receiverChangeHandler, // 수령인
+        reset: resetreceiverInput}         = useInput();
+    const { value: enteredContact, valueChangeHandler: contactChangeHandler, // 구매자 연락처
+        reset: resetContactInput}          = useInput();
+    const { value: enteredReceiverContact,                                  // 수령인 연락처
+        valueChangeHandler: receiverContactChangeHandler,
+        reset: resetReceiverContactInput}  = useInput();
+    const { value: enteredAddress, valueChangeHandler: addressChangeHandler, // 구매자 주소
+        reset: resetAddressInput}          = useInput();
+    const { value: enteredReceiverAddress,                                  // 수령인 주소
+        valueChangeHandler: receiverAddressChangeHandler,
+        reset: resetReceiverAddressInput}  = useInput();
+    const { value: enteredMemo, valueChangeHandler: memoChangeHandler,     // 전달사항
+        reset: resetMemoInput}             = useInput();
+    const { value: selectedMethod, valueChangeHandler: methodChangeHandler, // 결제방법
+        reset: resetMethod}                   = useInput();
+    const { value: wireName, valueChangeHandler: wireNameChangeHandler,    // 무통장 입금 성명
+        reset: resetWireName}                   = useInput();
 
+    const sameInfoBtnHandler = (event) =>{                                // 구매자와 수령인 정보가 같을 경우 해당 버튼 클릭
+        setIsBtnClicked(!isBtnClicked)
+    };
+
+    const getStepContent = (step) => {                                   // 주문 단계에 따라 해당하는 폼을 보여줌
+        switch (step) {
+            case 0: // 구매정보 입력
+                return <AddressForm buyerChangeHandler={buyerChangeHandler} receiverChangeHandler={receiverChangeHandler}
+                                    contactChangeHandler={contactChangeHandler} receiverContactChangeHandler={receiverContactChangeHandler}
+                                    addressChangeHandler={addressChangeHandler} receiverAddressChangeHandler={receiverAddressChangeHandler}
+                                    memoChangeHandler={memoChangeHandler} buyer={enteredBuyer} receiver={enteredReceiver}
+                                    addr={enteredAddress} contact={enteredContact} receiveContact={enteredReceiverContact}
+                                    receiverAddr={enteredReceiverAddress} memo={enteredMemo} setUsedToken={setUsedToken}
+                                    usedToken={usedToken} isBtnClicked={isBtnClicked} sameInfoBtnHandler={sameInfoBtnHandler}/>;
+            case 1: // 결제
+                return <PaymentForm selectedMethod={selectedMethod} methodChangeHandler={methodChangeHandler} usedToken={usedToken}
+                                    wireName={wireName} wireNameChangeHandler={wireNameChangeHandler} enteredMemo={enteredMemo}
+                                    buyer={enteredBuyer} addr={enteredAddress} contact={enteredContact} setActiveStep={setActiveStep}
+                                    orderList={orderList} setPaymentSuccessData={setPaymentSuccessData} resetMethod={resetMethod}/>;
+            case 2: // 주문완료
+                return <OrderSummary review={paymentSuccessData} setUsedToken={setUsedToken} selectedMethod={selectedMethod}
+                                     resetBuyerInput={resetBuyerInput} resetreceiverInput={resetreceiverInput}
+                                     resetContactInput={resetContactInput} resetReceiverContactInput={resetReceiverContactInput}
+                                     resetAddressInput={resetAddressInput} resetReceiverAddressInput={resetReceiverAddressInput}
+                                     resetMemoInput={resetMemoInput} resetWireName={resetWireName}/>;
+            case 3: window.location.replace("/shop"); 
+                    break;
+            default:
+                throw new Error('Unknown step');
+        }
+    }
+    if(isAuth){ // 로그인이 되어있는 경우 
+        if(isBtnClicked){ // 구매자 정보와 수령인 정보가 같음
+            isFormValid = true;
+        }else{
+            if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''
+                && enteredReceiver !=='' && enteredReceiverContact !== '' && enteredReceiverAddress !== ''){
+                isFormValid = true;
+            }
+        }
+    }else{ // 로그인이 안 되어 있는 경우
+        if(isBtnClicked){ // 구매자 정보와 수령인 정보가 같음
+            if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''){
+                isFormValid = true;
+            }
+        }else{
+            if(enteredBuyer !=='' && enteredContact !=='' && enteredAddress !==''
+                && enteredReceiver !=='' && enteredReceiverContact !== '' && enteredReceiverAddress !== ''){
+                isFormValid = true;
+            }
+        }
+    }
+
+    const handleNext = () => {
+        if(!isFormValid){
+            return;
+        }else{
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
+    };
+
+    const handleBack = () => {
+        if (activeStep < 0) {
+            setActiveStep(0);
+            return;
+        }else{
+            setActiveStep((prevActiveStep) => prevActiveStep - 1)
+        }
+    };
+    useEffect(() => {
+        const getOrderData = () => { // 카트에 담긴 정보를 
+            axios.get("/carts")
+                .then(res => setOrderList(res.data.cartDtos))
+                .catch(err => console.log(err));
+        }
+        getOrderData();
+    }, []);
+
+    dispatch(uiActions.toggleOff());
+    return (
+        <>
+            <section className="page-add">
+                <Container>
+                    <Row>
+                        <Col lg={4} >
+                            <div className="page-breadcrumb">
+                                <h2>주문하기</h2>
+                            </div>
+                        </Col>
+                        <Col lg={8} >
+                            <Stepper alternativeLabel activeStep={activeStep}>
+                                {steps.map((label) => (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+            <section className="cart-total-page spad">
+                <Container>
+                    <form action="#" className="checkout-form">
+                        <Row className="row">
+                            {getStepContent(activeStep)} // 단계에 맞는 폼을 보여줌
+                            {activeStep !==2 && <OrderList orderList={orderList} usedToken={usedToken}/>} // 주문완료 페이지가 아닌 경우에만 우측에 구매정보를 보여줌.
+                        </Row>
+                    </form>
+                    <Row>
+                        <div className="payment-method">
+                        <button type="button" onClick={handleNext}>
+                            {activeStep === 0 ? "결제선택" : activeStep === 1 ? "주문완료" : "구매완료"}
+                        </button>
+                            {activeStep > 0 && <button id='backward' onClick={handleBack}>이전</button>}
+                        </div>
+                    </Row>
+                </Container>
+            </section>
+        </>
+    );
+};
 ```
-### .jsx
+### Shopping/Order/AddressForm.jsx 
 ```javascript
+const AddressForm = (props) => {
+    const isAuth                                          = useSelector(state => state.auth.isAuthenticated); // 로그인 여부
+    const userInfo                                        = useSelector(state => state.auth);                 // 유저 정보
+    const tokenPrice                                      = useSelector(state => state.token.tokenPrice);     // 토큰 시세
+    const totalPrice                                      = useSelector(state => state.cart.totalPrice);      // 장바구니 물건 총합
+    const [usedToken, setUsedToken]                       = useState(0);                                      // 유저가 구매를 위해 사용한 토큰량
+    const [isBtnClicked, setIsBtnClicked]                 = useState(false);                                  // 구매자와 수령인 정보가 같은 경우
+    const userOrderTokenPrice                             = (tokenPrice * usedToken);                         // 토큰 시세 * 유저가 사용한 수량
+    const usedTokenHandler = (event) =>{
+        setUsedToken(event.target.value);
+    };
+
+    const tokenUseBtnHandler = () =>{
+        if(userInfo.tokenAmount <= 0){
+            alert("사용할 수 있는 토큰이 없습니다");
+            setUsedToken(0);
+            return;
+        }else{
+            if(usedToken > userInfo.tokenAmount){
+                alert("보유하신 양보다 더 큰 값을 입력하였습니다.")
+                setUsedToken(0);
+                return;
+            }
+            else{
+                if(userOrderTokenPrice > totalPrice){
+                    alert("토큰 사용이 구매 금액을 넘어설 수 없습니다.");
+                    setUsedToken(0);
+                }
+                else{
+                    if(usedToken < 0.01){
+                        alert("토큰 최소 사용금액은 0.01 입니다");
+                        setUsedToken(0);
+                        return;
+                    }
+                    else{
+                        props.setUsedToken(usedToken);
+                        setIsBtnClicked(true);
+
+                        setTimeout(() => {
+                            setIsBtnClicked(false);
+                        }, 4000);
+                    }
+                }
+            }
+        }
+    };
+
+    return (
+        <>
+        <Col lg={12}>
+            <h3>구매자</h3>
+        </Col>
+    <Col lg={9}>
+        <Row>
+            <Col lg={2}>
+                <p className="in-name">주문자*</p>
+            </Col>
+            <Col lg={4}>
+                {isAuth ? <input type="text" required readOnly value={userInfo.name}/>:
+                    <input type="text" onChange={props.buyerChangeHandler}/>}
+
+            </Col>
+            <Col lg={2}>
+                <p className="in-name">연락처*</p>
+            </Col>
+            <Col lg={4}>
+                {isAuth ? <input type="text" required readOnly value={userInfo.phone}/>:
+                <input type="text" onChange={props.contactChangeHandler}/>}
+            </Col>
+        </Row>
+        <Row>
+            <Col lg={2}>
+                <p className="in-name">주소*</p>
+            </Col>
+            <Col lg={10}>
+                {isAuth ? <input type="text" required readOnly value={userInfo.address}/>:
+                <input type="text" onChange={props.addressChangeHandler}/>}
+            </Col>
+        </Row>
+        <Row>
+            <Col lg={12} className="text-right">
+                <div className="form-check">
+                    <label className="form-check-label" htmlFor="flexCheckChecked">
+                        <input className="form-check-input diffBox" type="checkbox" value=""
+                               id="flexCheckChecked" onClick={props.sameInfoBtnHandler}/>
+                        구매자와 받는 사람의 정보가 같나요?
+                    </label>
+                </div>
+            </Col>
+            {/*--------------------수령인--------------------------*/}
+        </Row>
+        <Row>
+            <h3>수령인</h3>
+            <Col lg={2}>
+                <p className="in-name">수령인*</p>
+            </Col>
+            <Col lg={4}>
+                {props.isBtnClicked===true ? isAuth && <input disabled type="text" readOnly value={userInfo.name}/>:
+                    <input type="text" value={props.receiver} onChange={props.receiverChangeHandler}/>}
+            </Col>
+            <Col lg={2}>
+                <p className="in-name">연락처*</p>
+            </Col>
+            <Col lg={4}>
+                {props.isBtnClicked===true ? isAuth && <input disabled type="text" readOnly value={userInfo.phone}/>:
+                    <input type="text" value={props.receiveContact} onChange={props.receiverContactChangeHandler}/>}
+            </Col>
+        </Row>
+        <Row>
+            <Col lg={2}>
+                <p className="in-name">주소*</p>
+            </Col>
+            <Col lg={10}>
+                {props.isBtnClicked===true ? isAuth && <input disabled type="text" readOnly value={userInfo.address}/>:
+                    <input type="text" value={props.receiverAddr} onChange={props.receiverAddressChangeHandler}/>}
+            </Col>
+        </Row>
+        <Row>
+            <Col lg={2}>
+                <p className="in-name">메모사항</p>
+            </Col>
+            <Col lg={10}>
+                <input type="text" value={props.memo} onChange={props.memoChangeHandler}/>
+            </Col>
+        </Row>
+        {isAuth &&
+        <Row>
+            <h3>리본 토큰</h3>
+            <Col lg={2}>
+                <p className="in-name">지갑주소</p>
+            </Col>
+            <Col lg={10}>
+                <input type="text" value={userInfo.walletAddress} readOnly/>
+            </Col>
+            <Col lg={2}>
+                <p className="in-name">보유량</p>
+            </Col>
+            <Col lg={10}>
+                <input type="text" value={userInfo.tokenAmount} readOnly/>
+            </Col>
+            <Col lg={2}>
+                <p className="in-name">토큰<br/>(최소 0.01)</p>
+            </Col>
+            <Col lg={8}>
+                <input type="text" value={usedToken} id={"tokenInput"} onChange={usedTokenHandler}/>
+                {isBtnClicked && <span className="in-name" id={"usedMessage"}>사용되었습니다</span>}
+            </Col>
+            <Col lg={2}>
+                <button type="button" className="btn btn-light" onClick={tokenUseBtnHandler}>사용</button>
+            </Col>
+        </Row>}
+
+    </Col>
+    </>
+    );
+};
 ```
+### Shopping/Order/PaymentForm.jsx 
+```javascript
+const PaymentForm = (props) => {
+    useEffect(() => {
+        window.scrollTo(0,200);
+    }, [])
+    return(
+        <>
+            <Col lg={12}>
+                <h3>결제</h3>
+            </Col>
+            <Col lg={9}>
+                <Row>
+                    <ButtonGroup aria-label="Basic example" className="btnGroup">
+                        <Button variant="outline-primary" value="무통장" onClick={props.methodChangeHandler}>무통장입금</Button>
+                        <Button variant="outline-primary" value="카드" onClick={props.methodChangeHandler}>카드</Button>
+                        <Button variant="outline-primary" value="계좌이체" onClick={props.methodChangeHandler}>실시간 계좌이체</Button>
+                        <Button variant="outline-primary" value="카카오" onClick={props.methodChangeHandler}>카카오페이</Button>
+                    </ButtonGroup>
+                    {props.selectedMethod === "무통장"&&
+                    <>
+                        <Row>
+                            <Col lg={2}>
+                                <p className="in-name">입금인*</p>
+                            </Col>
+                            <Col lg={4}>
+                                <input type="text" value={props.wireName} onChange={props.wireNameChangeHandler}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col lg={2}>
+                                <p className="in-name">입금계좌</p>
+                            </Col>
+                            <Col lg={10}>
+                                <input type="text" value={"신한은행 110-123123-123"} readOnly/>
+                            </Col>
+                        </Row>
+                    </>}
+
+                    {props.selectedMethod === "카카오" && <IamPortPay orderList={props.orderList} buyer={props.buyer}
+                                                                    contact={props.contact} addr={props.addr} usedToken={props.usedToken}
+                                                                   enteredMemo={props.enteredMemo} setActiveStep={props.setActiveStep}
+                                                                   setPaymentSuccessData={props.setPaymentSuccessData}/>}
+                </Row>
+            </Col>
+        </>
+    )
+};
+```
+### Shopping/Order/Payment/IamPortPay.jsx
+```javascript
+function IamPortPay(props){     // 아임포트 결제페이지
+    const isAuth                = useSelector(state => state.auth.isAuthenticated);
+    const userInfo              = useSelector(state => state.auth);
+    const tokenPrice            = useSelector(state => state.token.tokenPrice);
+    const totalPrice            = useSelector(state => state.order.finalPrice);
+    const dispatch              = useDispatch();
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const { IMP } = window;
+        IMP.init("imp38404270");  // 아임포트 초기화
+
+        if(isAuth){
+            IMP.request_pay({
+                pg : "kakaopay",
+                pay_method : 'card',
+                merchant_uid : new Date().getTime(),
+                name : '리본 상품 결제',
+                amount : 1,
+                buyer_email : userInfo.email,
+                buyer_name : userInfo.name,
+                buyer_tel : userInfo.phone,
+                buyer_addr : userInfo.address,
+                buyer_postcode : userInfo.address,
+            }, callback);
+        }else{
+            IMP.request_pay({
+                pg : "kakaopay",
+                pay_method : 'card',
+                merchant_uid : new Date().getTime(),
+                name : '리본 상품 결제',
+                amount : totalPrice,
+                buyer_email : props.email,
+                buyer_name : props.buyer,
+                buyer_tel :  props.contact,
+                buyer_addr : props.addr,
+                buyer_postcode : props.addr,
+            }, callback);
+        }
+    }
+    function callback(res) {
+        console.log(totalPrice);
+        if(res.success){
+            let orderProductList = props.orderList.map( element =>{ // 구매한 상품 정보
+                let obj = {
+                    productIdx:element.productIdx,
+                    quantity:element.quantity
+                }
+                return obj
+            })
+            const paymentSuccessData  = ({
+                impUid: res.imp_uid,
+                orderNumber: res.merchant_uid,
+                userId: res.buyer_email,
+                userEmail: res.buyer_email,
+                userName: res.buyer_name,
+                orderName: res.name,
+                deliveryMessage: props.enteredMemo,
+                recipientAddress: res.buyer_addr,
+                totalPrice: totalPrice,
+                tokenAmount: props.usedToken,
+                orderProductList: orderProductList,
+                tokenPrice: tokenPrice,
+            });
+            axios.post("/orders", paymentSuccessData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+                .then(res => {
+                    props.setPaymentSuccessData(JSON.stringify(res.data));
+                    dispatch(cartActions.cleanCart());
+                })
+                .catch(err => console.log(err));
+            props.setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }else{
+            alert("결제에 실패하였습니다. 에러 내용: " + res.errorMessage);
+        }
+    }
+
+    return (
+        <>
+            <Button variant="outline-secondary" ><img src={"/img/kakaopay.jpg"} alt={"kakao"} onClick={handleSubmit}/></Button>
+        </>
+    );
+}
+
+const PaymentForm = Form.create({ name: 'payment' })(IamPortPay);
+
+export default withUserAgent(withRouter(PaymentForm));
+```
+#### 구매페이지는 전반적으로 Order.jsx에서 관리해주고 있습니다. Redux가 아닌 Order에서 통합적으로 구매관련 데이터를 관리하는 이유는 구매 관련 데이터들이 프로젝트 전반에서 사용되는게 아니고 오직 구매쪽에서만 사용되기에 redux를 사용하지 않았습니다. 구매 단계는 '이전'과 '결제선택', '주문완료' 등 버튼을 통해 step 값이 변하며 step 값에 따라 해당하는 컴포넌트들을 호출해주고 거기에 필요한 props를 넘겨주고 있습니다. 첫 단계는 구매정보를 입력하는 부분입니다. 구매인 정보와 수령인 정보를 입력하는 부분이며 구매자와 수령인이 같은 경우 간편하게 '구매인과 수령인 정보가 같다'라는 버튼을 클릭함으로써 번거로운 정보 입력을 최소화 시키고 있습니다. 로그인한 유저들에 한에서 결제페이지로 넘어가기전에 토큰을 사용할 수 있습니다. 회원가입시 기본적으로 100토큰이 주어지고 있으며 할인 금액이 전체 상품 금액이 넘어가지 않도록 구현해두었습니다. 또한, 유저의 편의성을 위해 할인 전 금액이 얼마인지, 토큰을 통해 할인되는 금액은 얼마인지, 최종 결제금액은 얼마인지 알기 쉽게하기 위해 표현해두었습니다.
+
+#### 결제페이지로 넘어가면 기본적인 무통장입금 부분과 카카오페이를 구현해두었습니다. 카카오페이는 아임포트를 활용하였습니다. 카카오결제를 선택하게 되면 바로 밑에 카카오 이미지가 뜨게 되고 이미지를 선택하면 카카오결제창이 뜹니다. 아임포트를 통해 결제가 성공적으로 진행되었다면 백엔드로 관련 데이터를 paymentSuccessData 변수에 담아서 전달해줍니다. paymentSuccessData에는 구매 정보, 수령인 정보, 토큰 시세와 토큰 사용량을 담고 있습니다. 백엔드로 성공적으로 전달해주면 dispatch(cartActions.cleanCart())로 카트를 비워주고 구매 완료 페이지로 이동시켜 줍니다.
 
 ## 마치며
 #### 이 프로젝트는 저에게 첫 팀 프로젝트였습니다. 협업을 위해 다음의 툴들을 이용하였습니다.
@@ -2285,4 +2740,5 @@ const CartModal = props => {
  + Github
  + Postman
 #### 프론트엔드 개발에 있어서 효율적인 코드 작성이 서비스 이용 속도에 직관되는 줄 알았습니다. 하지만 개발을 진행할 수록 프론트엔드 코드를 얼마나 효과적으로 작성하기 보다는 백엔드와 통신이 얼마나 원할하게 진행되냐에 따라 서비스 이용 속도에 큰 영향을 끼쳤습니다. 이쪽 부분에 대해서는 알고있는 부분이 많이 없어서 프로젝트 이후 추가적으로 공부하기로 하였습니다.
+
 #### 프로젝트의 약 90%를 비대면으로 진행하였는데 쉽지 않은 과정이었습니다. 옆에서 같이 개발하는게 아니니 자연스럽게 소통이 줄게 되었고, 소통이줄어드니 프론트와 백엔드를 서로 연결할 때에 있어서 많은 어려움이 있었을 뿐만 아니라 서로 원하는 개발 방향을 조율하기가 힘들었습니다. 결국에 프론트와 백엔드 연결에 있어서 많은 시간을 소비하게 되었습니다. 어려움 극복에 있어서 대면 회수 증가를 통한 소통 극복이 해결책이긴 하였지만, 백신 접종 완료 이전까지는 다른 방법으로 어려움을 최소화 하도록 노력하였습니다. 에를들어, Postman을 통해서 백엔드와 프론트 통신에 있어서 필요한 변수들의 이름과 URL 주소들을 폴더별로 만들어 효율적이고 개발자다운 소통을 늘렸습니다. 이후, 프로젝트 후반에가서 팀원 모두 백신 접종을 완료하게 되었고 기존 보다 조금 더 대면하여 같이 개발하는 회수를 늘림으로써 자연스러운 소통 증가로 연결시켰고 최초 계획한 목표만큼 개발을 마무리할 수 있었습니다.
