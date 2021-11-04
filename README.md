@@ -2145,18 +2145,126 @@ return (
 };
 ```
 #### 위 컴포넌트으 메인에서 상품 전체를 출력해주는 컴포넌트 입니다. 상품 리스트 위에는 전체, 골프클럽, 골프용품, 골프웨어 메뉴들이 있고 메뉴를 클릭하면 그 카테고리에 해당하는 아이템만 보여주도록 구현하였습니다. 메뉴를 선택하면 selectMenu를 통해 그 메뉴 value 값이 변경되며 변경된 값은 switch문을 통해 선택된 메뉴에 해당하는 데이터를 넣을 수 있도록 관리해주고 있습니다. 또한 각 상품을 클릭 시 그 상품에 해당하는 상세페이지로 이동하게 됩니다.
-### .jsx
-```javascript
 
-```
-### .jsx
+### Shopping/Cart/Cart.jsx 
 ```javascript
+const getModalStyle = () =>  { // 모달 위치
+    const top = 50 ;
+    const left = 50;
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
 
+const Cart = props => {
+    const classes                               = useStyles();
+    const dispatch                              = useDispatch();
+    const numberOfCartItems                     = useSelector(state => state.cart.totalQuantity); // 장바구니에 표시되는 상품 개수
+    const totalPrice                            = useSelector(state => state.cart.totalPrice); // 전체가격
+    const cartItemData                          = useSelector(state => state.cart.items); // 장바구니 아이템 불러오기
+    const hasItems                              = useSelector(state => state.cart.items.length > 0); // 장바구니 비어있는지 확인
+    const [modalStyle]                          = React.useState(getModalStyle);
+
+    const cartItemAddHandler = item => { // 장바구니 수량 1개 추가
+        dispatch(cartActions.addOneItem({
+            productIdx: item.productIdx,
+            title: item.title,
+            price: item.price,
+        }));
+
+    };
+    const cartItemRemoveHandler = id => { // 장바구니 수량 1개 제거
+        dispatch(cartActions.removeItem(id));
+    };
+    const cartItemAllRemoveHandler = id =>{ // 장바구니 해당 아이템 전체 제거
+        const findIndex = cartItemData.findIndex(item => {
+            return item.productIdx === id;
+        });
+        if(findIndex !== -1){
+            const foundItemLength = cartItemData[findIndex].quantity;
+            for(let a = 0; a < foundItemLength ; a++){
+                cartItemRemoveHandler(id);
+            }
+        }
+    };
+    const cartCleaner = () =>{ // 장바구니 
+        dispatch(cartActions.cleanCart());
+    };
+    return(
+        <>
+            <CartModal isOpen={props.isOpen} onClose={props.onClose}>
+                <div style={modalStyle} className={classes.paper}>
+                    <div className={classes.header}>
+                        <Typography variant={"h3"} className={classes.heading}>장바구니</Typography>
+                        {hasItems && <Typography variant={"h5"} className={classes.action} onClick={cartCleaner}>모두 지우기</Typography>}
+                    </div>
+                    {<CartItems data={cartItemData} onAdd={cartItemAddHandler} onRemove={cartItemRemoveHandler} removeItem={cartItemAllRemoveHandler}/>}
+
+                    <hr className={classes.hr}/>
+                        <div className={classes.checkout}>
+                            <div className={classes.total}>
+                                <div>
+                                    <div className={classes.subtotal}>전체 금액</div>
+                                    <div className={classes.items}>전체수량: {numberOfCartItems}</div>
+                                </div>
+                                <div className={classes.total_amount}>{totalPrice.toLocaleString('ko-KR')}</div>
+                            </div>
+                            {hasItems && <Button className={classes.button} component={Link} to={"/shop/order"}>주문하기</Button>}
+                        </div>
+                </div>
+            </CartModal>
+        </>
+    );
+};
 ```
-### .jsx
+### Shopping/Cart/CartItems.jsx 
 ```javascript
+const CartItems = props => {
+    const classes       = useStyles();
+    return props.data.map(item =>
+        <div className={classes.cart_Items} key={item.cartIdx+1}>
+            <div className={classes.image_box}>
+                <img src={item.imageDtoList === undefined? "/display?fileName="+item.img : "/display?fileName="+item.imageDtoList.imageURL} className={classes.cartImg} alt="product"/>
+            </div>
+            <div className={classes.about}>
+                <h1 className={classes.title}>{item.title}</h1>
+                <h3 className={classes.subtitle}>{item.price.toLocaleString('ko-KR')}</h3>
+            </div>
+            <div className={classes.counter}>
+                <div className={classes.btn} onClick={props.onAdd.bind(null, item)}>+</div>
+                <div className={classes.count}>{item.quantity}</div>
+                <div className={classes.btn} onClick={props.onRemove.bind(null, item.productIdx)}>-</div>
+            </div>
+            <div className={classes.prices}>
+                <div className={classes.amount}>{(item.price*item.quantity).toLocaleString('ko-KR')}</div>
+                <div className={classes.save}><u>나중에 주문</u></div>
+                <div className={classes.remove} onClick={props.removeItem.bind(null, item.productIdx)}><u>제거</u></div>
+            </div>
+        </div>
 
+    )
+};
 ```
+### Shopping/Cart/CartModal.jsx 
+```javascript
+const CartModal = props => {
+
+    return (
+        <>
+            {ReactDOM.createPortal(<Modal open={props.isOpen} onClose={props.onClose}
+                                          aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+
+                        {props.children}
+            </Modal>, document.getElementById("overlay-root"))}
+        </>
+    );
+}
+```
+#### 장바구니 기능은 Redux를 적극 활용하였습니다. 구매페이지에서 수량을 선택하고 장바구니 담기를 선택하게 되면 장바구니에 해당 아이템이 담겨집니다. 제품이미지, 이름, 수량, 가격으로 표시되며 + -를 통해 수량 조절을 할 수 있습니다. 우선 +로 수량을 늘릴 경우 redux를 통해 addOneItemr를 호출하고 해당 아이템의 번호인 productIdx와 제품 이름과 수량을 넘겨줍니다. -로 수량 1개를 줄이는 경우 줄여지는 아이템 번호를 removeItem의 매개변수로 넘겨주고 있으며 장바구니에 담겨져 있는 items를 find를 통해 매개변수로 넘겨준 id가 있는지 보고 있으면 해당하는 index 값을 반환해줍니다. 장바구니에 해당 아이템이 1개만 있다면 반환해준 인덱스 번호로 filter를 통해 해당하는 인덱스 아이템을 빼고 새롭게 배열을 만들어 items로 넣어주고 있습니다 (쉽게 말해 제거). 해당하는 아이템이 2개 이상인 경우 수량과 전체 아이템 개수를 줄여주고 있습니다. 해당 아이템 전체 제거를 하는 cartItemAllRemoveHandler는 위의 로직을 이용하여 for문으로 처리해주고 있습니다. 장바구니 전체 비우기는 장바구니의 초기값을 다시 넣어줌으로써 비워주도록 하였습니다. 
+수량 조절에 따라 하단의 전체 가격과 Navbar에 있는 장바구니 개수가 바뀝니다. 장바구니의 상태가 변할때 마다 메시지를 출력해주는 ui-slice가 있습니다 (코드는 상단에 있음). 장바구니에 성공적으로 추가되면 '담기 성공'등의 메시지가 출력이 되고, 어떠한 오류로 담을 수가 없을 경우 '담기 실패'가 뜹니다. 메시지를 출력해줌으로써 유저가 장바구니에 물건이 담기고있는지 알 수 있도록 직관적으로 구현하였습니다.
+
 ### .jsx
 ```javascript
 
@@ -2176,4 +2284,5 @@ return (
  + Slack
  + Github
  + Postman
+#### 프론트엔드 개발에 있어서 효율적인 코드 작성이 서비스 이용 속도에 직관되는 줄 알았습니다. 하지만 개발을 진행할 수록 프론트엔드 코드를 얼마나 효과적으로 작성하기 보다는 백엔드와 통신이 얼마나 원할하게 진행되냐에 따라 서비스 이용 속도에 큰 영향을 끼쳤습니다. 이쪽 부분에 대해서는 알고있는 부분이 많이 없어서 프로젝트 이후 추가적으로 공부하기로 하였습니다.
 #### 프로젝트의 약 90%를 비대면으로 진행하였는데 쉽지 않은 과정이었습니다. 옆에서 같이 개발하는게 아니니 자연스럽게 소통이 줄게 되었고, 소통이줄어드니 프론트와 백엔드를 서로 연결할 때에 있어서 많은 어려움이 있었을 뿐만 아니라 서로 원하는 개발 방향을 조율하기가 힘들었습니다. 결국에 프론트와 백엔드 연결에 있어서 많은 시간을 소비하게 되었습니다. 어려움 극복에 있어서 대면 회수 증가를 통한 소통 극복이 해결책이긴 하였지만, 백신 접종 완료 이전까지는 다른 방법으로 어려움을 최소화 하도록 노력하였습니다. 에를들어, Postman을 통해서 백엔드와 프론트 통신에 있어서 필요한 변수들의 이름과 URL 주소들을 폴더별로 만들어 효율적이고 개발자다운 소통을 늘렸습니다. 이후, 프로젝트 후반에가서 팀원 모두 백신 접종을 완료하게 되었고 기존 보다 조금 더 대면하여 같이 개발하는 회수를 늘림으로써 자연스러운 소통 증가로 연결시켰고 최초 계획한 목표만큼 개발을 마무리할 수 있었습니다.
